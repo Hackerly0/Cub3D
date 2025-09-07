@@ -1,0 +1,7 @@
+cub3D
+a.out
+*.o
+*.a
+*.dSYM/
+*.swp
+*.tmp
