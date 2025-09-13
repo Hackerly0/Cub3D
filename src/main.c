@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:18:04 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/10 17:14:53 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/13 14:58:27 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 char *sample_map[] = {
     "1111111111111111111",
-    "100000000001111111",
-    "100100N000000111111", 
+    "10N000000001111111",
+    "1001000000000111111", 
     "10000000000001",
     "1 000001", // Player facing North
     "10111001",
@@ -77,125 +77,147 @@ void init_map_from_muhammed(t_game *g)
     }
 }
 
-// void    player(t_game *game)
-// {
-    
-// }
-
 #define TILE 64
 #define P_SIZE 10
 
-void    player(t_game *game)
+void    dda(t_cub *cub, mlx_image_t* pixel_ray)
 {
-    int i, j;
+    if (fabs(cub->rays->m) <= 1)
+    {
+        while (cub->rays->x_new < cub->rays->x_end)
+        {
+            mlx_put_pixel(pixel_ray, (int)roundf(cub->rays->x_new), (int)roundf(cub->rays->y_new), 0xFF0000FF);
+            cub->rays->x_new += 1;
+            cub->rays->y_new += cub->rays->m;
+        }
+    }
+    else
+    {
+        while (cub->rays->y_new < cub->rays->y_end)
+        {
+            mlx_put_pixel(pixel_ray, (int)roundf(cub->rays->x_new), (int)roundf(cub->rays->y_new), 0xFF0000FF);
+            cub->rays->y_new += 1;
+            cub->rays->x_new += 1.0f / cub->rays->m;
+        }
+    }
+}
 
+int    ray(t_cub *cub)
+{
+    cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+    if (!cub->textures->pixel_ray)
+        return (1);
+    mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
+    cub->rays->x_end = cub->game->xp_pos * TILE + 200;
+    cub->rays->y_end = cub->game->yp_pos * TILE + 100;
+    cub->rays->m = (cub->rays->y_end - (cub->game->yp_pos * TILE)) / (cub->rays->x_end - (cub->game->xp_pos * TILE));
+    cub->rays->x_new = cub->game->xp_pos * TILE;
+    cub->rays->y_new = cub->game->yp_pos * TILE;
+    dda(cub, cub->textures->pixel_ray);
+    return (0);
+}
+
+int    player(t_game *game, t_cub *cub)
+{
+    int i;
+    int j;
+    int px;
+    int py;
+
+    cub->textures->player = mlx_new_image(game->mlx, P_SIZE, P_SIZE);
+    if (!cub->textures->player)
+        return (1);
     i = 0;
-    mlx_image_t* player = mlx_new_image(game->mlx, P_SIZE, P_SIZE);
-    // memset(player->pixels, 25, player->width * player->height * BPP);
     while (i < P_SIZE)
     {
         j = 0;
         while (j < P_SIZE)
         {
-            printf("location: %f", game->xp_pos);
-            mlx_put_pixel(player, j, i, 0x00FF00FF);
+            mlx_put_pixel(cub->textures->player, j, i, 0x00FF00FF);
             j++;
         }
         i++;
     }
-    int px = (int)(game->xp_pos * TILE);
-    int py = (int)(game->yp_pos * TILE);
-    mlx_image_to_window(game->mlx, player, px, py);
-}
-
-
-int main()
-{
-    t_game *game;
-    int i, j;
-
-    game = malloc(sizeof(t_game));
-    init_map_from_muhammed(game);
-    game->mlx = mlx_init(WIDTH, game->map_height * TILE, "Cub3D", true);
-    if (!game->mlx)
-        return (1);
-    mlx_image_t* wall = mlx_new_image(game->mlx, TILE, TILE);
-    // mlx_image_t* player = mlx_new_image(game->mlx, TILE, TILE);
-    memset(wall->pixels, 255, wall->width * wall->height * BPP);
-    i = 0;
-    while (i < game->map_height)
-    {
-        j = 0;
-        while (j < game->map_width)
-        {
-            if (game->map[i][j] == '1')
-            {
-                mlx_image_to_window(game->mlx, wall, j * TILE, i * TILE);
-            }
-
-            j++;
-        }
-        i++;
-    }
-    player(game);
-    mlx_loop(game->mlx);
-    mlx_terminate(game->mlx);
+    px = (int)(game->xp_pos * TILE);
+    py = (int)(game->yp_pos * TILE);
+    mlx_image_to_window(game->mlx, cub->textures->player, px, py);
     return (0);
 }
 
+int struct_init(t_cub *cub)
+{
+    cub->game = malloc(sizeof(t_game));
+    cub->rays = malloc(sizeof(t_rays));
+    cub->textures = malloc(sizeof(t_textures));
+    if (!cub->game || !cub->rays || !cub->textures)
+        return (1);
+    return (0);
+}
 
-// int     main()
-// {
-//     t_game *game;
-//     int i;
-//     int j;
+int ft_free_struct(t_cub *cub, int type)
+{
+    if (cub->game)
+        free(cub->game);
+    if (cub->rays)
+        free(cub->rays);
+    if (cub->textures)
+        free(cub->textures);
+    free(cub);
+    return (type);
+}
 
-//     j = 0;
-//     game = malloc(sizeof(t_game));
-//     game->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
-//     init_map_from_muhammed(game);
-//     mlx_image_t* img = mlx_new_image(game->mlx, 32, 32);
-//     memset(img->pixels, 255, img->width * img->height * BPP);
-//     while (game->map[j])
-//     {
-//         i = 0;
-//         while (game->map[j][i])
-//         {
-//             if (game->map[j][i] == '1')
-//             {
-//                     mlx_image_to_window(game->mlx, img, j * 32, i * 32);
-//             }
-//             i++;
-//         }
-//         j++;
-//     }
-
-//     mlx_loop(game->mlx);
-//     return (0);
-// }
-
-
-// int32_t	main(void)
-// {
-//     // Init mlx with a canvas size of 256x256 and the ability to resize the window.
-//     mlx_t* mlx = mlx_init(256, 256, "MLX42", true);
+int    draw_map(t_cub *cub)
+{
+    int i;
+    int j;
     
-//     if (!mlx) exit(EXIT_FAILURE);
+    cub->textures->wall = mlx_new_image(cub->game->mlx, TILE, TILE);
+    if (!cub->textures->wall)
+        return (1);
+    memset(cub->textures->wall->pixels, 255, cub->textures->wall->width * cub->textures->wall->height * BPP);
+    i = 0;
+    while (i < cub->game->map_height)
+    {
+        j = 0;
+        while (j < cub->game->map_width)
+        {
+            if (cub->game->map[i][j] == '1')
+                mlx_image_to_window(cub->game->mlx, cub->textures->wall, j * TILE, i * TILE);
+            j++;
+        }
+        i++;
+    }
+    return (0);
+}
+void mouse_event(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
+{
+    (void)mods;  // إذا ما بدك تستخدمها
+    (void)param;
+    if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
+        printf("Left click!\n");
+}
+int main()
+{
+    t_cub *cub;
 
-//     // Create a 128x128 image.
-//     mlx_image_t* img = mlx_new_image(mlx, 128, 128);
+    cub = malloc(sizeof(t_cub));
+    if (!cub)
+        return (1);
+    if (struct_init(cub))
+        return (ft_free_struct(cub, 1));
+    init_map_from_muhammed(cub->game);
+    cub->game->mlx = mlx_init(WIDTH, cub->game->map_height * TILE, "Cub3D", true);
+    if (!cub->game->mlx)
+        return (ft_free_struct(cub, 1));
+    if (draw_map(cub))
+        return (ft_free_struct(cub, 1));
+    if (player(cub->game, cub))
+        return (ft_free_struct(cub, 1));
+    if (ray(cub))
+        return (ft_free_struct(cub, 1));
+    mlx_mouse_hook(cub->game->mlx, &mouse_event, cub->game->mlx);
 
-//     // Set the channels of each pixel in our image to the maximum byte value of 255. 
-//     memset(img->pixels, 255, img->width * img->height * BPP);
-
-//     // Draw the image at coordinate (0, 0).
-//     mlx_image_to_window(mlx, img, 0, 0);
-//     mlx_image_to_window(mlx, img, 128, 0);
-
-//     // Run the main loop and terminate on quit.  
-//     mlx_loop(mlx);
-//     mlx_terminate(mlx);
-
-//     return (EXIT_SUCCESS);
-// }
-
+    mlx_loop(cub->game->mlx);
+    mlx_terminate(cub->game->mlx);
+    return (0);
+}

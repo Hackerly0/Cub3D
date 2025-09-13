@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iinclude 
+CFLAGS = -Wall -Werror -Wextra -g -Iinclude 
 
 SRCS = main.c
 SRCS := $(addprefix src/, $(SRCS))

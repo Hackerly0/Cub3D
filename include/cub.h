@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/09 17:03:38 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/13 13:11:01 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 #define HEIGHT 600  
 
 #include "../libft/libft.h"
+#include <math.h>
 #include "../MLX42/include/MLX42/MLX42.h"
 
-typedef struct s_dim
+typedef struct s_rays
 {
-    
-} t_dim;
+    float x_new;
+    float y_new;
+    float m;
+    float x_end;
+    float y_end;
+} t_rays;
 
 typedef struct  s_colors
 {
@@ -38,6 +43,13 @@ typedef struct s_dir
     char    *west;
 }   t_dir;
 
+typedef struct s_textures
+{
+    mlx_image_t* pixel_ray;
+    mlx_image_t* player;
+    mlx_image_t* wall;
+} t_textures;
+
 typedef struct s_game
 {
     mlx_t *mlx;
@@ -49,6 +61,11 @@ typedef struct s_game
 	int				map_width;//        3
 }   t_game;
 
-
+typedef struct s_cub
+{
+    t_game *game;
+    t_rays *rays;
+    t_textures *textures;
+} t_cub;
 
 #endif
