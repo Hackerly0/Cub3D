@@ -122,14 +122,88 @@ int parse_rgb(const char *s, t_rgb *out)
 	return(0);
 }
 
-void    push_map_line(t_vars *v, const char *s)
+void	ft_free(char **s, int j)
 {
-	/*Duplicate s and append it to v->map (which is a growable array of strings).
+	int i;
 
-	Update v->height (rows count).
-
-	Update v->width if this line is longer than the current max.*/
-
-
+	if (!s)
+		return ;
+	i = 0;
+	if (j != -1)
+	{
+		while(i < j)
+		{
+			free(s[i]);
+			s[i] = NULL;
+			i++;
+		}
+	}
+	else
+	{
+		while(s[i])
+		{
+			free(s[i]);
+			s[i] = NULL;
+			i++;
+		}
+	}
+	free(s);
+	s = NULL;
 }
 
+void    push_map_line(t_vars *v, const char *s)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	**temp;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	if (!s)
+		return ;
+	while (v->map && v->map[len]) 
+		len++;
+	temp = malloc(sizeof(char *) * (len + 2));
+	if (!temp)
+		return ;
+	if (v->map)
+	{
+		while (v->map[i])
+		{
+			temp[j] = strdup(v->map[i]);
+			if (!temp[j])
+			{
+				ft_free(temp, j);
+				return ;	
+			}
+			i++;
+			j++;
+		}
+		temp[j++] = strdup(s);
+		if (!temp[j-1])
+		{
+			ft_free(temp, j - 1);
+			return ;	
+		}
+		temp[j] = NULL;
+		ft_free(v->map, -1);
+		v->width = max(v->width, (int)strlen(s));
+		v->height = len + 1;
+		v->map = temp;
+	}
+	else
+	{
+		temp[0] = strdup(s);
+		if (!temp[0])
+		{
+			free(temp);
+			return ;
+		}
+		temp[1] = NULL;
+		v->map = temp;
+		v->width = strlen(s);
+		v->height = 1;
+	}
+}
