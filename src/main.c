@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:18:04 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/14 22:08:45 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/14 23:02:27 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int    ray(t_cub *cub)
     mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
     float ray_length = 200;
     cub->rays->x_end = cub->game->xp_pos * TILE + cub->game->dir_x * ray_length;
-    printf("%f", cub->game->dir_y);
     cub->rays->y_end = cub->game->yp_pos * TILE + cub->game->dir_y * ray_length;
     cub->rays->m = (cub->rays->y_end - (cub->game->yp_pos * TILE)) / (cub->rays->x_end - (cub->game->xp_pos * TILE));
     cub->rays->x_new = cub->game->xp_pos * TILE;
@@ -265,7 +264,8 @@ int    draw_map(t_cub *cub)
 
 void rotate_player(t_cub *cub, float theta)
 {
-    float old_dir_x = cub->game->dir_x;
+    float old_dir_x;
+    old_dir_x = cub->game->dir_x;
     cub->game->dir_x = cub->game->dir_x * cos(theta) - cub->game->dir_y * sin(theta);
     cub->game->dir_y = old_dir_x * sin(theta) + cub->game->dir_y * cos(theta);
 
@@ -284,13 +284,13 @@ void my_keyhook(mlx_key_data_t keydata, void *structs)
         rotate_player(cub, -0.05f);
     if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         rotate_player(cub, 0.05f);
-    if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+    if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         cub->game->yp_pos -= 0.2;
-    if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+    if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         cub->game->yp_pos += 0.2;
-    if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+    if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         cub->game->xp_pos -= 0.2;
-    if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+    if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         cub->game->xp_pos += 0.2;
     if (cub->textures->pixel_ray)
         mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
