@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:18:04 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/13 14:58:27 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/14 22:08:45 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,60 @@ void init_map_from_muhammed(t_game *g)
 #define TILE 64
 #define P_SIZE 10
 
-void    dda(t_cub *cub, mlx_image_t* pixel_ray)
+
+static void	init_dda(t_cub *cub, float *x_inc, float *y_inc, float *steps)//should understand
 {
-    if (fabs(cub->rays->m) <= 1)
+    float dx;
+    float dy;
+    float abs_dx;
+    float abs_dy;
+
+    dx = cub->rays->x_end - cub->rays->x_new;
+    dy = cub->rays->y_end - cub->rays->y_new;
+    abs_dx = dx;
+    if (abs_dx < 0)
+        abs_dx = -abs_dx;
+    abs_dy = dy;
+    if (abs_dy < 0)
+        abs_dy = -abs_dy;
+    *steps = abs_dx;
+    if (abs_dy > abs_dx)
+        *steps = abs_dy;
+    if (*steps == 0)
+        *steps = 1;
+    *x_inc = dx / *steps;
+    *y_inc = dy / *steps;
+}
+
+void    print_ray(float steps, t_cub *cub, float x_inc, float y_inc)
+{
+    int i;
+    int px;
+    int py;
+
+    i = 0;
+    while (i <= (int)steps)
     {
-        while (cub->rays->x_new < cub->rays->x_end)
-        {
-            mlx_put_pixel(pixel_ray, (int)roundf(cub->rays->x_new), (int)roundf(cub->rays->y_new), 0xFF0000FF);
-            cub->rays->x_new += 1;
-            cub->rays->y_new += cub->rays->m;
-        }
+
+        px = (int)(cub->rays->x_new + 0.5f);
+        py = (int)(cub->rays->y_new + 0.5f);
+        if (px >= 0 && px < WIDTH && py >= 0 && py < HEIGHT)
+            mlx_put_pixel(cub->textures->pixel_ray, px, py, 0xFF0000FF);
+        cub->rays->x_new += x_inc;
+        cub->rays->y_new += y_inc;
+        i++;
     }
-    else
-    {
-        while (cub->rays->y_new < cub->rays->y_end)
-        {
-            mlx_put_pixel(pixel_ray, (int)roundf(cub->rays->x_new), (int)roundf(cub->rays->y_new), 0xFF0000FF);
-            cub->rays->y_new += 1;
-            cub->rays->x_new += 1.0f / cub->rays->m;
-        }
-    }
+}
+
+void	dda(t_cub *cub)
+{
+
+    float x_inc;
+    float y_inc;
+    float steps;
+
+    init_dda(cub, &x_inc, &y_inc, &steps);
+    print_ray(steps, cub, x_inc, y_inc);
 }
 
 int    ray(t_cub *cub)
@@ -108,13 +142,39 @@ int    ray(t_cub *cub)
     if (!cub->textures->pixel_ray)
         return (1);
     mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
-    cub->rays->x_end = cub->game->xp_pos * TILE + 200;
-    cub->rays->y_end = cub->game->yp_pos * TILE + 100;
+    float ray_length = 200;
+    cub->rays->x_end = cub->game->xp_pos * TILE + cub->game->dir_x * ray_length;
+    printf("%f", cub->game->dir_y);
+    cub->rays->y_end = cub->game->yp_pos * TILE + cub->game->dir_y * ray_length;
     cub->rays->m = (cub->rays->y_end - (cub->game->yp_pos * TILE)) / (cub->rays->x_end - (cub->game->xp_pos * TILE));
     cub->rays->x_new = cub->game->xp_pos * TILE;
     cub->rays->y_new = cub->game->yp_pos * TILE;
-    dda(cub, cub->textures->pixel_ray);
+    dda(cub);
     return (0);
+}
+
+void    facing_dir(t_cub *cub)
+{
+    if (cub->game->facing_dir == 'N') 
+    { 
+        cub->game->dir_x = 0; 
+        cub->game->dir_y = -1; 
+    }
+    if (cub->game->facing_dir == 'S') 
+    { 
+        cub->game->dir_x = 0; 
+        cub->game->dir_y = 1; 
+    }
+    if (cub->game->facing_dir == 'E') 
+    {
+        cub->game->dir_x = 1; 
+        cub->game->dir_y = 0; 
+    }
+    if (cub->game->facing_dir == 'W') 
+    {
+        cub->game->dir_x = -1;
+        cub->game->dir_y = 0; 
+    }
 }
 
 int    player(t_game *game, t_cub *cub)
@@ -151,6 +211,19 @@ int struct_init(t_cub *cub)
     cub->textures = malloc(sizeof(t_textures));
     if (!cub->game || !cub->rays || !cub->textures)
         return (1);
+    cub->game->dir_x = 0;
+    cub->game->xp_pos = 0;
+    cub->game->dir_y = 0;
+    cub->game->facing_dir = 'N';
+    cub->game->yp_pos = 0;
+    cub->rays->y_new = 0;
+    cub->rays->x_new = 0;
+    cub->rays->y_end = 0;
+    cub->rays->x_end = 0;
+    cub->textures->player = NULL;
+    cub->rays->m = 0;
+    cub->textures->wall = NULL;
+    cub->textures->pixel_ray = NULL;
     return (0);
 }
 
@@ -189,13 +262,44 @@ int    draw_map(t_cub *cub)
     }
     return (0);
 }
-void mouse_event(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
+
+void rotate_player(t_cub *cub, float theta)
 {
-    (void)mods;  // إذا ما بدك تستخدمها
-    (void)param;
-    if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
-        printf("Left click!\n");
+    float old_dir_x = cub->game->dir_x;
+    cub->game->dir_x = cub->game->dir_x * cos(theta) - cub->game->dir_y * sin(theta);
+    cub->game->dir_y = old_dir_x * sin(theta) + cub->game->dir_y * cos(theta);
+
+    // 2️⃣ تدوير مستوى الكاميرا (plane_x, plane_y) إذا تستخدم raycasting
+    // float old_plane_x = cub->game->plane_x;
+    // cub->game->plane_x = cub->game->plane_x * cos(theta) - cub->game->plane_y * sin(theta);
+    // cub->game->plane_y = old_plane_x * sin(theta) + cub->game->plane_y * cos(theta);
 }
+
+void my_keyhook(mlx_key_data_t keydata, void *structs)
+{
+    t_cub *cub;
+    
+    cub = (t_cub *)structs;
+    if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+        rotate_player(cub, -0.05f);
+    if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+        rotate_player(cub, 0.05f);
+    if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+        cub->game->yp_pos -= 0.2;
+    if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+        cub->game->yp_pos += 0.2;
+    if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+        cub->game->xp_pos -= 0.2;
+    if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+        cub->game->xp_pos += 0.2;
+    if (cub->textures->pixel_ray)
+        mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
+    if (cub->textures->player)
+        mlx_delete_image(cub->game->mlx, cub->textures->player);
+    player(cub->game, cub);
+    ray(cub);
+}
+
 int main()
 {
     t_cub *cub;
@@ -206,6 +310,7 @@ int main()
     if (struct_init(cub))
         return (ft_free_struct(cub, 1));
     init_map_from_muhammed(cub->game);
+    facing_dir(cub);
     cub->game->mlx = mlx_init(WIDTH, cub->game->map_height * TILE, "Cub3D", true);
     if (!cub->game->mlx)
         return (ft_free_struct(cub, 1));
@@ -215,8 +320,7 @@ int main()
         return (ft_free_struct(cub, 1));
     if (ray(cub))
         return (ft_free_struct(cub, 1));
-    mlx_mouse_hook(cub->game->mlx, &mouse_event, cub->game->mlx);
-
+    mlx_key_hook(cub->game->mlx, my_keyhook, cub);
     mlx_loop(cub->game->mlx);
     mlx_terminate(cub->game->mlx);
     return (0);

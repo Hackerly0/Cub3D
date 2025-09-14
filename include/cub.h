@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/13 13:11:01 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/14 20:31:37 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,17 @@ typedef struct s_textures
 
 typedef struct s_game
 {
-    mlx_t *mlx;
-    char    **map;
+    mlx_t           *mlx;
+    char            **map;
+    float dir_x;
+    float dir_y;
+    // float             player_angle_x;
+    // float             player_angle_y;
     char			facing_dir;//       N   //S   //W    //E
-	double			xp_pos; //          x + 0.5
-	double			yp_pos; //          y + 0.5
+	double			xp_pos;    //          x + 0.5
+	double			yp_pos;    //          y + 0.5
 	int				map_height;//       4
-	int				map_width;//        3
+	int				map_width; //        3
 }   t_game;
 
 typedef struct s_cub
