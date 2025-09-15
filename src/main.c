@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:18:04 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/14 23:02:27 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:11:39 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+#define FOV 60
 
 #define BPP sizeof(int32_t)
 
 char *sample_map[] = {
     "1111111111111111111",
     "10N000000001111111",
-    "1001000000000111111", 
+    "1001000010000111111", 
     "10000000000001",
     "1 000001", // Player facing North
     "10111001",
@@ -114,7 +115,6 @@ void    print_ray(float steps, t_cub *cub, float x_inc, float y_inc)
     i = 0;
     while (i <= (int)steps)
     {
-
         px = (int)(cub->rays->x_new + 0.5f);
         py = (int)(cub->rays->y_new + 0.5f);
         if (px >= 0 && px < WIDTH && py >= 0 && py < HEIGHT)
@@ -136,21 +136,50 @@ void	dda(t_cub *cub)
     print_ray(steps, cub, x_inc, y_inc);
 }
 
-int    ray(t_cub *cub)
+// int    ray(t_cub *cub)
+// {    
+//     cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+//     if (!cub->textures->pixel_ray)
+//         return (1);
+//     mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
+    
+//     float ray_length = 200;
+//     cub->rays->x_end = cub->game->xp_pos * TILE + cub->game->dir_x * ray_length;
+//     cub->rays->y_end = cub->game->yp_pos * TILE + cub->game->dir_y * ray_length;
+//     cub->rays->m = (cub->rays->y_end - (cub->game->yp_pos * TILE)) / (cub->rays->x_end - (cub->game->xp_pos * TILE));
+//     cub->rays->x_new = cub->game->xp_pos * TILE;
+//     cub->rays->y_new = cub->game->yp_pos * TILE;
+//     dda(cub);
+    
+//     return (0);
+// }
+int ray(t_cub *cub)
 {
+    int     i;
+    float   fov_rad;
+    float   start_angle;
+    float   step_angle;
+
     cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
     if (!cub->textures->pixel_ray)
         return (1);
     mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
-    float ray_length = 200;
-    cub->rays->x_end = cub->game->xp_pos * TILE + cub->game->dir_x * ray_length;
-    cub->rays->y_end = cub->game->yp_pos * TILE + cub->game->dir_y * ray_length;
-    cub->rays->m = (cub->rays->y_end - (cub->game->yp_pos * TILE)) / (cub->rays->x_end - (cub->game->xp_pos * TILE));
-    cub->rays->x_new = cub->game->xp_pos * TILE;
-    cub->rays->y_new = cub->game->yp_pos * TILE;
-    dda(cub);
+    fov_rad = 60.0f * M_PI / 180.0f;
+    start_angle = atan2f(cub->game->dir_y, cub->game->dir_x) - fov_rad / 2.0f;
+    step_angle = fov_rad / (float)WIDTH;
+    i = 0;
+    while (i < WIDTH)
+    {
+        cub->rays->x_new = cub->game->xp_pos * TILE;
+        cub->rays->y_new = cub->game->yp_pos * TILE;
+        cub->rays->x_end = cub->rays->x_new + cosf(start_angle + i * step_angle) * 200;
+        cub->rays->y_end = cub->rays->y_new + sinf(start_angle + i * step_angle) * 200;
+        dda(cub);
+        i++;
+    }
     return (0);
 }
+
 
 void    facing_dir(t_cub *cub)
 {
@@ -325,3 +354,5 @@ int main()
     mlx_terminate(cub->game->mlx);
     return (0);
 }
+
+//  FOV 60   \|/ 
