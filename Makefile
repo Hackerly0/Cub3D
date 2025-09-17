@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g -Iinclude 
 
-SRCS = main.c
+SRCS = main.c raycasting.c move.c minimap.c textures.c
 SRCS := $(addprefix src/, $(SRCS))
 OBJS = $(SRCS:.c=.o)
 
