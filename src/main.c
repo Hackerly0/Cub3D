@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/09 14:18:04 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/17 18:35:51 by salshaha         ###   ########.fr       */
+/*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
+/*   Updated: 2025/09/20 17:55:23 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-#define FOV 60
 
-#define BPP sizeof(int32_t)
-
+// Sample map for testing
 char *sample_map[] = {
-    "1111111111111111111",
-    "100000000001111111",
-    "100N000000000111111", 
-    "10000000000001",
-    "1 000001", // Player facing North
-    "10111001",
-    "101 100001",
-    "111 1111",
+    "11111111111111111111111",
+    "10000000001000000000001",
+    "10110000111000000100001", 
+    "10010000000000000100001",
+    "10000000001000000000001",
+    "10000N00000000000000001", // Player facing North
+    "10000000001000000100001",
+    "10110000111000000100001",
+    "10010000000000000100001",
+    "11111111111111111111111",
     NULL
 };
 
-void init_map_from_muhammed(t_game *g, t_cub *cub) 
+void init_map_from_sample(t_game *g, t_cub *cub) 
 {
-    /////
+    // Calculate map dimensions
     g->map_height = 0;
     while (sample_map[g->map_height]) 
         g->map_height++;
@@ -43,15 +43,18 @@ void init_map_from_muhammed(t_game *g, t_cub *cub)
             g->map_width = len;
         i++;
     }
-    //////
-
-
     
+    // Allocate memory for the map
     g->map = malloc(g->map_height * sizeof(char*));
+    if (!g->map)
+        return;
+    
     int y = 0;
     while (y < g->map_height)
     {
         g->map[y] = malloc(g->map_width + 1);
+        if (!g->map[y])
+            return;
         
         // Copy the row and pad with '1' if necessary
         strcpy(g->map[y], sample_map[y]);
@@ -67,8 +70,8 @@ void init_map_from_muhammed(t_game *g, t_cub *cub)
         while (x < g->map_width) {
             char c = g->map[y][x];
             if (c == 'N' || c == 'S' || c == 'E' || c == 'W') {
-                g->xp_pos = x + 0.5;//x + 0.5;
-                g->yp_pos = y + 0.5;//y + 0.5;
+                g->xp_pos = x + 0.5f;
+                g->yp_pos = y + 0.5f;
                 g->facing_dir = c;
                 g->map[y][x] = '0';
             }
@@ -77,36 +80,66 @@ void init_map_from_muhammed(t_game *g, t_cub *cub)
         y++;
     }
 
+    // Set texture paths - make sure these files exist!
     cub->dir->north_path = "./textures/pillar.png";
     cub->dir->south_path = "./textures/wall_1.png";
     cub->dir->east_path  = "./textures/bluestone.png";
     cub->dir->west_path  = "./textures/eagle.png";
 }
 
-void    facing_dir(t_cub *cub)
+void facing_dir_n_s(t_cub *cub)
 {
     if (cub->game->facing_dir == 'N') 
     { 
         cub->game->dir_x = 0; 
-        cub->game->dir_y = -1; 
+        cub->game->dir_y = -1;
+        cub->game->plane_x = 0.66f;
+        cub->game->plane_y = 0;
     }
-    if (cub->game->facing_dir == 'S') 
+    else if (cub->game->facing_dir == 'S') 
     { 
         cub->game->dir_x = 0; 
-        cub->game->dir_y = 1; 
+        cub->game->dir_y = 1;
+        cub->game->plane_x = -0.66f;
+        cub->game->plane_y = 0;
     }
+}
+
+void facing_dir_e_w(t_cub *cub)
+{
     if (cub->game->facing_dir == 'E') 
     {
         cub->game->dir_x = 1; 
-        cub->game->dir_y = 0; 
+        cub->game->dir_y = 0;
+        cub->game->plane_x = 0;
+        cub->game->plane_y = 0.66f;
     }
-    if (cub->game->facing_dir == 'W') 
+    else if (cub->game->facing_dir == 'W') 
     {
         cub->game->dir_x = -1;
-        cub->game->dir_y = 0; 
+        cub->game->dir_y = 0;
+        cub->game->plane_x = 0;
+        cub->game->plane_y = -0.66f;
     }
 }
-int ft_free_struct(t_cub *cub, int type);
+
+void    init_struct_element(t_cub *cub)
+{
+    cub->game->dir_x = 0;
+    cub->game->xp_pos = 0;
+    cub->game->dir_y = 0;
+    cub->game->facing_dir = 'N';
+    cub->game->yp_pos = 0;
+    cub->game->plane_x = 0;
+    cub->game->plane_y = 0;
+    cub->textures->player = NULL;
+    cub->textures->wall = NULL;
+    cub->textures->pixel_ray = NULL;
+    cub->textures->north = NULL;
+    cub->textures->south = NULL;
+    cub->textures->east = NULL;
+    cub->textures->west = NULL;
+}
 
 int struct_init(t_cub *cub)
 {
@@ -117,24 +150,51 @@ int struct_init(t_cub *cub)
     cub->dir = malloc(sizeof(t_dir));
     if (!cub->game || !cub->rays || !cub->textures || !cub->colors || !cub->dir)
         return (1);
-    cub->game->dir_x = 0;
-    cub->game->xp_pos = 0;
-    cub->game->dir_y = 0;
-    cub->game->facing_dir = 'N';
-    cub->game->yp_pos = 0;
-    cub->rays->y_new = 0;
-    cub->rays->x_new = 0;
-    cub->rays->y_end = 0;
-    cub->rays->x_end = 0;
-    cub->textures->player = NULL;
-    cub->rays->m = 0;
-    cub->textures->wall = NULL;
-    cub->textures->pixel_ray = NULL;
+    init_struct_element(cub);
     return (0);
+}
+
+void free_map(t_game *game)
+{
+    if (game && game->map)
+    {
+        for (int i = 0; i < game->map_height; i++)
+        {
+            if (game->map[i])
+                free(game->map[i]);
+        }
+        free(game->map);
+        game->map = NULL;
+    }
+}
+
+void free_textures(t_cub *cub)
+{
+    if (cub->textures)
+    {
+        if (cub->textures->north)
+            mlx_delete_texture(cub->textures->north);
+        if (cub->textures->south)
+            mlx_delete_texture(cub->textures->south);
+        if (cub->textures->east)
+            mlx_delete_texture(cub->textures->east);
+        if (cub->textures->west)
+            mlx_delete_texture(cub->textures->west);
+        if (cub->textures->pixel_ray)
+            mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
+        if (cub->textures->player)
+            mlx_delete_image(cub->game->mlx, cub->textures->player);
+    }
 }
 
 int ft_free_struct(t_cub *cub, int type)
 {
+    if (!cub)
+        return (type);
+    free_textures(cub);
+    free_map(cub->game);
+    if (cub->game && cub->game->mlx)
+        mlx_terminate(cub->game->mlx);
     if (cub->game)
         free(cub->game);
     if (cub->rays)
@@ -149,37 +209,64 @@ int ft_free_struct(t_cub *cub, int type)
     return (type);
 }
 
-int main()
+int load_textures(t_cub *cub)
+{
+    cub->textures->north = mlx_load_png(cub->dir->north_path);
+    cub->textures->south = mlx_load_png(cub->dir->south_path);
+    cub->textures->east  = mlx_load_png(cub->dir->east_path);
+    cub->textures->west  = mlx_load_png(cub->dir->west_path);
+    if (!cub->textures->north || !cub->textures->south || 
+        !cub->textures->east || !cub->textures->west)
+    {
+        printf("Error: Failed to load one or more textures\n");
+        return (ft_free_struct(cub, 1));
+    }
+    return (0);
+}
+
+static uint32_t rgb_to_hex(int r, int g, int b)
+{
+    return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) |
+           ((b & 0xFF) << 8)  | 0xFF;
+}
+
+void set_colors(t_cub *cub)
+{    
+    cub->colors->ceil[0] = 135; // R
+    cub->colors->ceil[1] = 206; // G
+    cub->colors->ceil[2] = 235; // B
+    
+    cub->colors->floor[0] = 34;  // R
+    cub->colors->floor[1] = 139; // G
+    cub->colors->floor[2] = 34;  // B
+
+    cub->colors->ceil_col = rgb_to_hex(cub->colors->ceil[0], cub->colors->ceil[1], cub->colors->ceil[2]);
+	cub->colors->floor_col = rgb_to_hex(cub->colors->floor[0], cub->colors->floor[1], cub->colors->floor[2]);
+}
+
+int main(void)
 {
     t_cub *cub;
-
+    
     cub = malloc(sizeof(t_cub));
     if (!cub)
         return (1);
     if (struct_init(cub))
         return (ft_free_struct(cub, 1));
-    init_map_from_muhammed(cub->game, cub);
-    facing_dir(cub);
-    cub->textures->north = mlx_load_png(cub->dir->north_path);
-    cub->textures->south = mlx_load_png(cub->dir->south_path);
-    cub->textures->east  = mlx_load_png(cub->dir->east_path);
-    cub->textures->west  = mlx_load_png(cub->dir->west_path);
-    if (!cub->textures->north || !cub->textures->south || !cub->textures->east || !cub->textures->west)
-    {
-        ft_free_struct(cub, 1);
-        return 1;
-    }
-    cub->game->mlx = mlx_init(WIDTH, cub->game->map_height * TILE, "Cub3D", true);
+    init_map_from_sample(cub->game, cub);
+    if (!cub->game->map)
+        return (ft_free_struct(cub, 1));    
+    facing_dir_n_s(cub);
+    facing_dir_e_w(cub);
+    set_colors(cub);
+    cub->game->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
     if (!cub->game->mlx)
         return (ft_free_struct(cub, 1));
-    // if (draw_map(cub))
-    //     return (ft_free_struct(cub, 1));
-    // if (player(cub->game, cub))
-    //     return (ft_free_struct(cub, 1));
+    if (load_textures(cub))
+        return (ft_free_struct(cub, 1));
+    mlx_key_hook(cub->game->mlx, my_keyhook_complete, cub);
     if (ray(cub))
         return (ft_free_struct(cub, 1));
-    mlx_key_hook(cub->game->mlx, my_keyhook, cub);
     mlx_loop(cub->game->mlx);
-    mlx_terminate(cub->game->mlx);
-    return (0);
+    return (ft_free_struct(cub, 0));
 }

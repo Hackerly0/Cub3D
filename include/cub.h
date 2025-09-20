@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/17 18:52:14 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/20 17:56:54 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,29 @@
 
 typedef struct s_rays
 {
-    float distance;
-    int hit_vertical;
-    float x_new;
-    float y_new;
-    float m;
-    float x_end;
-    float y_end;
-} t_rays;
+    float   ray_x;      // ray direction X
+    float   ray_y;      // ray direction Y
+
+    float   delta_x;    // length of ray from one x-side to next
+    float   delta_y;    // length of ray from one y-side to next
+
+    int     map_x;      // current square X in the map
+    int     map_y;      // current square Y in the map
+
+    int     step_x;     // +1 or -1 step direction in X
+    int     step_y;     // +1 or -1 step direction in Y
+
+    float   side_x;     // distance from start to next x-side
+    float   side_y;     // distance from start to next y-side
+
+    int     side;       // 0 if vertical wall, 1 if horizontal
+    float   distance;   // perpendicular distance to wall
+
+    int     tex_x;      // X coordinate in texture
+    float   wall_x;     // wall hit position (for texture)
+    float   tex_step;   // step for texture mapping
+    float   tex_pos;    // current texture position
+}   t_rays;
 
 typedef struct  s_colors
 {
@@ -66,6 +81,8 @@ typedef struct s_game
     char            **map;
     float dir_x;
     float dir_y;
+        float plane_x;  // Add these camera plane variables
+    float plane_y;  // Add these camera plane variables
     char			facing_dir;//       N   //S   //W    //E
 	double			xp_pos;    //          x + 0.5
 	double			yp_pos;    //          y + 0.5
@@ -83,23 +100,54 @@ typedef struct s_cub
 } t_cub;
 
 
-int	    ray(t_cub *cub);
-float	calc_dist(t_cub *cub, float x, float y, float angle);
-void	draw_ray(t_cub *cub, float angle, float *dist_array, int col);
-void	cast_rays(t_cub *cub, float start, float step, float *dist);
-void	draw_walls(t_cub *cub, float *dist, float fov);
+// int	    ray(t_cub *cub);
+// float	calc_dist(t_cub *cub, float x, float y, float angle);
+// void draw_walls(t_cub *cub, float *dist, float fov, float *ray_hit_x, float *ray_hit_y);
+// void    rotate_player(t_cub *cub, float theta);
+// void    move_up_donw(t_cub *cub, char type);
+// void	move_left_right(t_cub *cub, char type);
+// void    my_keyhook(mlx_key_data_t keydata, void *structs);
 
+// void put_wall_pixel(t_cub *cub, int i, int begin, int end, int tex_x, mlx_texture_t *texture);
+// // int     player_minimap(t_game *game, t_cub *cub);
+// // int	    ray_minimap(t_cub *cub);
+// // int    draw_minimap(t_cub *cub);
+// // void	draw_ray_minimap(t_cub *cub, float angle);
+
+// void    colores_set(t_cub *cub);
+// void    put_pixel(t_cub *cub, int i, int	begin, int end);
+
+
+
+
+
+
+
+// Add these function prototypes to your cub.h file
+
+// Raycasting functions
+int     ray(t_cub *cub);
+void    colores_set(t_cub *cub);
+void    put_wall_pixel(t_cub *cub, int i, int begin, int end, int tex_x, mlx_texture_t *texture);
+
+// Movement and input functions  
+void    my_keyhook(mlx_key_data_t keydata, void *structs);
+void my_keyhook_complete(mlx_key_data_t keydata, void *param);
 void    rotate_player(t_cub *cub, float theta);
 void    move_up_donw(t_cub *cub, char type);
-void    move_left_rigth(t_cub *cub, char type);
-void    my_keyhook(mlx_key_data_t keydata, void *structs);
+void    move_left_right(t_cub *cub, char type);
 
+// Initialization functions
+void    facing_dir(t_cub *cub);
+int     struct_init(t_cub *cub);
+int     ft_free_struct(t_cub *cub, int type);
 
-// int     player_minimap(t_game *game, t_cub *cub);
-// int	    ray_minimap(t_cub *cub);
-// int    draw_minimap(t_cub *cub);
-// void	draw_ray_minimap(t_cub *cub, float angle);
+// Map functions
+void    init_map_from_sample(t_game *g, t_cub *cub);
 
-void    colores_set(t_cub *cub);
-void    put_pixel(t_cub *cub, int i, int	begin, int end);
+void move_player(t_cub *cub, float move_x, float move_y);
+void my_keyhook_complete(mlx_key_data_t keydata, void *param);
+void handle_movement_keys(t_cub *cub, mlx_key_data_t keydata);
+void move_player(t_cub *cub, float move_x, float move_y);
+
 #endif

@@ -3,89 +3,286 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/17 14:51:38 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/20 17:38:50 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void rotate_player(t_cub *cub, float theta)
-{
-    float old_dir_x;
-    old_dir_x = cub->game->dir_x;
-    cub->game->dir_x = cub->game->dir_x * cos(theta) - cub->game->dir_y * sin(theta);
-    cub->game->dir_y = old_dir_x * sin(theta) + cub->game->dir_y * cos(theta);
-
-    // 2️⃣ تدوير مستوى الكاميرا (plane_x, plane_y) إذا تستخدم raycasting
-    // float old_plane_x = cub->game->plane_x;
-    // cub->game->plane_x = cub->game->plane_x * cos(theta) - cub->game->plane_y * sin(theta);
-    // cub->game->plane_y = old_plane_x * sin(theta) + cub->game->plane_y * cos(theta);
-}
-
-void move_up_donw(t_cub *cub, char type)
-{
-    if (type == 'W')
-    {
-        cub->game->xp_pos += cub->game->dir_x * 0.2f;
-        cub->game->yp_pos += cub->game->dir_y * 0.2f;
-        if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
-        {
-            cub->game->xp_pos -= cub->game->dir_x * 0.2f;
-            cub->game->yp_pos -= cub->game->dir_y * 0.2f;
-        }
-    }
-    if (type == 'S')
-    {
-        cub->game->xp_pos -= cub->game->dir_x * 0.2f;
-        cub->game->yp_pos -= cub->game->dir_y * 0.2f;
-        if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
-        {
-            cub->game->xp_pos += cub->game->dir_x * 0.2f;
-            cub->game->yp_pos += cub->game->dir_y * 0.2f;
-        }   
-    }
-}
-
-void    move_left_rigth(t_cub *cub, char type)
-{
-    if (type == 'A')
-    {
-        cub->game->xp_pos -= 0.3;
-        if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
-            cub->game->xp_pos += 0.3;
-    }
-    if (type == 'D')
-    {
-        cub->game->xp_pos += 0.3;
-        if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
-            cub->game->xp_pos -= 0.3;
-    }
-}
-
-void my_keyhook(mlx_key_data_t keydata, void *structs)
-{
-    t_cub *cub;
+// void rotate_player(t_cub *cub, float theta)
+// {
+//     float old_dir_x = cub->game->dir_x;
+//     float old_plane_x = cub->game->plane_x;
     
-    cub = (t_cub *)structs;
-    if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-        rotate_player(cub, -0.05f);
-    if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-        rotate_player(cub, 0.05f);
-    if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-        move_up_donw(cub, 'W');
-    if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-        move_up_donw(cub, 'S');
-    if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-        move_left_rigth(cub, 'A');
-    if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-        move_left_rigth(cub, 'D');
+//     cub->game->dir_x = cub->game->dir_x * cos(theta) - cub->game->dir_y * sin(theta);
+//     cub->game->dir_y = old_dir_x * sin(theta) + cub->game->dir_y * cos(theta);
+    
+//     cub->game->plane_x = cub->game->plane_x * cos(theta) - cub->game->plane_y * sin(theta);
+//     cub->game->plane_y = old_plane_x * sin(theta) + cub->game->plane_y * cos(theta);
+// }
+
+// // Simplified collision detection
+// int check_collision(t_cub *cub, float new_x, float new_y)
+// {
+//     float margin = 0.2f;
+    
+//     // Check the four corners around the player
+//     if ((int)(new_x - margin) < 0 || (int)(new_x + margin) >= cub->game->map_width ||
+//         (int)(new_y - margin) < 0 || (int)(new_y + margin) >= cub->game->map_height)
+//         return 1;
+        
+//     if (cub->game->map[(int)(new_y - margin)][(int)(new_x - margin)] == '1' ||
+//         cub->game->map[(int)(new_y - margin)][(int)(new_x + margin)] == '1' ||
+//         cub->game->map[(int)(new_y + margin)][(int)(new_x - margin)] == '1' ||
+//         cub->game->map[(int)(new_y + margin)][(int)(new_x + margin)] == '1')
+//         return 1;
+        
+//     return 0;
+// }
+
+// // void move_up_donw(t_cub *cub, char type)
+// // {
+// //     if (type == 'W')
+// //     {
+// //         // Calculate new position
+// //         float new_x = cub->game->xp_pos + cub->game->dir_x * 0.2f;
+// //         float new_y = cub->game->yp_pos + cub->game->dir_y * 0.2f;
+        
+// //         // Check collision BEFORE moving
+// //         if (!check_collision(cub, new_x * TILE, new_y * TILE))
+// //         {
+// //             // No collision - safe to move
+// //             cub->game->xp_pos = new_x;
+// //             cub->game->yp_pos = new_y;
+// //         }
+// //         // If there IS collision, don't move at all
+// //     }
+// //     else if (type == 'S')
+// //     {
+// //         float new_x = cub->game->xp_pos - cub->game->dir_x * 0.2f;
+// //         float new_y = cub->game->yp_pos - cub->game->dir_y * 0.2f;
+        
+// //         if (!check_collision(cub, new_x * TILE, new_y * TILE))
+// //         {
+// //             cub->game->xp_pos = new_x;
+// //             cub->game->yp_pos = new_y;
+// //         }
+// //     }
+// // }
+
+// void move_up_donw(t_cub *cub, char type)
+// {
+//     if (type == 'W')
+//     {
+//         float new_x = cub->game->xp_pos + cub->game->dir_x * 0.1f;
+//         float new_y = cub->game->yp_pos + cub->game->dir_y * 0.1f;
+        
+//         // Use the same collision check as move_left_right (without TILE multiplication)
+//         if (!check_collision(cub, new_x, new_y))
+//         {
+//             cub->game->xp_pos = new_x;
+//             cub->game->yp_pos = new_y;
+//         }
+//     }
+//     else if (type == 'S')
+//     {
+//         float new_x = cub->game->xp_pos - cub->game->dir_x * 0.1f;
+//         float new_y = cub->game->yp_pos - cub->game->dir_y * 0.1f;
+        
+//         if (!check_collision(cub, new_x, new_y))
+//         {
+//             cub->game->xp_pos = new_x;
+//             cub->game->yp_pos = new_y;
+//         }
+//     }
+// }
+
+// // void move_up_donw(t_cub *cub, char type)
+// // {
+// //     if (type == 'W')
+// //     {
+// //         cub->game->xp_pos += cub->game->dir_x * 0.2f;
+// //         cub->game->yp_pos += cub->game->dir_y * 0.2f;
+// //         // if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
+// //         if (!check_collision(cub, cub->game->xp_pos, cub->game->yp_pos))
+// //         {
+// //             printf("anuthinggg\n");
+// //             cub->game->xp_pos -= cub->game->dir_x * 0.2f;
+// //             cub->game->yp_pos -= cub->game->dir_y * 0.2f;
+// //         }
+// //     }
+// //     if (type == 'S')
+// //     {
+// //         cub->game->xp_pos -= cub->game->dir_x * 0.2f;
+// //         cub->game->yp_pos -= cub->game->dir_y * 0.2f;
+// //         if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
+// //         {
+// //             cub->game->xp_pos += cub->game->dir_x * 0.2f;
+// //             cub->game->yp_pos += cub->game->dir_y * 0.2f;
+// //         }   
+// //     }
+// // }
+
+// // void	move_left_right(t_cub *cub, char type)
+// // {
+// // 	if (type == 'A')
+// // 	{
+// // 		cub->game->xp_pos += cub->game->dir_y * 0.2f;
+// // 		cub->game->yp_pos -= cub->game->dir_x * 0.2f;
+// // 		if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
+// // 		{
+// // 			cub->game->xp_pos -= cub->game->dir_y * 0.2f;
+// // 			cub->game->yp_pos += cub->game->dir_x * 0.2f;
+// // 		}
+// // 	}
+// // 	if (type == 'D')
+// // 	{
+// // 		cub->game->xp_pos -= cub->game->dir_y * 0.2f; //we use cub->game->dir_y here because when we rotate the facing dir 90 digree the x component become y component 
+// // 		cub->game->yp_pos += cub->game->dir_x * 0.2f;
+// // 		if (cub->game->map[(int)cub->game->yp_pos][(int)cub->game->xp_pos] == '1')
+// // 		{
+// // 			cub->game->xp_pos += cub->game->dir_y * 0.2f;
+// // 			cub->game->yp_pos -= cub->game->dir_x * 0.2f;
+// // 		}
+// // 	}
+// // }
+
+// void move_left_right(t_cub *cub, char type)
+// {
+//     if (type == 'A')
+//     {
+//         float new_x = cub->game->xp_pos + cub->game->dir_y * 0.1f;  // Reduced from 0.2f
+//         float new_y = cub->game->yp_pos - cub->game->dir_x * 0.1f;
+        
+//         // Remove TILE multiplication to match move_up_down
+//         if (!check_collision(cub, new_x, new_y))
+//         {
+//             cub->game->xp_pos = new_x;
+//             cub->game->yp_pos = new_y;
+//         }
+//     }
+//     if (type == 'D')
+//     {
+//         float new_x = cub->game->xp_pos - cub->game->dir_y * 0.1f;
+//         float new_y = cub->game->yp_pos + cub->game->dir_x * 0.1f;
+        
+//         if (!check_collision(cub, new_x, new_y))
+//         {
+//             cub->game->xp_pos = new_x;
+//             cub->game->yp_pos = new_y;
+//         }
+//     }
+// }
+
+// void my_keyhook(mlx_key_data_t keydata, void *structs)
+// {
+//     t_cub *cub;
+    
+//     cub = (t_cub *)structs;
+//     if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+//         rotate_player(cub, -0.05f);
+//     if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+//         rotate_player(cub, 0.05f);
+//     if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+//         move_up_donw(cub, 'W');
+//     if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+//         move_up_donw(cub, 'S');
+//     if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+//         move_left_right(cub, 'A');
+//     if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+//         move_left_right(cub, 'D');
+//     if (cub->textures->pixel_ray)
+//         mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
+//     if (cub->textures->player)
+//         mlx_delete_image(cub->game->mlx, cub->textures->player);
+//     // player(cub->game, cub);
+//     ray(cub);
+// }
+
+void rotate_player(t_cub *cub, float angle)
+{
+    float old_dir_x = cub->game->dir_x;
+    float old_plane_x = cub->game->plane_x;
+    
+    float cos_angle = cos(angle);
+    float sin_angle = sin(angle);
+    
+    // Rotate direction vector
+    cub->game->dir_x = cub->game->dir_x * cos_angle - cub->game->dir_y * sin_angle;
+    cub->game->dir_y = old_dir_x * sin_angle + cub->game->dir_y * cos_angle;
+    
+    // Rotate camera plane
+    cub->game->plane_x = cub->game->plane_x * cos_angle - cub->game->plane_y * sin_angle;
+    cub->game->plane_y = old_plane_x * sin_angle + cub->game->plane_y * cos_angle;
+}
+
+int is_valid_position(t_cub *cub, float x, float y)
+{
+    int map_x = (int)x;
+    int map_y = (int)y;
+    
+    // Check boundaries
+    if (map_x < 0 || map_x >= cub->game->map_width || 
+        map_y < 0 || map_y >= cub->game->map_height)
+        return 0;
+    
+    // Check for walls
+    return (cub->game->map[map_y][map_x] != '1');
+}
+
+void move_player(t_cub *cub, float move_x, float move_y)
+{
+    float new_x = cub->game->xp_pos + move_x;
+    float new_y = cub->game->yp_pos + move_y;
+    
+    // Collision detection with small margin
+    float margin = 0.1f;
+    
+    // Try to move in x direction
+    if (is_valid_position(cub, new_x + (move_x > 0 ? margin : -margin), cub->game->yp_pos))
+        cub->game->xp_pos = new_x;
+    
+    // Try to move in y direction
+    if (is_valid_position(cub, cub->game->xp_pos, new_y + (move_y > 0 ? margin : -margin)))
+        cub->game->yp_pos = new_y;
+}
+
+void handle_movement_keys(t_cub *cub, mlx_key_data_t keydata)
+{
+    float move_speed = 0.1f;
+    float rot_speed = 0.05f;
+    
+    if (keydata.action != MLX_PRESS && keydata.action != MLX_REPEAT)
+        return;
+    
+    if (keydata.key == MLX_KEY_W)
+        move_player(cub, cub->game->dir_x * move_speed, cub->game->dir_y * move_speed);
+    else if (keydata.key == MLX_KEY_S)
+        move_player(cub, -cub->game->dir_x * move_speed, -cub->game->dir_y * move_speed);
+    else if (keydata.key == MLX_KEY_A)
+        move_player(cub, cub->game->dir_y * move_speed, -cub->game->dir_x * move_speed);
+    else if (keydata.key == MLX_KEY_D)
+        move_player(cub, -cub->game->dir_y * move_speed, cub->game->dir_x * move_speed);
+    else if (keydata.key == MLX_KEY_LEFT)
+        rotate_player(cub, -rot_speed);
+    else if (keydata.key == MLX_KEY_RIGHT)
+        rotate_player(cub, rot_speed);
+    else if (keydata.key == MLX_KEY_ESCAPE)
+        mlx_close_window(cub->game->mlx);
+}
+
+void my_keyhook_complete(mlx_key_data_t keydata, void *param)
+{
+    t_cub *cub = (t_cub *)param;
+    
+    handle_movement_keys(cub, keydata);
+    
+    // Re-render the scene
     if (cub->textures->pixel_ray)
         mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
-    if (cub->textures->player)
-        mlx_delete_image(cub->game->mlx, cub->textures->player);
-    // player(cub->game, cub);
+    
     ray(cub);
 }
