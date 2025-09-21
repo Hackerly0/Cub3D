@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/20 17:38:50 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/21 17:20:31 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,12 +204,15 @@
 
 void rotate_player(t_cub *cub, float angle)
 {
-    float old_dir_x = cub->game->dir_x;
-    float old_plane_x = cub->game->plane_x;
-    
-    float cos_angle = cos(angle);
-    float sin_angle = sin(angle);
-    
+	float	old_dir_x;
+	float	old_plane_x;
+	float	cos_angle;
+	float	sin_angle;
+
+	old_dir_x = cub->game->dir_x;
+	old_plane_x = cub->game->plane_x;
+	cos_angle = cos(angle);
+	sin_angle = sin(angle);
     // Rotate direction vector
     cub->game->dir_x = cub->game->dir_x * cos_angle - cub->game->dir_y * sin_angle;
     cub->game->dir_y = old_dir_x * sin_angle + cub->game->dir_y * cos_angle;
@@ -219,70 +222,70 @@ void rotate_player(t_cub *cub, float angle)
     cub->game->plane_y = old_plane_x * sin_angle + cub->game->plane_y * cos_angle;
 }
 
-int is_valid_position(t_cub *cub, float x, float y)
+int is_valid_position(t_cub *cub, float map_x, float map_y)
 {
-    int map_x = (int)x;
-    int map_y = (int)y;
-    
     // Check boundaries
     if (map_x < 0 || map_x >= cub->game->map_width || 
         map_y < 0 || map_y >= cub->game->map_height)
         return 0;
     
     // Check for walls
-    return (cub->game->map[map_y][map_x] != '1');
+    return (cub->game->map[(int)map_y][(int)map_x] != '1');
 }
 
-void move_player(t_cub *cub, float move_x, float move_y)
+void	move_player(t_cub *cub, float move_x, float move_y)
 {
-    float new_x = cub->game->xp_pos + move_x;
-    float new_y = cub->game->yp_pos + move_y;
-    
-    // Collision detection with small margin
-    float margin = 0.1f;
-    
-    // Try to move in x direction
-    if (is_valid_position(cub, new_x + (move_x > 0 ? margin : -margin), cub->game->yp_pos))
-        cub->game->xp_pos = new_x;
-    
-    // Try to move in y direction
-    if (is_valid_position(cub, cub->game->xp_pos, new_y + (move_y > 0 ? margin : -margin)))
-        cub->game->yp_pos = new_y;
+	float	new_x;
+	float	new_y;
+	float	margin;
+	float	check_x;
+	float	check_y;
+
+	new_x = cub->game->xp_pos + move_x;
+	new_y = cub->game->yp_pos + move_y;
+	margin = 0.1f;
+	if (move_x > 0)
+		check_x = new_x + margin;
+	else
+		check_x = new_x - margin;
+	if (is_valid_position(cub, check_x, cub->game->yp_pos))
+		cub->game->xp_pos = new_x;
+	if (move_y > 0)
+		check_y = new_y + margin;
+	else
+		check_y = new_y - margin;
+	if (is_valid_position(cub, cub->game->xp_pos, check_y))
+		cub->game->yp_pos = new_y;
 }
+
 
 void handle_movement_keys(t_cub *cub, mlx_key_data_t keydata)
 {
-    float move_speed = 0.1f;
-    float rot_speed = 0.05f;
-    
     if (keydata.action != MLX_PRESS && keydata.action != MLX_REPEAT)
         return;
-    
     if (keydata.key == MLX_KEY_W)
-        move_player(cub, cub->game->dir_x * move_speed, cub->game->dir_y * move_speed);
+        move_player(cub, cub->game->dir_x * MOVE_SPEED, cub->game->dir_y * MOVE_SPEED);
     else if (keydata.key == MLX_KEY_S)
-        move_player(cub, -cub->game->dir_x * move_speed, -cub->game->dir_y * move_speed);
+        move_player(cub, -cub->game->dir_x * MOVE_SPEED, -cub->game->dir_y * MOVE_SPEED);
     else if (keydata.key == MLX_KEY_A)
-        move_player(cub, cub->game->dir_y * move_speed, -cub->game->dir_x * move_speed);
+        move_player(cub, cub->game->dir_y * MOVE_SPEED, -cub->game->dir_x * MOVE_SPEED);
     else if (keydata.key == MLX_KEY_D)
-        move_player(cub, -cub->game->dir_y * move_speed, cub->game->dir_x * move_speed);
+        move_player(cub, -cub->game->dir_y * MOVE_SPEED, cub->game->dir_x * MOVE_SPEED);
     else if (keydata.key == MLX_KEY_LEFT)
-        rotate_player(cub, -rot_speed);
+        rotate_player(cub, -ROT_SPEED);
     else if (keydata.key == MLX_KEY_RIGHT)
-        rotate_player(cub, rot_speed);
+        rotate_player(cub, ROT_SPEED);
     else if (keydata.key == MLX_KEY_ESCAPE)
         mlx_close_window(cub->game->mlx);
 }
 
-void my_keyhook_complete(mlx_key_data_t keydata, void *param)
+void	my_keyhook_complete(mlx_key_data_t keydata, void *param)
 {
-    t_cub *cub = (t_cub *)param;
-    
-    handle_movement_keys(cub, keydata);
-    
-    // Re-render the scene
-    if (cub->textures->pixel_ray)
-        mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
-    
-    ray(cub);
+	t_cub	*cub;
+
+	cub = (t_cub *)param;
+	handle_movement_keys(cub, keydata);
+	if (cub->textures->pixel_ray)
+		mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
+	ray(cub);
 }

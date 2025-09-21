@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/20 17:56:54 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/21 17:15:59 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #define HEIGHT 600
 #define TILE 64
 #define P_SIZE 10
+#define MOVE_SPEED 0.1f
+#define ROT_SPEED 0.05f
 
 #include "../libft/libft.h"
 #include <math.h>
@@ -47,6 +49,17 @@ typedef struct s_rays
     float   tex_step;   // step for texture mapping
     float   tex_pos;    // current texture position
 }   t_rays;
+
+typedef struct s_column
+{
+	int			x;
+	int			wall_height;
+	int			start;
+	int			end;
+	float		wall_x;
+	int			tex_x;
+	int			tex_y;
+}	t_column;
 
 typedef struct  s_colors
 {
@@ -97,6 +110,7 @@ typedef struct s_cub
     t_textures *textures;
     t_colors *colors;
     t_dir *dir;
+    // t_column	*col;
 } t_cub;
 
 
@@ -149,5 +163,13 @@ void move_player(t_cub *cub, float move_x, float move_y);
 void my_keyhook_complete(mlx_key_data_t keydata, void *param);
 void handle_movement_keys(t_cub *cub, mlx_key_data_t keydata);
 void move_player(t_cub *cub, float move_x, float move_y);
+uint32_t	get_pixel_color(mlx_texture_t *tex, int x, int y);
+mlx_texture_t	*get_wall_texture(t_cub *cub, int side, int step_x, int step_y);
+void	get_texture_coords(t_cub *cub, mlx_texture_t *tex, float *wall_x, int *tex_x);
+float	get_distance(t_cub *cub);
+void	cast_ray(t_cub *cub, int x);
+int	ray(t_cub *cub);
+void	draw_column(t_cub *cub, int x, float dist);
+
 
 #endif
