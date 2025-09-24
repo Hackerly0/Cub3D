@@ -4,12 +4,13 @@
 /* Create a copy of the map for flood fill (so we don't modify original) */
 static char **create_map_copy(t_vars *v)
 {
-    char **copy;
-    int i, j;
+    char    **copy;
+    int     i;
+    int     j;
     
     if (!v || !v->map)
         return (NULL);
-        
+
     copy = malloc(sizeof(char *) * (v->height + 1));
     if (!copy)
         return (NULL);

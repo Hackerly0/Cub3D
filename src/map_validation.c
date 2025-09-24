@@ -7,28 +7,6 @@ int is_valid_map_char(char c)
             c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-// int validate_map_chars(t_vars *v)
-// {
-//     int y, x;
-    
-//     y = 0;
-//     while (y < v->height)
-//     {
-//         x = 0;
-//         while (x < v->width)
-//         {
-//             if (!is_valid_map_char(v->map[y][x]))
-//             {
-//                 printf("Error\nInvalid character '%c' in map\n", v->map[y][x]);
-//                 return (1);
-//             }
-//             x++;
-//         }
-//         y++;
-//     }
-//     return (0);
-// }
-
 int is_surrounded_by_walls(t_vars *v, int y, int x)
 {
     // Check if a '0' (floor) is properly surrounded by walls or other floors

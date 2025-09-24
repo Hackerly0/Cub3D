@@ -25,7 +25,7 @@ int validate_and_extract_player(t_vars *v)
         }
         y++;
     }
-    
+
     if (player_count != 1)
     {
         printf("Error\nMap must contain exactly one player (N/S/E/W)\n");
