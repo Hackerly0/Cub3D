@@ -148,6 +148,9 @@ int parse_cub(const char *path, t_config *cfg)
     if (warp_flood_fill(&cfg->vars)) 
         return 1;
 
+    if (map_validation(&cfg->vars))
+        return 1;
+
     printf("✓ All validations passed!\n");
     printf("✓ Player at (%d, %d) facing '%c'\n", 
            (int)cfg->vars.player.x, (int)cfg->vars.player.y, cfg->vars.player.dir);
