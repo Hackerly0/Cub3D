@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/21 15:44:12 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:11:38 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,9 @@ void set_colors(t_cub *cub)
 	cub->colors->floor_col = rgb_to_hex(cub->colors->floor[0], cub->colors->floor[1], cub->colors->floor[2]);
 }
 
+
+
+
 int main(void)
 {
     t_cub *cub;
@@ -264,7 +267,8 @@ int main(void)
         return (ft_free_struct(cub, 1));
     if (load_textures(cub))
         return (ft_free_struct(cub, 1));
-    mlx_key_hook(cub->game->mlx, my_keyhook_complete, cub);
+    mlx_loop_hook(cub->game->mlx, keyhook, cub);
+    mlx_cursor_hook(cub->game->mlx, cursor, cub);
     if (ray(cub))
         return (ft_free_struct(cub, 1));
     mlx_loop(cub->game->mlx);

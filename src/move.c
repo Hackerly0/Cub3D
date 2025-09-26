@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/21 17:20:31 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:11:45 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,34 +257,50 @@ void	move_player(t_cub *cub, float move_x, float move_y)
 	if (is_valid_position(cub, cub->game->xp_pos, check_y))
 		cub->game->yp_pos = new_y;
 }
-
-
-void handle_movement_keys(t_cub *cub, mlx_key_data_t keydata)
+void	cursor(double xpos, double ypos, void *param)
 {
-    if (keydata.action != MLX_PRESS && keydata.action != MLX_REPEAT)
-        return;
-    if (keydata.key == MLX_KEY_W)
+	t_cub	*cub;
+    double delta_x;
+	static double last_x = -1;
+    
+	cub = (t_cub *)param;
+    (void)ypos;
+	// Example: rotate player depending on mouse movement
+
+	if (last_x < 0)
+		last_x = xpos;
+
+	delta_x = xpos - last_x;
+
+	if (delta_x != 0)
+		rotate_player(cub, delta_x * 0.002f); // sensitivity factor
+	last_x = xpos;
+}
+
+void handle_movement_keys(t_cub *cub)
+{
+    if (mlx_is_key_down(cub->game->mlx, MLX_KEY_W))
         move_player(cub, cub->game->dir_x * MOVE_SPEED, cub->game->dir_y * MOVE_SPEED);
-    else if (keydata.key == MLX_KEY_S)
+    if (mlx_is_key_down(cub->game->mlx, MLX_KEY_S))
         move_player(cub, -cub->game->dir_x * MOVE_SPEED, -cub->game->dir_y * MOVE_SPEED);
-    else if (keydata.key == MLX_KEY_A)
+    if (mlx_is_key_down(cub->game->mlx, MLX_KEY_A))
         move_player(cub, cub->game->dir_y * MOVE_SPEED, -cub->game->dir_x * MOVE_SPEED);
-    else if (keydata.key == MLX_KEY_D)
+    if (mlx_is_key_down(cub->game->mlx, MLX_KEY_D))
         move_player(cub, -cub->game->dir_y * MOVE_SPEED, cub->game->dir_x * MOVE_SPEED);
-    else if (keydata.key == MLX_KEY_LEFT)
+    if (mlx_is_key_down(cub->game->mlx, MLX_KEY_LEFT))
         rotate_player(cub, -ROT_SPEED);
-    else if (keydata.key == MLX_KEY_RIGHT)
+    if (mlx_is_key_down(cub->game->mlx, MLX_KEY_RIGHT))
         rotate_player(cub, ROT_SPEED);
-    else if (keydata.key == MLX_KEY_ESCAPE)
+    if (mlx_is_key_down(cub->game->mlx, MLX_KEY_ESCAPE))
         mlx_close_window(cub->game->mlx);
 }
 
-void	my_keyhook_complete(mlx_key_data_t keydata, void *param)
+void	keyhook(void *param)
 {
 	t_cub	*cub;
 
 	cub = (t_cub *)param;
-	handle_movement_keys(cub, keydata);
+	handle_movement_keys(cub);
 	if (cub->textures->pixel_ray)
 		mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
 	ray(cub);
