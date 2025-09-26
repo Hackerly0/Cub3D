@@ -1,5 +1,4 @@
-#include "cub3d.h"   // your structs + parse_cub prototype
-#include <stdio.h>   // printf
+#include <cub3d.h>
 
 int main(int argc, char **argv)
 {

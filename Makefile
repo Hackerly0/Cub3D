@@ -6,7 +6,7 @@
 #    By: $(USER)                                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 20:40:00 by you               #+#    #+#              #
-#    Updated: 2025/09/23 20:40:00 by you              ###   ########.fr        #
+#    Updated: 2025/09/26 20:40:00 by you              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,15 @@ GNL_DIR = GNL
 # Source files
 SRCS    = $(SRC_DIR)/main.c \
           $(SRC_DIR)/parse_cub.c \
-          $(SRC_DIR)/pad_map.c \
-          $(SRC_DIR)/parse.c \
-          $(SRC_DIR)/floodfill.c \
-          $(SRC_DIR)/header_validation.c \
-          $(SRC_DIR)/map_validation.c \
-          $(SRC_DIR)/player_validation.c \
+          $(SRC_DIR)/Parsing/map_builder.c \
+          $(SRC_DIR)/Parsing/pad_map.c \
+          $(SRC_DIR)/Parsing/parse_elements.c \
+          $(SRC_DIR)/Utility/memory_utils.c \
+          $(SRC_DIR)/Utility/utils.c \
+          $(SRC_DIR)/Validation/flood_validation.c \
+          $(SRC_DIR)/Validation/header_validation.c \
+          $(SRC_DIR)/Validation/map_validation.c \
+          $(SRC_DIR)/Validation/player_validation.c \
           $(GNL_DIR)/get_next_line.c \
           $(GNL_DIR)/get_next_line_utils.c
 

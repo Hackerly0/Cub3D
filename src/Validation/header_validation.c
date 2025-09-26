@@ -1,5 +1,4 @@
-/* Header validation - ensure all required elements are present */
-#include "../include/cub3d.h"
+#include <cub3d.h>
 
 int validate_textures(t_config *cfg)
 {

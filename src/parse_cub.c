@@ -1,11 +1,5 @@
-// Updated parse_cub.c with complete validation
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include <cub3d.h>
 #include "../GNL/get_next_line.h"
-#include "../include/cub3d.h"
 
 static int is_blank(const char *s)
 {
@@ -143,15 +137,15 @@ int parse_cub(const char *path, t_config *cfg)
     }
 
     // 1. Basic character validation
-    if (validate_map_chars(&cfg->vars)) 
+    if (validate_chars(&cfg->vars)) 
         return 1;
 
     // 2. Extract player (this replaces player char with '0')
-    if (validate_and_extract_player_enhanced(&cfg->vars)) 
+    if (validate_and_extract_player(&cfg->vars)) 
         return 1;
 
     // 3. Flood fill validation (the main validation!)
-    if (validate_map_with_floodfill(&cfg->vars)) 
+    if (warp_flood_fill(&cfg->vars)) 
         return 1;
 
     printf("✓ All validations passed!\n");
@@ -160,32 +154,3 @@ int parse_cub(const char *path, t_config *cfg)
 
     return 0;
 }
-
-/* Basic character validation - allows only valid map characters */
-int validate_map_chars(t_vars *v)
-{
-    int y, x;
-    
-    if (!v || !v->map)
-        return (1);
-    
-    y = 0;
-    while (y < v->height)
-    {
-        x = 0;
-        while (x < v->width)
-        {
-            char c = v->map[y][x];
-            if (c != '0' && c != '1' && c != ' ' && 
-                c != 'N' && c != 'S' && c != 'E' && c != 'W')
-            {
-                printf("Error\nInvalid character '%c' at position (%d, %d)\n", c, x, y);
-                return (1);
-            }
-            x++;
-        }
-        y++;
-    }
-    return (0);
-}
-
