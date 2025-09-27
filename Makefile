@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -Iinclude -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra  -Iinclude 
 
 SRCS = main.c raycasting.c move.c minimap.c textures.c draw.c
 SRCS := $(addprefix src/, $(SRCS))

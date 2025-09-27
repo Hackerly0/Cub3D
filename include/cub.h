@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/26 12:52:08 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:47:34 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #define P_SIZE 10
 #define MOVE_SPEED 0.1f
 #define ROT_SPEED 0.05f
+#define MINIMAP_SCALE 0.2f 
 
 #include "../libft/libft.h"
 #include <math.h>
@@ -82,6 +83,7 @@ typedef struct s_textures
     mlx_image_t* pixel_ray;
     mlx_image_t* player;
     mlx_image_t* wall;
+    mlx_image_t* space;
     mlx_texture_t *north;
     mlx_texture_t *south;
     mlx_texture_t *east;
@@ -150,6 +152,7 @@ void keyhook(void *param);
 void    rotate_player(t_cub *cub, float theta);
 void    move_up_donw(t_cub *cub, char type);
 void    move_left_right(t_cub *cub, char type);
+void	cursor(double xpos, double ypos, void *param);
 
 // Initialization functions
 void    facing_dir(t_cub *cub);
@@ -170,5 +173,8 @@ void	cast_ray(t_cub *cub, int x);
 int	ray(t_cub *cub);
 void	draw_column(t_cub *cub, int x, float dist);
 
+
+//minimap
+int    draw_minimap(t_cub *cub);
 
 #endif

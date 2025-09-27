@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/26 13:11:45 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:18:52 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,8 +300,13 @@ void	keyhook(void *param)
 	t_cub	*cub;
 
 	cub = (t_cub *)param;
+	if (!cub->textures->pixel_ray)
+	{
+		cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+	}
 	handle_movement_keys(cub);
-	if (cub->textures->pixel_ray)
-		mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
 	ray(cub);
+	// draw_minimap(cub);
+    mlx_image_to_window(cub->game->mlx, cub->textures->wall, 0, 0);
+	mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
 }

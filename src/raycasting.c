@@ -97,7 +97,8 @@ int	ray(t_cub *cub)
 	int	x;
 
 	x = 0;
-	cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+	if (!cub->textures->pixel_ray)
+		cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
 	if (!cub->textures->pixel_ray)
 		return (1);
 	while (x < WIDTH)
@@ -105,7 +106,7 @@ int	ray(t_cub *cub)
 		cast_ray(cub, x);
 		x++;
 	}
-	mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
+	// mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
 	return (0);
 }
 

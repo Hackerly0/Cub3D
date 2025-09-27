@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:02:47 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/26 12:29:00 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/27 12:11:50 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ mlx_texture_t	*get_wall_texture(t_cub *cub, int side, int step_x, int step_y)
 void	get_texture_coords(t_cub *cub, mlx_texture_t *tex,
 	float *wall_x, int *tex_x)
 {
+	if (!tex)
+		return ;
 	if (cub->rays->side == 0)
 		*wall_x = cub->game->yp_pos
 			+ get_distance(cub) * cub->rays->ray_y;
