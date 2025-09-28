@@ -97,10 +97,10 @@ int	ray(t_cub *cub)
 	int	x;
 
 	x = 0;
-	if (!cub->textures->pixel_ray)
-		cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
-	if (!cub->textures->pixel_ray)
-		return (1);
+	// if (!cub->textures->pixel_ray)
+	// 	cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+	// if (!cub->textures->pixel_ray)
+	// 	return (1);
 	while (x < WIDTH)
 	{
 		cast_ray(cub, x);

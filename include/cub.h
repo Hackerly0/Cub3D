@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/27 17:47:34 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/28 16:06:52 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
-#define WIDTH 1200 
-#define HEIGHT 600
+// #define WIDTH 1200 
+// #define HEIGHT 600
+#define WIDTH 1920
+#define HEIGHT 1080
 #define TILE 64
 #define P_SIZE 10
 #define MOVE_SPEED 0.1f
@@ -176,5 +178,5 @@ void	draw_column(t_cub *cub, int x, float dist);
 
 //minimap
 int    draw_minimap(t_cub *cub);
-
+int    player_minimap(t_game *game, t_cub *cub);
 #endif

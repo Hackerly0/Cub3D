@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:53:15 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/27 17:39:01 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/28 16:15:52 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,23 @@ int    player_minimap(t_game *game, t_cub *cub)
     int px;
     int py;
 
-    cub->textures->player = mlx_new_image(game->mlx, P_SIZE, P_SIZE);
-    if (!cub->textures->player)
-        return (1);
+    // cub->textures->player = mlx_new_image(game->mlx, P_SIZE * MINIMAP_SCALE, P_SIZE * MINIMAP_SCALE);
+    // if (!cub->textures->player)
+    //     return (1);
     i = 0;
     while (i < P_SIZE)
     {
         j = 0;
         while (j < P_SIZE)
         {
-            mlx_put_pixel(cub->textures->player, j, i, 0x00FF00FF);
+            mlx_put_pixel(cub->textures->player, j * MINIMAP_SCALE, i * MINIMAP_SCALE, 0x00FF00FF);
             j++;
         }
         i++;
     }
     px = (int)(game->xp_pos * TILE * MINIMAP_SCALE);
     py = (int)(game->yp_pos * TILE * MINIMAP_SCALE);
-    mlx_image_to_window(game->mlx, cub->textures->player, px, py);
+    // mlx_image_to_window(game->mlx, cub->textures->player, px, py);
     return (0);
 }
 
@@ -95,11 +95,11 @@ int draw_minimap(t_cub *cub)
     int x;
     int y;
 
-    if (!cub->textures->wall)
-        cub->textures->wall = mlx_new_image(cub->game->mlx, 
-            cub->game->map_width * TILE * MINIMAP_SCALE, cub->game->map_height * TILE * MINIMAP_SCALE);
-    else
-        return 0;
+    // if (!cub->textures->wall)
+    //     cub->textures->wall = mlx_new_image(cub->game->mlx, 
+    //         cub->game->map_width * TILE * MINIMAP_SCALE, cub->game->map_height * TILE * MINIMAP_SCALE);
+    // else
+    //     return 0;
     i = 0;
     while (i < cub->game->map_height)
     {

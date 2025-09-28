@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/27 17:34:04 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/28 18:05:57 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,8 @@ void free_textures(t_cub *cub)
             mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
         if (cub->textures->player)
             mlx_delete_image(cub->game->mlx, cub->textures->player);
+        if (cub->textures->wall) 
+            mlx_delete_image(cub->game->mlx, cub->textures->wall);
     }
 }
 
@@ -244,6 +246,21 @@ void set_colors(t_cub *cub)
 	cub->colors->floor_col = rgb_to_hex(cub->colors->floor[0], cub->colors->floor[1], cub->colors->floor[2]);
 }
 
+int init_image(t_cub *cub)
+{
+    cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+	if (!cub->textures->pixel_ray)
+		return (1);
+    cub->textures->wall = mlx_new_image(cub->game->mlx, 
+            cub->game->map_width * TILE * MINIMAP_SCALE, cub->game->map_height * TILE * MINIMAP_SCALE);
+    if (!cub->textures->wall)
+		return (1);
+    cub->textures->player = mlx_new_image(cub->game->mlx, P_SIZE * MINIMAP_SCALE, P_SIZE * MINIMAP_SCALE);
+    if (!cub->textures->player)
+        return (1);
+    return 0;
+}
+
 int main(void)
 {
     t_cub *cub;
@@ -264,11 +281,16 @@ int main(void)
         return (ft_free_struct(cub, 1));
     if (load_textures(cub))
         return (ft_free_struct(cub, 1));
+    init_image(cub);
+    draw_minimap(cub);
+
+	mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
+    mlx_image_to_window(cub->game->mlx, cub->textures->wall, 0, 0);
     mlx_loop_hook(cub->game->mlx, keyhook, cub);
     mlx_cursor_hook(cub->game->mlx, cursor, cub);
-    draw_minimap(cub);
+    // mlx_image_to_window(cub->game->mlx, cub->textures->player, (int)(cub->game->xp_pos * TILE * MINIMAP_SCALE), (int)(cub->game->yp_pos * TILE * MINIMAP_SCALE));
     if (ray(cub))
-        return (ft_free_struct(cub, 1));
+    return (ft_free_struct(cub, 1));
     mlx_loop(cub->game->mlx);
     return (ft_free_struct(cub, 0));
 }
