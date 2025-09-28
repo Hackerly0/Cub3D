@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/28 16:06:52 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/28 23:15:17 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 #define WIDTH 1920
 #define HEIGHT 1080
 #define TILE 64
-#define P_SIZE 10
+#define P_SIZE 20
 #define MOVE_SPEED 0.1f
 #define ROT_SPEED 0.05f
 #define MINIMAP_SCALE 0.2f 
+
 
 #include "../libft/libft.h"
 #include <math.h>
@@ -105,6 +106,7 @@ typedef struct s_game
 	double			yp_pos;    //          y + 0.5
 	int				map_height;//       4
 	int				map_width; //        3
+    float minimap_scale;
 }   t_game;
 
 typedef struct s_cub
@@ -175,8 +177,8 @@ void	cast_ray(t_cub *cub, int x);
 int	ray(t_cub *cub);
 void	draw_column(t_cub *cub, int x, float dist);
 
-
+int	init_image(t_cub *cub);
 //minimap
-int    draw_minimap(t_cub *cub);
-int    player_minimap(t_game *game, t_cub *cub);
+int    draw_minimap(t_cub *cub, float minimap_scale);
+int    player_minimap(t_cub *cub, float minimap_scale);
 #endif

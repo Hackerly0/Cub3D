@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/28 18:14:25 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/28 23:11:04 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,21 +295,20 @@ void handle_movement_keys(t_cub *cub)
         mlx_close_window(cub->game->mlx);
 }
 
-void	keyhook(void *param)
-{
-	t_cub	*cub;
-
-	cub = (t_cub *)param;
-	if (!cub->textures->pixel_ray)
-	{
-		cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
-	}
-	handle_movement_keys(cub);
-	ray(cub);
-	player_minimap(cub->game, cub);
-	// draw_minimap(cub);
-	    mlx_image_to_window(cub->game->mlx, cub->textures->player, (int)(cub->game->xp_pos * TILE * MINIMAP_SCALE), (int)(cub->game->yp_pos * TILE * MINIMAP_SCALE));
-
-    // mlx_image_to_window(cub->game->mlx, cub->textures->wall, 0, 0);
-	// mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
-}
+// void keyhook(void *param)
+// {
+//     t_cub *cub;
+//     cub = (t_cub *)param;
+    
+//     if (!cub->textures->pixel_ray)
+//         cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+//     handle_movement_keys(cub);
+//     ray(cub);
+//     if (cub->textures->player && cub->textures->player->instances)
+//     {
+//         cub->textures->player->instances[0].x = 
+//             (int)(cub->game->xp_pos * TILE * MINIMAP_SCALE) - (P_SIZE * MINIMAP_SCALE)/2;
+//         cub->textures->player->instances[0].y = 
+//             (int)(cub->game->yp_pos * TILE * MINIMAP_SCALE) - (P_SIZE * MINIMAP_SCALE)/2;
+//     }
+// }
