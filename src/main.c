@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/28 23:34:18 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:47:35 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,166 +18,13 @@ char *sample_map[] = {
     "10110000111000000100001", 
     "10010000000000000100001",
     "10000000001000000000001",
-    "10000N00000000000000001", // Player facing North
+    "10000E0000D000000000001", // Player facing North
     "10000000001000000100001",
-    "10110000111000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
-    "10010000000000000100001",
+    "101100001D1000000100001",
+    "100D0000000000000D00001",
     "10010000000000000100001",
     "10010000000000000100001",
     "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-    // "11111111111111111111111",
-
     NULL
 };
 
@@ -239,6 +86,7 @@ void init_map_from_sample(t_game *g, t_cub *cub)
     cub->dir->south_path = "./textures/wall_1.png";
     cub->dir->east_path  = "./textures/bluestone.png";
     cub->dir->west_path  = "./textures/eagle.png";
+    cub->dir->door_path  = "./textures/door.png";
 }
 
 void facing_dir_n_s(t_cub *cub)
@@ -294,6 +142,7 @@ void    init_struct_element(t_cub *cub)
     cub->textures->south = NULL;
     cub->textures->east = NULL;
     cub->textures->west = NULL;
+    cub->textures->door = NULL;
 }
 
 int struct_init(t_cub *cub)
@@ -335,6 +184,8 @@ void free_textures(t_cub *cub)
             mlx_delete_texture(cub->textures->east);
         if (cub->textures->west)
             mlx_delete_texture(cub->textures->west);
+        if (cub->textures->door)
+            mlx_delete_texture(cub->textures->door);
         if (cub->textures->pixel_ray)
             mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
         if (cub->textures->player)
@@ -343,12 +194,30 @@ void free_textures(t_cub *cub)
             mlx_delete_image(cub->game->mlx, cub->textures->wall);
     }
 }
+void free_door_states(t_game *game)
+{
+    int i;
+    
+    if (game && game->door_state)
+    {
+        i = 0;
+        while (i < game->map_height)
+        {
+            if (game->door_state[i])
+                free(game->door_state[i]);
+            i++;
+        }
+        free(game->door_state);
+        game->door_state = NULL;
+    }
+}
 
 int ft_free_struct(t_cub *cub, int type)
 {
     if (!cub)
         return (type);
     free_textures(cub);
+    free_door_states(cub->game);
     free_map(cub->game);
     if (cub->game && cub->game->mlx)
         mlx_terminate(cub->game->mlx);
@@ -372,8 +241,9 @@ int load_textures(t_cub *cub)
     cub->textures->south = mlx_load_png(cub->dir->south_path);
     cub->textures->east  = mlx_load_png(cub->dir->east_path);
     cub->textures->west  = mlx_load_png(cub->dir->west_path);
-    if (!cub->textures->north || !cub->textures->south || 
-        !cub->textures->east || !cub->textures->west)
+    cub->textures->door  = mlx_load_png(cub->dir->door_path);
+    if (!cub->textures->north || !cub->textures->south ||
+        !cub->textures->east || !cub->textures->west || !cub->textures->door)
     {
         printf("Error: Failed to load one or more textures\n");
         return (ft_free_struct(cub, 1));
@@ -403,13 +273,17 @@ void set_colors(t_cub *cub)
 
 int init_image(t_cub *cub)
 {
+    int minimap_width;
+    int minimap_height;
+
+    minimap_height = 200;
+    minimap_width = 200;
     cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
 	if (!cub->textures->pixel_ray)
 		return (1);
-    cub->textures->wall = mlx_new_image(cub->game->mlx, 
-            cub->game->map_width * TILE * MINIMAP_SCALE, cub->game->map_height * TILE * MINIMAP_SCALE);
+   cub->textures->wall = mlx_new_image(cub->game->mlx, minimap_width, minimap_height);
     if (!cub->textures->wall)
-		return (1);
+        return (1);
     cub->textures->player = mlx_new_image(cub->game->mlx, P_SIZE * MINIMAP_SCALE, P_SIZE * MINIMAP_SCALE);
     if (!cub->textures->player)
         return (1);
@@ -417,61 +291,19 @@ int init_image(t_cub *cub)
 }
 
 
-// int main(void)
-// {
-//     t_cub *cub;
-    
-//     cub = malloc(sizeof(t_cub));
-//     if (!cub)
-//         return (1);
-//     if (struct_init(cub))
-//         return (ft_free_struct(cub, 1));
-//     init_map_from_sample(cub->game, cub);
-//     if (!cub->game->map)
-//         return (ft_free_struct(cub, 1));    
-//     facing_dir_n_s(cub);
-//     facing_dir_e_w(cub);
-//     set_colors(cub);
-//     cub->game->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
-//     if (!cub->game->mlx)
-//         return (ft_free_struct(cub, 1));
-//     if (load_textures(cub))
-//         return (ft_free_struct(cub, 1));
-//     init_image(cub);
-//     draw_minimap(cub);
-//     player_minimap(cub);
-//     mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
-//     mlx_image_to_window(cub->game->mlx, cub->textures->wall, 0, 0);
-//     mlx_image_to_window(cub->game->mlx, cub->textures->player, 
-//                        (int)(cub->game->xp_pos * TILE * MINIMAP_SCALE) - (P_SIZE * MINIMAP_SCALE)/2, 
-//                        (int)(cub->game->yp_pos * TILE * MINIMAP_SCALE) - (P_SIZE * MINIMAP_SCALE)/2);
-//     mlx_loop_hook(cub->game->mlx, keyhook, cub);
-//     mlx_cursor_hook(cub->game->mlx, cursor, cub);
-    
-//     if (ray(cub))
-//         return (ft_free_struct(cub, 1));
-//     mlx_loop(cub->game->mlx);
-//     return (ft_free_struct(cub, 0));
-// }
-float calculate_minimap_scale(t_cub *cub);
-int init_image_adaptive(t_cub *cub, float minimap_scale);
 int main(void)
 {
     t_cub *cub;
-    float minimap_scale;
-    
+
     cub = malloc(sizeof(t_cub));
     if (!cub)
         return (1);
     if (struct_init(cub))
         return (ft_free_struct(cub, 1));
     init_map_from_sample(cub->game, cub);
+    init_door_states(cub->game);  // Add this line
     if (!cub->game->map)
-        return (ft_free_struct(cub, 1));
-        
-    minimap_scale = calculate_minimap_scale(cub);
-    cub->game->minimap_scale = minimap_scale;
-    
+        return (ft_free_struct(cub, 1));    
     facing_dir_n_s(cub);
     facing_dir_e_w(cub);
     set_colors(cub);
@@ -480,23 +312,17 @@ int main(void)
         return (ft_free_struct(cub, 1));
     if (load_textures(cub))
         return (ft_free_struct(cub, 1));
-        
-    if (init_image_adaptive(cub, minimap_scale))
-        return (ft_free_struct(cub, 1));
-        
-    draw_minimap(cub, minimap_scale);
-    player_minimap(cub, minimap_scale);
-    
+    init_image(cub);
+    chosse_scale(cub);
+    draw_minimap(cub);
+    player_minimap(cub);
     mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
     mlx_image_to_window(cub->game->mlx, cub->textures->wall, 0, 0);
-    
-    int player_x = (int)(cub->game->xp_pos * TILE * minimap_scale) - (P_SIZE * minimap_scale)/2;
-    int player_y = (int)(cub->game->yp_pos * TILE * minimap_scale) - (P_SIZE * minimap_scale)/2;
-    mlx_image_to_window(cub->game->mlx, cub->textures->player, player_x, player_y);
-    
+    mlx_image_to_window(cub->game->mlx, cub->textures->player, 
+                       (int)(cub->game->xp_pos * cub->game->minimap_scale) - (P_SIZE * cub->game->minimap_scale)/2, 
+                       (int)(cub->game->yp_pos * cub->game->minimap_scale) - (P_SIZE * cub->game->minimap_scale)/2);
     mlx_loop_hook(cub->game->mlx, keyhook, cub);
     mlx_cursor_hook(cub->game->mlx, cursor, cub);
-    
     if (ray(cub))
         return (ft_free_struct(cub, 1));
     mlx_loop(cub->game->mlx);

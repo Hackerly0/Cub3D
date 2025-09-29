@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 16:23:50 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/21 17:03:38 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:41:35 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,33 @@ void	draw_ceiling_floor(t_cub *cub, t_column col)
 	}
 }
 
+
 void	draw_wall_texture(t_cub *cub, mlx_texture_t *tex, t_column *col)
 {
-	uint32_t	color;
 	float		tex_step;
 	float		tex_pos;
 	int			y;
-
+	int			tex_y;
+	uint32_t	color;
+	
+	if (!tex)
+		return ;
 	get_texture_coords(cub, tex, &col->wall_x, &col->tex_x);
 	tex_step = (float)tex->height / col->wall_height;
 	tex_pos = (col->start - HEIGHT / 2 + col->wall_height / 2) * tex_step;
 	y = col->start;
 	while (y < col->end)
 	{
-		col->tex_y = (int)tex_pos & (tex->height - 1);
-		color = get_pixel_color(tex, col->tex_x, col->tex_y);
+		tex_y = (int)tex_pos;
+		if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y >= (int)tex->height)
+			tex_y = tex->height - 1;
+		color = get_pixel_color(tex, col->tex_x, tex_y);
 		if (cub->rays->side == 1)
-			color = (color >> 1) & 0x7F7F7F7F;
-		mlx_put_pixel(cub->textures->pixel_ray, col->x, y, color);
+			color = ((color >> 1) & 0x7F7F7F7F) | (color & 0xFF000000);
+		mlx_put_pixel(cub->textures->pixel_ray, col->x, y++, color);
 		tex_pos += tex_step;
-		y++;
 	}
 }
 

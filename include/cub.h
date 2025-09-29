@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:52:48 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/28 23:15:17 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:10:54 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_rays
     float   wall_x;     // wall hit position (for texture)
     float   tex_step;   // step for texture mapping
     float   tex_pos;    // current texture position
+    char    hit_cell;  // Cell type that was hit (e.g., '1' for wall, 'D' for door)
 }   t_rays;
 
 typedef struct s_column
@@ -79,6 +80,7 @@ typedef struct s_dir
     char    *south_path;
     char    *east_path;
     char    *west_path;
+    char    *door_path;
 }   t_dir;
 
 typedef struct s_textures
@@ -91,6 +93,7 @@ typedef struct s_textures
     mlx_texture_t *south;
     mlx_texture_t *east;
     mlx_texture_t *west;
+    mlx_texture_t *door;
 } t_textures;
 
 typedef struct s_game
@@ -107,6 +110,8 @@ typedef struct s_game
 	int				map_height;//       4
 	int				map_width; //        3
     float minimap_scale;
+
+    char    **door_state;;
 }   t_game;
 
 typedef struct s_cub
@@ -179,6 +184,10 @@ void	draw_column(t_cub *cub, int x, float dist);
 
 int	init_image(t_cub *cub);
 //minimap
-int    draw_minimap(t_cub *cub, float minimap_scale);
-int    player_minimap(t_cub *cub, float minimap_scale);
+int    draw_minimap(t_cub *cub);
+int    player_minimap(t_cub *cub);
+void chosse_scale(t_cub *cub);
+
+
+void init_door_states(t_game *game);
 #endif

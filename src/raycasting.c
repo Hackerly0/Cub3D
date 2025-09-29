@@ -55,30 +55,33 @@ void	init_steps(t_cub *cub, t_rays *ray)
 	}
 }
 
-void	perform_dda(t_cub *cub)
+void perform_dda(t_cub *cub)
 {
-	int	hit;
+    cub->rays->hit_cell = '0';
+    while (1)
+    {
+        if (cub->rays->side_x < cub->rays->side_y)
+            (cub->rays->side_x += cub->rays->delta_x,
+             cub->rays->map_x += cub->rays->step_x,
+             cub->rays->side = 0);
+        else
+            (cub->rays->side_y += cub->rays->delta_y,
+             cub->rays->map_y += cub->rays->step_y,
+             cub->rays->side = 1);
 
-	hit = 0;
-	while (!hit)
-	{
-		if (cub->rays->side_x < cub->rays->side_y)
-		{
-			cub->rays->side_x += cub->rays->delta_x;
-			cub->rays->map_x += cub->rays->step_x;
-			cub->rays->side = 0;
-		}
-		else
-		{
-			cub->rays->side_y += cub->rays->delta_y;
-			cub->rays->map_y += cub->rays->step_y;
-			cub->rays->side = 1;
-		}
-		if (cub->rays->map_x < 0 || cub->rays->map_x >= cub->game->map_width
-			|| cub->rays->map_y < 0 || cub->rays->map_y >= cub->game->map_height
-			|| cub->game->map[cub->rays->map_y][cub->rays->map_x] == '1')
-			hit = 1;
-	}
+        if (cub->rays->map_x < 0 || cub->rays->map_x >= cub->game->map_width
+         || cub->rays->map_y < 0 || cub->rays->map_y >= cub->game->map_height
+         || cub->game->map[cub->rays->map_y][cub->rays->map_x] == '1'
+         || (cub->game->map[cub->rays->map_y][cub->rays->map_x] == 'D'
+             && cub->game->door_state[cub->rays->map_y][cub->rays->map_x] == '1'))
+        {
+            cub->rays->hit_cell = cub->game->map[cub->rays->map_y][cub->rays->map_x];
+            if (cub->rays->map_x < 0 || cub->rays->map_x >= cub->game->map_width
+             || cub->rays->map_y < 0 || cub->rays->map_y >= cub->game->map_height)
+                cub->rays->hit_cell = '1'; // treat out-of-bounds as wall
+            return;
+        }
+    }
 }
 
 void	cast_ray(t_cub *cub, int x)

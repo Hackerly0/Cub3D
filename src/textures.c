@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:02:47 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/28 15:21:38 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:35:59 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,26 @@ uint32_t	get_pixel_color(mlx_texture_t *tex, int x, int y)
 		| (pixels[i + 1] << 8) | pixels[i + 2]);
 }
 
-mlx_texture_t	*get_wall_texture(t_cub *cub, int side, int step_x, int step_y)
+mlx_texture_t *get_wall_texture(t_cub *cub, int side, int step_x, int step_y)
 {
-	if (side == 0)
-	{
-		if (step_x > 0)
-			return (cub->textures->east);
-		return (cub->textures->west);
-	}
-	if (step_y > 0)
-		return (cub->textures->south);
-	return (cub->textures->north);
+    // Check what we hit
+    if (cub->rays->hit_cell == 'D')
+    {
+        // For doors, use the same texture regardless of side
+        // This ensures consistent appearance from both sides
+        return (cub->textures->door);
+    }
+    
+    // Regular wall textures based on side
+    if (side == 0)
+    {
+        if (step_x > 0)
+            return (cub->textures->east);
+        return (cub->textures->west);
+    }
+    if (step_y > 0)
+        return (cub->textures->south);
+    return (cub->textures->north);
 }
 
 void	get_texture_coords(t_cub *cub, mlx_texture_t *tex,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/28 23:11:04 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:50:53 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,15 +222,49 @@ void rotate_player(t_cub *cub, float angle)
     cub->game->plane_y = old_plane_x * sin_angle + cub->game->plane_y * cos_angle;
 }
 
+// int is_valid_position(t_cub *cub, float map_x, float map_y)
+// {
+//     // Check boundaries
+//     if (map_x < 0 || map_x >= cub->game->map_width || 
+//         map_y < 0 || map_y >= cub->game->map_height)
+//         return 0;
+    
+//     // Check for walls
+//     return (cub->game->map[(int)map_y][(int)map_x] != '1');
+// }
+
 int is_valid_position(t_cub *cub, float map_x, float map_y)
 {
-    // Check boundaries
+	char cell;
+
+	cell = cub->game->map[(int)map_y][(int)map_x];
     if (map_x < 0 || map_x >= cub->game->map_width || 
         map_y < 0 || map_y >= cub->game->map_height)
         return 0;
     
-    // Check for walls
-    return (cub->game->map[(int)map_y][(int)map_x] != '1');
+    // Can't walk through walls
+    if (cell == '1')
+        return 0;
+    
+    // Can't walk through closed doors
+    if (cell == 'D' && cub->game->door_state[(int)map_y][(int)map_x] == '1')
+        return 0;
+    
+    return 1;
+}
+
+void toggle_nearest_door(t_cub *cub)
+{
+    int check_x;
+	int check_y;
+    float check_dist;
+
+    check_dist = 1.5f; 
+    check_x = (int)(cub->game->xp_pos + cub->game->dir_x * check_dist);
+    check_y = (int)(cub->game->yp_pos + cub->game->dir_y * check_dist);
+    if (cub->game->map[check_y][check_x] == 'D')
+        if (cub->game->door_state[check_y][check_x] == '1')
+            cub->game->door_state[check_y][check_x] = '0';
 }
 
 void	move_player(t_cub *cub, float move_x, float move_y)
@@ -279,6 +313,8 @@ void	cursor(double xpos, double ypos, void *param)
 
 void handle_movement_keys(t_cub *cub)
 {
+	if (mlx_is_key_down(cub->game->mlx, MLX_KEY_SPACE))
+		toggle_nearest_door(cub);
     if (mlx_is_key_down(cub->game->mlx, MLX_KEY_W))
         move_player(cub, cub->game->dir_x * MOVE_SPEED, cub->game->dir_y * MOVE_SPEED);
     if (mlx_is_key_down(cub->game->mlx, MLX_KEY_S))
@@ -295,20 +331,20 @@ void handle_movement_keys(t_cub *cub)
         mlx_close_window(cub->game->mlx);
 }
 
-// void keyhook(void *param)
-// {
-//     t_cub *cub;
-//     cub = (t_cub *)param;
-    
-//     if (!cub->textures->pixel_ray)
-//         cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
-//     handle_movement_keys(cub);
-//     ray(cub);
-//     if (cub->textures->player && cub->textures->player->instances)
-//     {
-//         cub->textures->player->instances[0].x = 
-//             (int)(cub->game->xp_pos * TILE * MINIMAP_SCALE) - (P_SIZE * MINIMAP_SCALE)/2;
-//         cub->textures->player->instances[0].y = 
-//             (int)(cub->game->yp_pos * TILE * MINIMAP_SCALE) - (P_SIZE * MINIMAP_SCALE)/2;
-//     }
-// }
+void keyhook(void *param)
+{
+    t_cub *cub;
+
+    cub = (t_cub *)param;
+    if (!cub->textures->pixel_ray)
+        cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+    handle_movement_keys(cub);
+    ray(cub);
+	draw_minimap(cub);
+	// Update player position on minimap
+	if (cub->textures->player && cub->textures->player->instances)
+    {
+        cub->textures->player->instances[0].x = (int)(cub->game->xp_pos * cub->game->minimap_scale);
+        cub->textures->player->instances[0].y = (int)(cub->game->yp_pos * cub->game->minimap_scale);
+    }
+}
