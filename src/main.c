@@ -12,8 +12,10 @@ int main(int argc, char **argv)
     if (parse_cub(argv[1], &cfg))
     {
         printf("Parsing failed\n");
+        free_config(&cfg);
         return (1);
     }
     printf("Parsing OK\n");
+    free_config(&cfg);
     return (0);
 }

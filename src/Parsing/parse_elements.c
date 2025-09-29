@@ -1,34 +1,51 @@
 #include <cub3d.h>
 
-int parse_tex_id(const char *s, char **out)
+static int	parse_component(const char *s, int *i, int *dst, int need_comma)
 {
-	int		i;
+	int	v;
+
+	v = parse_num(s, i);
+	if (v < 0)
+		return (-1);
+	*dst = v;
+	while (s[*i] && is_ws(s[*i]))
+		(*i)++;
+	if (need_comma)
+	{
+		if (s[*i] != ',')
+			return (-1);
+		(*i)++;
+		while (s[*i] && is_ws(s[*i]))
+			(*i)++;
+	}
+	return (0);
+}
+
+int	parse_tex_id(const char *s, char **out)
+{
+	int	i;
 
 	i = 0;
-	if (!s)
-		return(-1);
+	if (!s || !out)
+		return (-1);
 	while (is_ws(s[i]))
 		i++;
-    if (!isalpha(s[i]) || !isalpha(s[i+1]))
-        return (-1);
-    i += 2;
+	if (!isalpha(s[i]) || !isalpha(s[i + 1]))
+		return (-1);
+	i += 2;
 	while (is_ws(s[i]))
 		i++;
 	if (s[i] == '\0')
 		return (-1);
 	*out = strdup(s + i);
-
-    if (!*out)
-	{
-        return (-1);
-	}
+	if (!*out)
+		return (-1);
 	return (0);
 }
 
 int	parse_rgb(const char *s, t_rgb *out)
 {
 	int	i;
-	int	v;
 
 	if (!s || !out)
 		return (-1);
@@ -42,43 +59,17 @@ int	parse_rgb(const char *s, t_rgb *out)
 		i++;
 	if (!s[i])
 		return (-1);
-
-	/* R */
-	v = parse_num(s, &i);
-	if (v < 0)
+	if (parse_component(s, &i, &out->r, 1))
 		return (-1);
-	out->r = v;
+	if (parse_component(s, &i, &out->g, 1))
+		return (-1);
+	if (parse_component(s, &i, &out->b, 0))
+		return (-1);
 	while (s[i] && is_ws(s[i]))
 		i++;
-	if (s[i] != ',')
+	if (s[i])
 		return (-1);
-	i++;
-	while (s[i] && is_ws(s[i]))
-		i++;
-
-	/* G */
-	v = parse_num(s, &i);
-	if (v < 0)
-		return (-1);
-	out->g = v;
-	while (s[i] && is_ws(s[i]))
-		i++;
-	if (s[i] != ',')
-		return (-1);
-	i++;
-	while (s[i] && is_ws(s[i]))
-		i++;
-
-	/* B */
-	v = parse_num(s, &i);
-	if (v < 0)
-		return (-1);
-	out->b = v;
-	while (s[i] && is_ws(s[i]))
-		i++;
-    if (s[i])
-        return (-1);
-    return (0);
+	return (0);
 }
 
 int	parse_num(const char *s, int *i)
@@ -101,24 +92,17 @@ int	parse_num(const char *s, int *i)
 	return (val);
 }
 
-int is_map_line(const char *s)
+int	is_map_line(const char *s)
 {
-	int i;
+	int		i;
+	char	c;
 
 	i = 0;
 	while (is_ws(s[i]))
 		i++;
-	if (s[i] == '0')
-		return (1);
-	else if (s[i] == '1')
-		return (1);
-	else if (s[i] == 'N')
-		return (1);
-	else if (s[i] == 'S')
-		return (1);
-	else if (s[i] == 'E')
-		return (1);
-	else if (s[i] == 'W')
+	c = s[i];
+	if (c == '0' || c == '1' || c == 'N' || c == 'S'
+		|| c == 'E' || c == 'W')
 		return (1);
 	return (0);
 }

@@ -21,6 +21,8 @@ GNL_DIR = GNL
 # Source files
 SRCS    = $(SRC_DIR)/main.c \
           $(SRC_DIR)/parse_cub.c \
+          $(SRC_DIR)/parse_cub_helper.c \
+          $(SRC_DIR)/parse_cub_helper2.c \
           $(SRC_DIR)/Parsing/map_builder.c \
           $(SRC_DIR)/Parsing/pad_map.c \
           $(SRC_DIR)/Parsing/parse_elements.c \

@@ -65,7 +65,7 @@ int	map_validation(t_vars *v)
 		j = 0;
 		while (j < v->width)
 		{
-			if (is_walkable(v->map[i][j]) && touches_void8(v, i, j))
+			if (v->map[i][j] == '0' && touches_void8(v, i, j))
 				return (1);
 			j++;
 		}

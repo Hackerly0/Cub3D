@@ -16,7 +16,7 @@ void	ft_fill_spaces(char *dst, int start, int end)
 {
 	while (start < end)
 	{
-		dst[start] = ' ';
+		dst[start] = '1';
 		start++;
 	}
 }
