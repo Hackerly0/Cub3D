@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cub_helper2.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/30 14:52:34 by hnisirat          #+#    #+#             */
+/*   Updated: 2025/09/30 14:59:00 by hnisirat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
 #include "../GNL/get_next_line.h"
 
@@ -8,7 +20,7 @@ static int	process_phase0(char *line, t_config *cfg, int *phase)
 	result = handle_header_line(line, cfg, &(*phase));
 	if (result)
 	{
-		free(line);
+		//free(line);
 		return (result);
 	}
 	return (0);
