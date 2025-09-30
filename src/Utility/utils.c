@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/30 14:52:20 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 14:52:21 by hnisirat         ###   ########.fr       */
+/*   Created: 2025/09/30 14:52:58 by hnisirat          #+#    #+#             */
+/*   Updated: 2025/09/30 14:54:38 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-int	main(int argc, char **argv)
+int	is_ws(char c)
 {
-	t_config	cfg;
+	return (((c >= 9 && c <= 13) || c == 32));
+}
 
-	if (argc != 2)
-	{
-		printf("Usage: %s map.cub\n", argv[0]);
+int	isnum(int c)
+{
+	if (c >= '0' && c <= '9')
 		return (1);
-	}
-	if (parse_cub(argv[1], &cfg))
-	{
-		printf("Parsing failed\n");
-		free_config(&cfg);
-		return (1);
-	}
-	printf("Parsing OK\n");
-	free_config(&cfg);
-	return (0);
+	else
+		return (0);
+}
+
+int	max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int	perr(const char *msg)
+{
+	if (msg)
+		printf("Error\n%s\n", msg);
+	else
+		printf("Error\n");
+	return (1);
 }
