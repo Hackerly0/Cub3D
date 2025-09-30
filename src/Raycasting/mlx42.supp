@@ -1,0 +1,245 @@
+# MLX42 Valgrind Suppression File
+# Usage: valgrind --leak-check=full --suppressions=mlx42.supp ./your_program
+
+# Dynamic linker suppressions (dl-load.c errors from library loading)
+{
+   dl_load_invalid_read_strncmp
+   Memcheck:Addr8
+   fun:strncmp
+   fun:is_dst
+   fun:_dl_dst_count
+   ...
+}
+
+{
+   dl_load_invalid_read_dst_substitute
+   Memcheck:Addr8
+   fun:strncmp
+   fun:is_dst
+   fun:_dl_dst_substitute
+   ...
+}
+
+{
+   dl_load_rpath_errors
+   Memcheck:Addr8
+   ...
+   fun:decompose_rpath
+   fun:cache_rpath
+   fun:_dl_map_object
+   ...
+}
+
+{
+   dl_open_worker_errors
+   Memcheck:Addr8
+   ...
+   fun:dl_open_worker_begin
+   ...
+}
+
+{
+   dl_catch_exception_errors
+   Memcheck:Addr8
+   ...
+   fun:_dl_catch_exception
+   ...
+}
+
+# GLFW related suppressions
+{
+   glfw_init_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glfwInit
+}
+
+{
+   glfw_create_window
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glfwCreateWindow
+}
+
+{
+   glfw_make_context_current
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glfwMakeContextCurrent
+}
+
+# OpenGL/GPU driver suppressions
+{
+   opengl_driver_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   obj:*/libGL.so*
+}
+
+{
+   opengl_driver_leak_nvidia
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   obj:*/libnvidia-glcore.so*
+}
+
+{
+   opengl_driver_leak_mesa
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   obj:*/libmesa*.so*
+}
+
+{
+   opengl_shader_compiler
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glCompileShader
+}
+
+# X11 related suppressions
+{
+   x11_display_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XOpenDisplay
+}
+
+{
+   x11_general_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   obj:*/libX11.so*
+}
+
+{
+   x11_randr_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libXrandr.so*
+}
+
+{
+   x11_xcb_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libxcb.so*
+}
+
+# DRM (Direct Rendering Manager) suppressions
+{
+   drm_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   obj:*/libdrm*.so*
+}
+
+# GLX related suppressions
+{
+   glx_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libGLX.so*
+}
+
+# Threading libraries
+{
+   pthread_leak
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   fun:pthread_create*
+}
+
+# Font/Fontconfig suppressions
+{
+   fontconfig_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libfontconfig.so*
+}
+
+# DBus suppressions (used by some display servers)
+{
+   dbus_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libdbus-1.so*
+}
+
+# Wayland suppressions (if using Wayland instead of X11)
+{
+   wayland_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libwayland-client.so*
+}
+
+# GPU memory allocations (often reported as still reachable)
+{
+   gpu_buffer_allocation
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glGen*
+}
+
+{
+   gpu_texture_allocation
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glTexImage*
+}
+
+# Vulkan driver suppressions (MLX42 may use Vulkan backend)
+{
+   vulkan_driver_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   obj:*/libvulkan.so*
+}
+
+# GBM (Generic Buffer Management) suppressions
+{
+   gbm_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libgbm.so*
+}
+
+# EGL suppressions
+{
+   egl_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libEGL.so*
+}
+
+# System locale/internationalization
+{
+   locale_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:setlocale
+}

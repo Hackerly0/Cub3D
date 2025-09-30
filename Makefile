@@ -1,37 +1,39 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: $(USER)                                     +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/09/23 20:40:00 by you               #+#    #+#              #
-#    Updated: 2025/09/26 20:40:00 by you              ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -Iinclude -IGNL
-NAME    = cub3d
+NAME    = cub3D
 
 # Directories
-SRC_DIR = src
+PARSE_DIR = src/Parser
+RAYCAST_DIR = src/Raycasting
 GNL_DIR = GNL
+LIBFT_DIR = ./libft
+MLX_DIR = ./MLX42
+
+# Libraries
+LIBFT = $(LIBFT_DIR)/libft.a
+MLX = $(MLX_DIR)/build/libmlx42.a
+MLXFLAGS = -Iinclude -ldl -lglfw -pthread -lm
 
 # Source files
-SRCS    = $(SRC_DIR)/main.c \
-          $(SRC_DIR)/parse_cub.c \
-          $(SRC_DIR)/parse_cub_helper.c \
-          $(SRC_DIR)/parse_cub_helper2.c \
-          $(SRC_DIR)/Parsing/map_builder.c \
-          $(SRC_DIR)/Parsing/pad_map.c \
-          $(SRC_DIR)/Parsing/parse_elements.c \
-          $(SRC_DIR)/Utility/memory_utils.c \
-          $(SRC_DIR)/Utility/utils.c \
-          $(SRC_DIR)/Validation/flood_validation.c \
-          $(SRC_DIR)/Validation/header_validation.c \
-          $(SRC_DIR)/Validation/map_validation.c \
-          $(SRC_DIR)/Validation/player_validation.c \
+SRCS    = $(RAYCAST_DIR)/main.c \
+          $(RAYCAST_DIR)/raycasting.c \
+          $(RAYCAST_DIR)/move.c \
+          $(RAYCAST_DIR)/minimap.c \
+          $(RAYCAST_DIR)/textures.c \
+          $(RAYCAST_DIR)/draw.c \
+          $(RAYCAST_DIR)/door.c \
+          $(PARSE_DIR)/parse_cub.c \
+          $(PARSE_DIR)/parse_cub_helper.c \
+          $(PARSE_DIR)/parse_cub_helper2.c \
+          $(PARSE_DIR)/map_builder.c \
+          $(PARSE_DIR)/pad_map.c \
+          $(PARSE_DIR)/parse_elements.c \
+          $(PARSE_DIR)/Utility/memory_utils.c \
+          $(PARSE_DIR)/Utility/utils.c \
+          $(PARSE_DIR)/Validation/flood_validation.c \
+          $(PARSE_DIR)/Validation/header_validation.c \
+          $(PARSE_DIR)/Validation/map_validation.c \
+          $(PARSE_DIR)/Validation/player_validation.c \
           $(GNL_DIR)/get_next_line.c \
           $(GNL_DIR)/get_next_line_utils.c
 
@@ -39,25 +41,38 @@ SRCS    = $(SRC_DIR)/main.c \
 OBJS    = $(SRCS:.c=.o)
 
 # Default target
-all: $(NAME)
+all: LIBFT MLX $(NAME)
 
 # Build the executable
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX) -L$(LIBFT_DIR) -lft $(MLXFLAGS) -o $(NAME)
 
 # Compile source files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Build libft
+LIBFT:
+	make -C $(LIBFT_DIR)
+
+# Build MLX42
+MLX: $(MLX)
+
+$(MLX):
+	cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
+	cmake --build $(MLX_DIR)/build -j4
+
 # Clean object files
 clean:
 	rm -f $(OBJS)
+	make clean -C $(LIBFT_DIR)
 
 # Clean everything
 fclean: clean
 	rm -f $(NAME)
+	make fclean -C $(LIBFT_DIR)
 
 # Rebuild everything
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re LIBFT MLX
