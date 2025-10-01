@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/30 17:36:51 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/01 19:29:22 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "cub3d.h"
 
 char *sample_map[] = {
     "11111111111111111111111",
@@ -82,10 +82,10 @@ void init_map_from_sample(t_game *g, t_cub *cub)
     }
 
     // Set texture paths - make sure these files exist!
-    cub->dir->north_path = "./textures/pillar.png";
-    cub->dir->south_path = "./textures/wall_1.png";
-    cub->dir->east_path  = "./textures/bluestone.png";
-    cub->dir->west_path  = "./textures/eagle.png";
+    // cub->dir->north_path = "./textures/pillar.png";
+    // cub->dir->south_path = "./textures/wall_1.png";
+    // cub->dir->east_path  = "./textures/bluestone.png";
+    // cub->dir->west_path  = "./textures/eagle.png";
     cub->dir->door_path  = "./textures/door.png";
 }
 
@@ -241,7 +241,7 @@ int load_textures(t_cub *cub)
     cub->textures->south = mlx_load_png(cub->dir->south_path);
     cub->textures->east  = mlx_load_png(cub->dir->east_path);
     cub->textures->west  = mlx_load_png(cub->dir->west_path);
-    cub->textures->door  = mlx_load_png(cub->dir->door_path);
+    cub->textures->door  = mlx_load_png("./textures/door.png");
     if (!cub->textures->north || !cub->textures->south ||
         !cub->textures->east || !cub->textures->west || !cub->textures->door)
     {
@@ -251,7 +251,7 @@ int load_textures(t_cub *cub)
     return (0);
 }
 
-static uint32_t rgb_to_hex(int r, int g, int b)
+uint32_t    rgb_to_hex(int r, int g, int b)
 {
     return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) |
            ((b & 0xFF) << 8)  | 0xFF;
@@ -291,40 +291,29 @@ int init_image(t_cub *cub)
 }
 
 
-int main(void)
+int	raycasting(t_cub *cub)
 {
-    t_cub *cub;
-
-    cub = malloc(sizeof(t_cub));
-    if (!cub)
-        return (1);
-    if (struct_init(cub))
-        return (ft_free_struct(cub, 1));
-    init_map_from_sample(cub->game, cub);
-    init_door_states(cub->game);  // Add this line
-    if (!cub->game->map)
-        return (ft_free_struct(cub, 1));    
-    facing_dir_n_s(cub);
-    facing_dir_e_w(cub);
-    set_colors(cub);
-    cub->game->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
-    if (!cub->game->mlx)
-        return (ft_free_struct(cub, 1));
-    if (load_textures(cub))
-        return (ft_free_struct(cub, 1));
-    init_image(cub);
-    chosse_scale(cub);
-    draw_minimap(cub);
-    player_minimap(cub);
-    mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
-    mlx_image_to_window(cub->game->mlx, cub->textures->wall, 0, 0);
-    mlx_image_to_window(cub->game->mlx, cub->textures->player, 
-                       (int)(cub->game->xp_pos * cub->game->minimap_scale) - (P_SIZE * cub->game->minimap_scale)/2, 
-                       (int)(cub->game->yp_pos * cub->game->minimap_scale) - (P_SIZE * cub->game->minimap_scale)/2);
-    mlx_loop_hook(cub->game->mlx, keyhook, cub);
-    mlx_cursor_hook(cub->game->mlx, cursor, cub);
-    if (ray(cub))
-        return (ft_free_struct(cub, 1));
-    mlx_loop(cub->game->mlx);
-    return (ft_free_struct(cub, 0));
+	cub->game->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
+	if (!cub->game->mlx)
+		return (ft_free_struct(cub, 1));
+	if (load_textures(cub))
+		return (ft_free_struct(cub, 1));
+	if (init_image(cub))
+		return (ft_free_struct(cub, 1));
+	chosse_scale(cub);
+	draw_minimap(cub);
+	player_minimap(cub);
+	mlx_image_to_window(cub->game->mlx, cub->textures->pixel_ray, 0, 0);
+	mlx_image_to_window(cub->game->mlx, cub->textures->wall, 0, 0);
+	mlx_image_to_window(cub->game->mlx, cub->textures->player,
+		(int)(cub->game->xp_pos * cub->game->minimap_scale)
+		- (P_SIZE * cub->game->minimap_scale) / 2,
+		(int)(cub->game->yp_pos * cub->game->minimap_scale)
+		- (P_SIZE * cub->game->minimap_scale) / 2);
+	mlx_loop_hook(cub->game->mlx, keyhook, cub);
+	mlx_cursor_hook(cub->game->mlx, cursor, cub);
+	if (ray(cub))
+		return (ft_free_struct(cub, 1));
+	mlx_loop(cub->game->mlx);
+	return (ft_free_struct(cub, 0));
 }

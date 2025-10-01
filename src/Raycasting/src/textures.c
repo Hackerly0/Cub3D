@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:02:47 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/29 16:35:59 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/01 19:03:46 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "cub3d.h"
 
 uint32_t	get_pixel_color(mlx_texture_t *tex, int x, int y)
 {

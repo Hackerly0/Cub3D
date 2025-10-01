@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/30 15:04:14 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/01 19:03:13 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "cub3d.h"
 
 void init_door_states(t_game *game)
 {

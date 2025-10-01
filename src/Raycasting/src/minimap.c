@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:53:15 by salshaha          #+#    #+#             */
-/*   Updated: 2025/09/30 16:05:52 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/01 19:03:27 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "cub3d.h"
 
 // void	draw_ray_minimap(t_cub *cub, float angle)
 // {

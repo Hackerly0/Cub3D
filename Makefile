@@ -4,7 +4,7 @@ NAME    = cub3D
 
 # Directories
 PARSE_DIR = src/Parser
-RAYCAST_DIR = src/Raycasting
+RAYCAST_DIR = src/Raycasting/src
 GNL_DIR = GNL
 LIBFT_DIR = ./libft
 MLX_DIR = ./MLX42
@@ -15,27 +15,29 @@ MLX = $(MLX_DIR)/build/libmlx42.a
 MLXFLAGS = -Iinclude -ldl -lglfw -pthread -lm
 
 # Source files
-SRCS    = $(RAYCAST_DIR)/main.c \
-          $(RAYCAST_DIR)/raycasting.c \
-          $(RAYCAST_DIR)/move.c \
-          $(RAYCAST_DIR)/minimap.c \
-          $(RAYCAST_DIR)/textures.c \
-          $(RAYCAST_DIR)/draw.c \
-          $(RAYCAST_DIR)/door.c \
-          $(PARSE_DIR)/parse_cub.c \
-          $(PARSE_DIR)/parse_cub_helper.c \
-          $(PARSE_DIR)/parse_cub_helper2.c \
-          $(PARSE_DIR)/map_builder.c \
-          $(PARSE_DIR)/pad_map.c \
-          $(PARSE_DIR)/parse_elements.c \
-          $(PARSE_DIR)/Utility/memory_utils.c \
-          $(PARSE_DIR)/Utility/utils.c \
-          $(PARSE_DIR)/Validation/flood_validation.c \
-          $(PARSE_DIR)/Validation/header_validation.c \
-          $(PARSE_DIR)/Validation/map_validation.c \
-          $(PARSE_DIR)/Validation/player_validation.c \
-          $(GNL_DIR)/get_next_line.c \
-          $(GNL_DIR)/get_next_line_utils.c
+SRCS    = src/main.c \
+		src/config_to_cub.c \
+		$(RAYCAST_DIR)/raycast.c \
+		$(RAYCAST_DIR)/raycasting.c \
+		$(RAYCAST_DIR)/move.c \
+		$(RAYCAST_DIR)/minimap.c \
+		$(RAYCAST_DIR)/textures.c \
+		$(RAYCAST_DIR)/draw.c \
+		$(RAYCAST_DIR)/door.c \
+		$(PARSE_DIR)/parse_cub.c \
+		$(PARSE_DIR)/parse_cub_helper.c \
+		$(PARSE_DIR)/parse_cub_helper2.c \
+		$(PARSE_DIR)/Parsing/map_builder.c \
+		$(PARSE_DIR)/Parsing/pad_map.c \
+		$(PARSE_DIR)/Parsing/parse_elements.c \
+		$(PARSE_DIR)/Utility/memory_utils.c \
+		$(PARSE_DIR)/Utility/utils.c \
+		$(PARSE_DIR)/Validation/flood_validation.c \
+		$(PARSE_DIR)/Validation/header_validation.c \
+		$(PARSE_DIR)/Validation/map_validation.c \
+		$(PARSE_DIR)/Validation/player_validation.c \
+		$(GNL_DIR)/get_next_line.c \
+		$(GNL_DIR)/get_next_line_utils.c
 
 # Object files
 OBJS    = $(SRCS:.c=.o)
