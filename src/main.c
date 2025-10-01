@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:20 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/01 19:15:38 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:22:38 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	main(int argc, char **argv)
 		return (ft_free_struct(cub, 1));
 	}
 	free_config(&cfg);
-	init_door_states(cub->game);
 	facing_dir_n_s(cub);
 	facing_dir_e_w(cub);
 	return (raycasting(cub));

@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 19:03:13 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:09:16 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void toggle_nearest_door(t_cub *cub)
+{
+    int check_x;
+	int check_y;
+    float check_dist;
+
+    check_dist = 1.5f; 
+    check_x = (int)(cub->game->xp_pos + cub->game->dir_x * check_dist);
+    check_y = (int)(cub->game->yp_pos + cub->game->dir_y * check_dist);
+    if (cub->game->map[check_y][check_x] == 'D')
+        if (cub->game->door_state[check_y][check_x] == '1')
+            cub->game->door_state[check_y][check_x] = '0';
+}
 
 void init_door_states(t_game *game)
 {

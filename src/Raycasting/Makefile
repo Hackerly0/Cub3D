@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra  -Iinclude #-fsanitize=address
 
-SRCS = main.c raycasting.c move.c minimap.c textures.c draw.c door.c
+SRCS = main.c raycasting.c move.c minimap.c textures.c draw.c door.c init.c
 SRCS := $(addprefix src/, $(SRCS))
 OBJS = $(SRCS:.c=.o)
 

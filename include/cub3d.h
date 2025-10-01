@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 00:00:00 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/01 19:16:52 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/01 20:03:21 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,14 +261,13 @@ void			get_texture_coords(t_cub *cub, mlx_texture_t *tex,
 /*                          MOVEMENT & INPUT FUNCTIONS                        */
 /* ========================================================================== */
 
-void	my_keyhook(mlx_key_data_t keydata, void *structs);
 void	keyhook(void *param);
 void	rotate_player(t_cub *cub, float theta);
-void	move_up_donw(t_cub *cub, char type);
-void	move_left_right(t_cub *cub, char type);
 void	cursor(double xpos, double ypos, void *param);
 void	move_player(t_cub *cub, float move_x, float move_y);
 void	handle_movement_keys(t_cub *cub);
+void 	toggle_nearest_door(t_cub *cub);
+int 	is_valid_position(t_cub *cub, float map_x, float map_y);
 
 /* ========================================================================== */
 /*                        INITIALIZATION FUNCTIONS                            */

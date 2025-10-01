@@ -1,5 +1,5 @@
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -Iinclude -IGNL
+CFLAGS  = -Wall -Wextra -Werror -Iinclude -IGNL -fsanitize=address
 NAME    = cub3D
 
 # Directories
@@ -24,6 +24,8 @@ SRCS    = src/main.c \
 		$(RAYCAST_DIR)/textures.c \
 		$(RAYCAST_DIR)/draw.c \
 		$(RAYCAST_DIR)/door.c \
+		$(RAYCAST_DIR)/init.c \
+		$(RAYCAST_DIR)/ft_free_raycasting.c \
 		$(PARSE_DIR)/parse_cub.c \
 		$(PARSE_DIR)/parse_cub_helper.c \
 		$(PARSE_DIR)/parse_cub_helper2.c \
