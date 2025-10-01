@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:47 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 14:54:13 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/01 22:44:15 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	is_allowed(char c)
 {
 	return (c == '0' || c == '1' || c == ' '
-		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
+		|| c == 'N' || c == 'S' || c == 'E'
+		|| c == 'W' || c == 'D');
 }
 
 int	is_walkable(char c)
