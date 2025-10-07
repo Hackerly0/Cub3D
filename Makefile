@@ -17,6 +17,7 @@ MLXFLAGS = -Iinclude -ldl -lglfw -pthread -lm
 # Source files
 SRCS    = src/main.c \
 		src/config_to_cub.c \
+		src/grab_questions.c \
 		$(RAYCAST_DIR)/raycast.c \
 		$(RAYCAST_DIR)/raycasting.c \
 		$(RAYCAST_DIR)/move.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 16:23:50 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 19:03:23 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:47:24 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	draw_wall_texture(t_cub *cub, mlx_texture_t *tex, t_column *col)
 			tex_y = tex->height - 1;
 		color = get_pixel_color(tex, col->tex_x, tex_y);
 		if (cub->rays->side == 1)
-			color = ((color >> 1) & 0x7F7F7F7F) | (color & 0xFF000000);
+			color = ((color >> 1) & 0x7F7F7F00) | 0xFF;
 		mlx_put_pixel(cub->textures->pixel_ray, col->x, y++, color);
 		tex_pos += tex_step;
 	}
@@ -85,7 +85,7 @@ void	draw_wall(t_cub *cub, t_column col)
 	mlx_texture_t	*tex;
 
 	tex = get_wall_texture(cub, cub->rays->side,
-			cub->rays->step_x, cub->rays->step_y);
+		cub->rays->step_x, cub->rays->step_y);
 	draw_ceiling_floor(cub, col);
 	draw_wall_texture(cub, tex, &col);
 }

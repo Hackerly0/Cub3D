@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:53:22 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 19:54:32 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/06 17:55:28 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void    init_struct_element(t_cub *cub)
     cub->game->plane_x = 0;
     cub->game->plane_y = 0;
     cub->textures->player = NULL;
-    cub->textures->space = NULL;
     cub->textures->wall = NULL;
     cub->textures->pixel_ray = NULL;
+    cub->textures->scery = NULL;
     cub->textures->north = NULL;
     cub->textures->south = NULL;
     cub->textures->east = NULL;
@@ -97,5 +97,17 @@ int init_image(t_cub *cub)
     cub->textures->player = mlx_new_image(cub->game->mlx, P_SIZE * MINIMAP_SCALE, P_SIZE * MINIMAP_SCALE);
     if (!cub->textures->player)
         return (1);
+    // cub->textures->scery = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
+    // if (!cub->textures->scery)
+    //     return (1);
+    
+    // // Fill crosshair with white color
+    // for (int y = 0; y < 6; y++)
+    // {
+    //     for (int x = 0; x < 6; x++)
+    //     {
+    //         mlx_put_pixel(cub->textures->crosshair, x, y, 0xFFFFFFFF);
+    //     }
+    // }
     return 0;
 }

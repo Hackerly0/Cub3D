@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:53:15 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 19:46:31 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/05 17:58:26 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ uint32_t minimap_color(t_cub *cub, int i, int j)
 {
     uint32_t color;
 
+    color = 0x00000000;
     if (cub->game->map[i][j] == '1')
         color = 0xFFFFFFFF;
     else if (cub->game->map[i][j] == '0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 20:04:27 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/06 17:26:19 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	cursor(double xpos, double ypos, void *param)
 
 void handle_movement_keys(t_cub *cub)
 {
-	if (mlx_is_key_down(cub->game->mlx, MLX_KEY_SPACE))
-		toggle_nearest_door(cub);
     if (mlx_is_key_down(cub->game->mlx, MLX_KEY_W))
         move_player(cub, cub->game->dir_x * MOVE_SPEED, cub->game->dir_y * MOVE_SPEED);
     if (mlx_is_key_down(cub->game->mlx, MLX_KEY_S))

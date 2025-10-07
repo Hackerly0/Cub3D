@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:02:47 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 20:04:52 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/05 15:32:30 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 uint32_t    rgb_to_hex(int r, int g, int b)
 {
-    return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) |
-           ((b & 0xFF) << 8)  | 0xFF;
+    return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) |
+           ((b & 0xFF));
 }
 
 void set_colors(t_cub *cub)
@@ -34,8 +34,8 @@ uint32_t	get_pixel_color(mlx_texture_t *tex, int x, int y)
 		return (0xFF0000FF);
 	pixels = tex->pixels;
 	i = (y * tex->width + x) * 4;
-	return ((pixels[i + 3] << 24) | (pixels[i] << 16)
-		| (pixels[i + 1] << 8) | pixels[i + 2]);
+	return ((pixels[i] << 24) | (pixels[i + 1] << 16)
+		| (pixels[i + 2] << 8) | 0xFF);
 }
 
 mlx_texture_t *get_wall_texture(t_cub *cub, int side, int step_x, int step_y)

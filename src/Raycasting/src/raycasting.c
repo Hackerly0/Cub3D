@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:15:56 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 20:04:39 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/05 15:32:48 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ int	ray(t_cub *cub)
 		cast_ray(cub, x);
 		x++;
 	}
+	// draw_center_square(cub);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/01 20:02:32 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:11:08 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,13 @@ int load_textures(t_cub *cub)
     cub->textures->east  = mlx_load_png(cub->dir->east_path);
     cub->textures->west  = mlx_load_png(cub->dir->west_path);
     cub->textures->door  = mlx_load_png("./textures/door.png");
+	cub->textures->scery = mlx_load_png("./textures/scery.png");
     if (!cub->textures->north || !cub->textures->south ||
-        !cub->textures->east || !cub->textures->west || !cub->textures->door)
+        !cub->textures->east || !cub->textures->west || 
+        !cub->textures->door || !cub->textures->scery)
     {
         printf("Error: Failed to load one or more textures\n");
-        return (ft_free_struct(cub, 1));
+        return (1);  // <-- First free here
     }
     return (0);
 }
@@ -140,6 +142,7 @@ int	raycasting(t_cub *cub)
 		(int)(cub->game->yp_pos * cub->game->minimap_scale)
 		- (P_SIZE * cub->game->minimap_scale) / 2);
 	mlx_loop_hook(cub->game->mlx, keyhook, cub);
+	mlx_key_hook(cub->game->mlx, space_hook, cub);
 	mlx_cursor_hook(cub->game->mlx, cursor, cub);
 	if (ray(cub))
 		return (ft_free_struct(cub, 1));

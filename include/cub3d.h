@@ -1,12 +1,24 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*                                                                      typedef struct s_textures
+{
+	mlx_image_t		*pixel_ray;
+	mlx_image_t		*player;
+	mlx_image_t		*wall;
+	mlx_image_t		*space;
+	mlx_image_t		*crosshair;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*east;
+	mlx_texture_t	*west;
+	mlx_texture_t	*door;
+	mlx_texture_t	*scary_door;  // New texture for scary door
+}	t_textures;                                                      :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 00:00:00 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/01 20:03:21 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/05 16:41:06 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +42,9 @@
 /* ========================================================================== */
 /*                                   DEFINES                                  */
 /* ========================================================================== */
+
+/* Function Prototypes */
+// void	draw_center_square(t_cub *cub);
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -153,12 +168,12 @@ typedef struct s_textures
 	mlx_image_t		*pixel_ray;
 	mlx_image_t		*player;
 	mlx_image_t		*wall;
-	mlx_image_t		*space;
 	mlx_texture_t	*north;
 	mlx_texture_t	*south;
 	mlx_texture_t	*east;
 	mlx_texture_t	*west;
 	mlx_texture_t	*door;
+	mlx_texture_t	*scery;
 }	t_textures;
 
 typedef struct s_game
@@ -306,4 +321,9 @@ void	ft_free(char **s, int j);
 char	*strdup(const char *s);
 size_t	strlen(const char *s);
 
+
+
+void space_hook(mlx_key_data_t keydata, void* param);
+void print_qa(char **qa);
+char	**grab_questions(void);
 #endif

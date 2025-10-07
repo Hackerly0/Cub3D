@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   grab_questions.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/06 14:33:38 by salshaha          #+#    #+#             */
+/*   Updated: 2025/10/06 15:00:46 by salshaha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
-#include "libft.h"
+# include "../libft/libft.h"
 #include "../GNL/get_next_line.h"
-
+// #include "../include/cub3d.h"
 static int	is_blank_line(const char *s)
 {
 	size_t	i;
@@ -141,4 +153,19 @@ char	**grab_questions(void)
 		return (NULL);
 	trim_fields(qa);
 	return (qa);
+}
+
+void print_qa(char **qa)
+{
+	int	i;
+
+	if (!qa)
+		return ;
+	i = 0;
+	while (qa[i])
+	{
+		write(1, qa[i], ft_strlen(qa[i]));
+		write(1, "\n", 1);
+		i++;
+	}
 }
