@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/06 17:26:19 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:44:08 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,18 @@ void keyhook(void *param)
     t_cub *cub;
 
     cub = (t_cub *)param;
+
+	// CHECK IF SHOWING SCERY SCREEN
+    if (cub->game->showing_scery)
+    {
+        if (mlx_get_time() - cub->game->scery_start_time > 5.0)
+        {
+            ft_free_struct(cub, 0);
+            exit(0);
+        }
+        return; // Don't do normal game stuff while showing scery
+    }
+	
     if (!cub->textures->pixel_ray)
         cub->textures->pixel_ray = mlx_new_image(cub->game->mlx, WIDTH, HEIGHT);
     handle_movement_keys(cub);

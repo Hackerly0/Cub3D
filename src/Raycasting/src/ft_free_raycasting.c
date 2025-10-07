@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_raycasting.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:56:49 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/06 18:14:01 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/07 14:20:36 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ void free_textures(t_cub *cub)
             mlx_delete_image(cub->game->mlx, cub->textures->player);
         if (cub->textures->wall) 
             mlx_delete_image(cub->game->mlx, cub->textures->wall);
-
-        // Then delete textures
+            // Then delete textures
+        if (cub->textures->scery)
+            mlx_delete_texture(cub->textures->scery);
         if (cub->textures->north)
             mlx_delete_texture(cub->textures->north);
         if (cub->textures->south)

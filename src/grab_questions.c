@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grab_questions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:33:38 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/06 15:00:46 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/07 14:42:15 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,13 +158,21 @@ char	**grab_questions(void)
 void print_qa(char **qa)
 {
 	int	i;
+	int	j;
 
 	if (!qa)
 		return ;
 	i = 0;
+	write(1, "\n\n", 2);
 	while (qa[i])
 	{
-		write(1, qa[i], ft_strlen(qa[i]));
+		j = 0;
+		while (qa[i][j])
+		{
+			if (ft_isprint(qa[i][j]) && qa[i][j] != '*')
+				write(1, &qa[i][j], 1);
+			j++;
+		}
 		write(1, "\n", 1);
 		i++;
 	}

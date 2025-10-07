@@ -46,8 +46,8 @@
 /* Function Prototypes */
 // void	draw_center_square(t_cub *cub);
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1280
+# define HEIGHT 720
 # define TILE 64
 # define P_SIZE 20
 # define MOVE_SPEED 0.1f
@@ -191,6 +191,9 @@ typedef struct s_game
 	int		map_width;
 	float	minimap_scale;
 	char	**door_state;
+	int		showing_scery;        // ADD THIS
+	double	scery_start_time;     // ADD THIS
+
 }	t_game;
 
 typedef struct s_cub
