@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/07 16:31:42 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/07 16:42:12 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_answer(char **qa)
 		if (a == 'a' && correct_answer(qa[1]))
 		{
 			count = 0;
-			return (1);	
+			return (1);
 		}
 		else if (a == 'b' && correct_answer(qa[2]))
 		{
