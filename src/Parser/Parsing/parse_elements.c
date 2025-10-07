@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:53:07 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 14:53:08 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/07 23:18:57 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,33 @@ static int	parse_component(const char *s, int *i, int *dst, int need_comma)
 	return (0);
 }
 
+static char	*trim_whitespace(const char *str)
+{
+	int		start;
+	int		end;
+	char	*result;
+	int		i;
+
+	if (!str)
+		return (NULL);
+	start = 0;
+	while (str[start] && is_ws(str[start]))
+		start++;
+	end = start;
+	while (str[end])
+		end++;
+	while (end > start && is_ws(str[end - 1]))
+		end--;
+	result = malloc(end - start + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (start < end)
+		result[i++] = str[start++];
+	result[i] = '\0';
+	return (result);
+}
+
 int	parse_tex_id(const char *s, char **out)
 {
 	int	i;
@@ -49,7 +76,7 @@ int	parse_tex_id(const char *s, char **out)
 		i++;
 	if (s[i] == '\0')
 		return (-1);
-	*out = strdup(s + i);
+	*out = trim_whitespace(s + i);
 	if (!*out)
 		return (-1);
 	return (0);

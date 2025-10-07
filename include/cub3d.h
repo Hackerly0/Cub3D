@@ -1,26 +1,3 @@
-/* ************************************************************************** */
-/*                                                                      typedef struct s_textures
-{
-	mlx_image_t		*pixel_ray;
-	mlx_image_t		*player;
-	mlx_image_t		*wall;
-	mlx_image_t		*space;
-	mlx_image_t		*crosshair;
-	mlx_texture_t	*north;
-	mlx_texture_t	*south;
-	mlx_texture_t	*east;
-	mlx_texture_t	*west;
-	mlx_texture_t	*door;
-	mlx_texture_t	*scary_door;  // New texture for scary door
-}	t_textures;                                                      :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 00:00:00 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/05 16:41:06 by salshaha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -233,6 +210,7 @@ void	rstrip_newline(char *s);
 uint32_t	rgb_to_hex(int r, int g, int b);
 void		facing_dir_n_s(t_cub *cub);
 void		facing_dir_e_w(t_cub *cub);
+void		drain_gnl(int fd);
 
 /* ========================================================================== */
 /*                          VALIDATION FUNCTIONS                              */
@@ -329,4 +307,5 @@ size_t	strlen(const char *s);
 void space_hook(mlx_key_data_t keydata, void* param);
 void print_qa(char **qa);
 char	**grab_questions(void);
+
 #endif

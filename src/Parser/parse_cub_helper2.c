@@ -6,12 +6,20 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:34 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 14:59:00 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/07 22:27:51 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 #include "../GNL/get_next_line.h"
+
+void	drain_gnl(int fd)
+{
+    char *line;
+
+    while ((line = get_next_line(fd)))
+        free(line);
+}
 
 static int	process_phase0(char *line, t_config *cfg, int *phase)
 {
@@ -20,7 +28,7 @@ static int	process_phase0(char *line, t_config *cfg, int *phase)
 	result = handle_header_line(line, cfg, &(*phase));
 	if (result)
 	{
-		//free(line);
+		free_config(cfg);
 		return (result);
 	}
 	return (0);
@@ -69,10 +77,13 @@ int	process_file_lines(int fd, t_config *cfg)
 		if (!line)
 			break ;
 		rstrip_newline(line);
-		if (phase == 0 && process_phase0(line, cfg, &phase))
-			return (1);
-		if (phase == 1 && process_phase1(line, cfg))
-			return (1);
+        if ((phase == 0 && process_phase0(line, cfg, &phase)) ||
+            (phase == 1 && process_phase1(line, cfg)))
+        {
+            free(line);
+            drain_gnl(fd);
+            return (1);
+        }
 		free(line);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:53:10 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 14:53:11 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/07 22:59:17 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,23 @@ int	ft_rowlen(const char *s)
 	return (i);
 }
 
-void	ft_fill_spaces(char *dst, int start, int end)
+static void	copy_content(char *new, char *old, int len)
 {
-	while (start < end)
+	int	i;
+
+	i = 0;
+	while (i < len)
 	{
-		dst[start] = '1';
+		new[i] = old[i];
+		i++;
+	}
+}
+
+static void	pad_with_spaces(char *new, int start, int width)
+{
+	while (start < width)
+	{
+		new[start] = ' ';
 		start++;
 	}
 }
@@ -38,7 +50,6 @@ int	ft_pad_one_row(char **row_ptr, int width)
 	char	*old;
 	char	*new;
 	int		len;
-	int		i;
 
 	old = *row_ptr;
 	len = ft_rowlen(old);
@@ -47,13 +58,8 @@ int	ft_pad_one_row(char **row_ptr, int width)
 	new = (char *)malloc((size_t)width + 1);
 	if (!new)
 		return (1);
-	i = 0;
-	while (i < len)
-	{
-		new[i] = old[i];
-		i++;
-	}
-	ft_fill_spaces(new, len, width);
+	copy_content(new, old, len);
+	pad_with_spaces(new, len, width);
 	new[width] = '\0';
 	free(old);
 	*row_ptr = new;

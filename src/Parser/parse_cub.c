@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:30 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 00:05:16 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/07 22:08:47 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ int	parse_cub(const char *path, t_config *cfg)
 	int	fd;
 	int	result;
 
+	parser_init(cfg);
 	if (validate_inputs(path, cfg))
 		return (1);
-	parser_init(cfg);
 	fd = open_cub_fd(path);
 	if (fd < 0)
 		return (1);
