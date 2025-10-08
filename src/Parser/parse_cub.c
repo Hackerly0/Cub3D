@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:30 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/07 22:08:47 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:30:05 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	rstrip_newline(char *s)
 
 	if (!s)
 		return ;
-	n = (int)strlen(s);
+	n = (int)ft_strlen(s);
 	while (n > 0 && (s[n - 1] == '\n' || s[n - 1] == '\r'))
 	{
 		s[n - 1] = '\0';
@@ -48,7 +48,7 @@ int	starts_with_id(const char *s, const char *id)
 		return (0);
 	while (s[i] && ((s[i] >= 9 && s[i] <= 13) || s[i] == 32))
 		i++;
-	return (strncmp(s + i, id, strlen(id)) == 0);
+	return (ft_strncmp(s + i, id, ft_strlen(id)) == 0);
 }
 
 static void	parser_init(t_config *cfg)

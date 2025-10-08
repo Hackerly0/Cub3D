@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 16:23:50 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/05 14:47:24 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/08 17:01:37 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ float	get_distance(t_cub *cub)
 
 	if (cub->rays->side == 0)
 	{
-		dist = (cub->rays->map_x - cub->game->xp_pos
-				+ (1 - cub->rays->step_x) / 2.0f) / cub->rays->ray_x;
+		dist = (cub->rays->map_x - cub->game->xp_pos + (1 - cub->rays->step_x)
+				/ 2.0f) / cub->rays->ray_x;
 	}
 	else
 	{
-		dist = (cub->rays->map_y - cub->game->yp_pos
-				+ (1 - cub->rays->step_y) / 2.0f) / cub->rays->ray_y;
+		dist = (cub->rays->map_y - cub->game->yp_pos + (1 - cub->rays->step_y)
+				/ 2.0f) / cub->rays->ray_y;
 	}
 	if (dist < 0.001f)
 		dist = 0.001f;
@@ -58,7 +58,7 @@ void	draw_wall_texture(t_cub *cub, mlx_texture_t *tex, t_column *col)
 	int			y;
 	int			tex_y;
 	uint32_t	color;
-	
+
 	if (!tex)
 		return ;
 	get_texture_coords(cub, tex, &col->wall_x, &col->tex_x);
@@ -84,8 +84,8 @@ void	draw_wall(t_cub *cub, t_column col)
 {
 	mlx_texture_t	*tex;
 
-	tex = get_wall_texture(cub, cub->rays->side,
-		cub->rays->step_x, cub->rays->step_y);
+	tex = get_wall_texture(cub, cub->rays->side, cub->rays->step_x,
+			cub->rays->step_y);
 	draw_ceiling_floor(cub, col);
 	draw_wall_texture(cub, tex, &col);
 }
@@ -104,5 +104,3 @@ void	draw_column(t_cub *cub, int x, float dist)
 		col.end = HEIGHT - 1;
 	draw_wall(cub, col);
 }
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:53:02 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 15:02:08 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:31:47 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**copy_map(char **map, int height)
 	i = 0;
 	while (i < height)
 	{
-		new_map[i] = strdup(map[i]);
+		new_map[i] = ft_strdup(map[i]);
 		if (!new_map[i])
 		{
 			ft_free(new_map, i);

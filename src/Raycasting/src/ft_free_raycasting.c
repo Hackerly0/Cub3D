@@ -3,131 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_raycasting.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:56:49 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/07 14:20:36 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/08 15:38:59 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-void free_map(t_game *game)
+void	free_textures(t_cub *cub)
 {
-    if (game && game->map)
-    {
-        for (int i = 0; i < game->map_height; i++)
-        {
-            if (game->map[i])
-                free(game->map[i]);
-        }
-        free(game->map);
-        game->map = NULL;
-    }
+	if (cub && cub->textures && cub->game && cub->game->mlx)
+	{
+		if (cub->textures->pixel_ray)
+			mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
+		if (cub->textures->player)
+			mlx_delete_image(cub->game->mlx, cub->textures->player);
+		if (cub->textures->wall)
+			mlx_delete_image(cub->game->mlx, cub->textures->wall);
+		if (cub->textures->scery)
+			mlx_delete_texture(cub->textures->scery);
+		if (cub->textures->north)
+			mlx_delete_texture(cub->textures->north);
+		if (cub->textures->south)
+			mlx_delete_texture(cub->textures->south);
+		if (cub->textures->east)
+			mlx_delete_texture(cub->textures->east);
+		if (cub->textures->west)
+			mlx_delete_texture(cub->textures->west);
+		if (cub->textures->door)
+			mlx_delete_texture(cub->textures->door);
+	}
 }
 
-void free_textures(t_cub *cub)
+void	free_td_array(t_game *game, char **string, int limit)
 {
-    if (cub && cub->textures && cub->game && cub->game->mlx)
-    {
-        // Delete images first
-        if (cub->textures->pixel_ray)
-            mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
-        if (cub->textures->player)
-            mlx_delete_image(cub->game->mlx, cub->textures->player);
-        if (cub->textures->wall) 
-            mlx_delete_image(cub->game->mlx, cub->textures->wall);
-            // Then delete textures
-        if (cub->textures->scery)
-            mlx_delete_texture(cub->textures->scery);
-        if (cub->textures->north)
-            mlx_delete_texture(cub->textures->north);
-        if (cub->textures->south)
-            mlx_delete_texture(cub->textures->south);
-        if (cub->textures->east)
-            mlx_delete_texture(cub->textures->east);
-        if (cub->textures->west)
-            mlx_delete_texture(cub->textures->west);
-        if (cub->textures->door)
-            mlx_delete_texture(cub->textures->door);
-        // if (cub->textures->scary_door)
-        //     mlx_delete_texture(cub->textures->scary_door); //should fix he leak because scary_door is assigned to door
-    }
+	int	i;
+
+	if (game && string)
+	{
+		i = 0;
+		while (i < limit)
+		{
+			if (string[i])
+				free(string[i]);
+			i++;
+		}
+		free(string);
+		string = NULL;
+	}
 }
 
-// void free_textures(t_cub *cub)
-// {
-//     if (cub->textures)
-//     {
-//         if (cub->textures->north)
-//             mlx_delete_texture(cub->textures->north);
-//         if (cub->textures->south)
-//             mlx_delete_texture(cub->textures->south);
-//         if (cub->textures->east)
-//             mlx_delete_texture(cub->textures->east);
-//         if (cub->textures->west)
-//             mlx_delete_texture(cub->textures->west);
-//         if (cub->textures->door)
-//             mlx_delete_texture(cub->textures->door);
-//         if (cub->textures->pixel_ray)
-//             mlx_delete_image(cub->game->mlx, cub->textures->pixel_ray);
-//         if (cub->textures->player)
-//             mlx_delete_image(cub->game->mlx, cub->textures->player);
-//         if (cub->textures->wall) 
-//             mlx_delete_image(cub->game->mlx, cub->textures->wall);
-//     }
-// }
-
-void free_door_states(t_game *game)
+void	ft_free_dir(t_dir *dir)
 {
-    int i;
-    
-    if (game && game->door_state)
-    {
-        i = 0;
-        while (i < game->map_height)
-        {
-            if (game->door_state[i])
-                free(game->door_state[i]);
-            i++;
-        }
-        free(game->door_state);
-        game->door_state = NULL;
-    }
+	if (dir)
+	{
+		if (dir->north_path)
+			free(dir->north_path);
+		if (dir->south_path)
+			free(dir->south_path);
+		if (dir->east_path)
+			free(dir->east_path);
+		if (dir->west_path)
+			free(dir->west_path);
+		if (dir->door_path)
+			free(dir->door_path);
+		free(dir);
+	}
 }
 
-int ft_free_struct(t_cub *cub, int type)
+int	ft_free_struct(t_cub *cub, int type)
 {
-    if (!cub)
-        return (type);
-    free_textures(cub);
-    free_door_states(cub->game);
-    free_map(cub->game);
-    if (cub->dir)
-    {
-        if (cub->dir->north_path)
-            free(cub->dir->north_path);
-        if (cub->dir->south_path)
-            free(cub->dir->south_path);
-        if (cub->dir->east_path)
-            free(cub->dir->east_path);
-        if (cub->dir->west_path)
-            free(cub->dir->west_path);
-        if (cub->dir->door_path)
-            free(cub->dir->door_path);
-    }
-    if (cub->game && cub->game->mlx)
-        mlx_terminate(cub->game->mlx);
-    if (cub->game)
-        free(cub->game);
-    if (cub->rays)
-        free(cub->rays);
-    if (cub->textures)
-        free(cub->textures);
-    if (cub->colors)
-        free(cub->colors);
-    if (cub->dir)
-        free(cub->dir);
-    free(cub);
-    return (type);
+	if (!cub)
+		return (type);
+	free_textures(cub);
+	free_td_array(cub->game, cub->game->door_state, cub->game->map_height);
+	free_td_array(cub->game, cub->game->map, cub->game->map_height);
+	ft_free_dir(cub->dir);
+	if (cub->game && cub->game->mlx)
+		mlx_terminate(cub->game->mlx);
+	if (cub->game)
+		free(cub->game);
+	if (cub->rays)
+		free(cub->rays);
+	if (cub->textures)
+		free(cub->textures);
+	if (cub->colors)
+		free(cub->colors);
+	free(cub);
+	return (type);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header_validation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 00:50:40 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 00:58:11 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:26:35 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	validate_file_extension(const char *path, const char *expected_ext)
 
 	if (!path || !expected_ext)
 		return (1);
-	path_len = (int)strlen(path);
-	ext_len = (int)strlen(expected_ext);
+	path_len = (int)ft_strlen(path);
+	ext_len = (int)ft_strlen(expected_ext);
 	while (path_len > 0 && (path[path_len - 1] == ' '
 			|| path[path_len - 1] == '\t'
 			|| path[path_len - 1] == '\n'
@@ -30,7 +30,7 @@ static int	validate_file_extension(const char *path, const char *expected_ext)
 		path_len--;
 	if (path_len < ext_len)
 		return (1);
-	return (strncmp(path + (path_len - ext_len), expected_ext, ext_len) != 0);
+	return (ft_strncmp(path + (path_len - ext_len), expected_ext, ext_len) != 0);
 }
 
 static int	validate_texture_file(const char *path)

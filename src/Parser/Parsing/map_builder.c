@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:53:13 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 14:53:14 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:32:19 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	copy_old(char **dst, char **src)
 	i = 0;
 	while (src && src[i])
 	{
-		dst[i] = strdup(src[i]);
+		dst[i] = ft_strdup(src[i]);
 		if (!dst[i])
 		{
 			ft_free(dst, i);
@@ -44,7 +44,7 @@ static int	copy_old(char **dst, char **src)
 
 static int	append_new(char **dst, int j, const char *s)
 {
-	dst[j] = strdup(s);
+	dst[j] = ft_strdup(s);
 	if (!dst[j])
 	{
 		ft_free(dst, j);
@@ -61,7 +61,7 @@ static int	first_insert(t_vars *v, const char *s)
 	temp = malloc(sizeof(char *) * 2);
 	if (!temp)
 		return (1);
-	temp[0] = strdup(s);
+	temp[0] = ft_strdup(s);
 	if (!temp[0])
 	{
 		free(temp);
@@ -69,7 +69,7 @@ static int	first_insert(t_vars *v, const char *s)
 	}
 	temp[1] = NULL;
 	v->map = temp;
-	v->width = (int)strlen(s);
+	v->width = (int)ft_strlen(s);
 	v->height = 1;
 	return (0);
 }
@@ -78,7 +78,7 @@ static void	finalize_existing(t_vars *v, char **temp, const char *s, int len)
 {
 	ft_free(v->map, -1);
 	v->map = temp;
-	v->width = max(v->width, (int)strlen(s));
+	v->width = max(v->width, (int)ft_strlen(s));
 	v->height = len + 1;
 }
 

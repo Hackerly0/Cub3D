@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:15:56 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/05 15:32:48 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/08 18:27:57 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,56 +55,60 @@ void	init_steps(t_cub *cub, t_rays *ray)
 	}
 }
 
-void perform_dda(t_cub *cub)
+void	update_ray_position(t_cub *cub)
 {
-    cub->rays->hit_cell = '0';
-    while (1)
-    {
-        if (cub->rays->side_x < cub->rays->side_y)
-            (cub->rays->side_x += cub->rays->delta_x,
-             cub->rays->map_x += cub->rays->step_x,
-             cub->rays->side = 0);
-        else
-            (cub->rays->side_y += cub->rays->delta_y,
-             cub->rays->map_y += cub->rays->step_y,
-             cub->rays->side = 1);
-
-        if (cub->rays->map_x < 0 || cub->rays->map_x >= cub->game->map_width
-         || cub->rays->map_y < 0 || cub->rays->map_y >= cub->game->map_height
-         || cub->game->map[cub->rays->map_y][cub->rays->map_x] == '1'
-         || (cub->game->map[cub->rays->map_y][cub->rays->map_x] == 'D'
-             && cub->game->door_state[cub->rays->map_y][cub->rays->map_x] == '1'))
-        {
-            cub->rays->hit_cell = cub->game->map[cub->rays->map_y][cub->rays->map_x];
-            if (cub->rays->map_x < 0 || cub->rays->map_x >= cub->game->map_width
-             || cub->rays->map_y < 0 || cub->rays->map_y >= cub->game->map_height)
-                cub->rays->hit_cell = '1';
-            return;
-        }
-    }
+	if (cub->rays->side_x < cub->rays->side_y)
+	{
+		cub->rays->side_x += cub->rays->delta_x;
+		cub->rays->map_x += cub->rays->step_x;
+		cub->rays->side = 0;
+	}
+	else
+	{
+		cub->rays->side_y += cub->rays->delta_y;
+		cub->rays->map_y += cub->rays->step_y;
+		cub->rays->side = 1;
+	}
 }
 
-void	cast_ray(t_cub *cub, int x)
+void	perform_dda(t_cub *cub)
 {
-	float	dist;
-
-	init_ray_vars(cub, x, cub->rays);
-	init_steps(cub, cub->rays);
-	perform_dda(cub);
-	dist = get_distance(cub);
-	draw_column(cub, x, dist);
+	cub->rays->hit_cell = '0';
+	while (1)
+	{
+		update_ray_position(cub);
+		if (cub->rays->map_x < 0 || cub->rays->map_x >= cub->game->map_width
+			|| cub->rays->map_y < 0 || cub->rays->map_y >= cub->game->map_height
+			|| cub->game->map[cub->rays->map_y][cub->rays->map_x] == '1'
+			|| (cub->game->map[cub->rays->map_y][cub->rays->map_x] == 'D'
+				&& cub->game->door_state
+					[cub->rays->map_y][cub->rays->map_x] == '1'))
+		{
+			cub->rays->hit_cell = cub->game->map
+			[cub->rays->map_y][cub->rays->map_x];
+			if (cub->rays->map_x < 0 || cub->rays->map_x >= cub->game->map_width
+				|| cub->rays->map_y < 0
+				|| cub->rays->map_y >= cub->game->map_height)
+				cub->rays->hit_cell = '1';
+			return ;
+		}
+	}
 }
 
 int	ray(t_cub *cub)
 {
-	int	x;
+	int		x;
+	float	dist;
 
 	x = 0;
 	while (x < WIDTH)
 	{
-		cast_ray(cub, x);
+		init_ray_vars(cub, x, cub->rays);
+		init_steps(cub, cub->rays);
+		perform_dda(cub);
+		dist = get_distance(cub);
+		draw_column(cub, x, dist);
 		x++;
 	}
-	// draw_center_square(cub);
 	return (0);
 }
