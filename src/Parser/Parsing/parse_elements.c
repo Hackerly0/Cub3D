@@ -6,11 +6,36 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:53:07 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/07 23:18:57 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:22:01 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+static int	has_valid_extension(const char *path)
+{
+	size_t	len;
+
+	len = strlen(path);
+	if (len > 4 && strcmp(path + len - 4, ".png") == 0)
+		return (1);
+	return (0);
+}
+
+static int	validate_texture_file(const char *path)
+{
+	int		fd;
+
+	if (!path)
+		return (-1);
+	if (!has_valid_extension(path))
+		return (-1);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (-1);
+	close(fd);
+	return (0);
+}
 
 static int	parse_component(const char *s, int *i, int *dst, int need_comma)
 {
@@ -33,36 +58,33 @@ static int	parse_component(const char *s, int *i, int *dst, int need_comma)
 	return (0);
 }
 
-static char	*trim_whitespace(const char *str)
+static char	*extract_and_trim_path(const char *s, int start)
 {
-	int		start;
 	int		end;
-	char	*result;
-	int		i;
+	int		len;
+	char	*path;
 
-	if (!str)
-		return (NULL);
-	start = 0;
-	while (str[start] && is_ws(str[start]))
-		start++;
 	end = start;
-	while (str[end])
+	while (s[end])
 		end++;
-	while (end > start && is_ws(str[end - 1]))
+	end--;
+	while (end >= start && is_ws(s[end]))
 		end--;
-	result = malloc(end - start + 1);
-	if (!result)
+	len = end - start + 1;
+	if (len <= 0)
 		return (NULL);
-	i = 0;
-	while (start < end)
-		result[i++] = str[start++];
-	result[i] = '\0';
-	return (result);
+	path = malloc(len + 1);
+	if (!path)
+		return (NULL);
+	strncpy(path, s + start, len);
+	path[len] = '\0';
+	return (path);
 }
 
 int	parse_tex_id(const char *s, char **out)
 {
-	int	i;
+	int		i;
+	char	*path;
 
 	i = 0;
 	if (!s || !out)
@@ -76,9 +98,15 @@ int	parse_tex_id(const char *s, char **out)
 		i++;
 	if (s[i] == '\0')
 		return (-1);
-	*out = trim_whitespace(s + i);
-	if (!*out)
+	path = extract_and_trim_path(s, i);
+	if (!path)
 		return (-1);
+	if (validate_texture_file(path) < 0)
+	{
+		free(path);
+		return (-1);
+	}
+	*out = path;
 	return (0);
 }
 
@@ -141,7 +169,7 @@ int	is_map_line(const char *s)
 		i++;
 	c = s[i];
 	if (c == '0' || c == '1' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W')
+		|| c == 'E' || c == 'W' || c == 'D')
 		return (1);
 	return (0);
 }

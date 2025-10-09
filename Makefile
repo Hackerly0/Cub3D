@@ -39,6 +39,7 @@ SRCS    = src/main.c \
 		$(PARSE_DIR)/Validation/header_validation.c \
 		$(PARSE_DIR)/Validation/map_validation.c \
 		$(PARSE_DIR)/Validation/player_validation.c \
+		$(PARSE_DIR)/Validation/door_validation.c \
 		$(GNL_DIR)/get_next_line.c \
 		$(GNL_DIR)/get_next_line_utils.c
 

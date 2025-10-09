@@ -236,6 +236,7 @@ int		is_void_or_oob(t_vars *v, int y, int x);
 int		flood_fill_recursive(char **map, int x, int y, t_vars *var);
 char	**copy_map(char **map, int height);
 int		warp_flood_fill(t_vars *var);
+int		validate_door_accessibility(t_vars *v);
 
 /* ========================================================================== */
 /*                           RAYCASTING FUNCTIONS                             */

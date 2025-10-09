@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:31 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/09/30 14:52:32 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:24:04 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int	handle_header_line(const char *line, t_config *cfg, int *phase)
 		return (0);
 	}
 	printf("Error\nunknown identifier\n");
+	//exit (1);
 	return (1);
 }

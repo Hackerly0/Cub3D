@@ -3,16 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   header_validation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 00:50:40 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/08 16:26:35 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:45:53 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ctype.h>
 #include <cub3d.h>
 #include "../GNL/get_next_line.h"
+
+static int	file_exists(const char *path)
+{
+	int	fd;
+
+	if (!path)
+		return (0);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	return (1);
+}
 
 static int	validate_file_extension(const char *path, const char *expected_ext)
 {
@@ -44,6 +57,11 @@ static int	validate_texture_file(const char *path)
 			printf("%s\n", path);
 		else
 			printf("(null)\n");
+		return (1);
+	}
+	if (!file_exists(path))
+	{
+		printf("Error\nTexture file not found or unreadable: %s\n", path);
 		return (1);
 	}
 	return (0);

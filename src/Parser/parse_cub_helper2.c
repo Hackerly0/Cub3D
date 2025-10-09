@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:34 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/07 22:27:51 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:20:35 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	process_file_lines(int fd, t_config *cfg)
         if ((phase == 0 && process_phase0(line, cfg, &phase)) ||
             (phase == 1 && process_phase1(line, cfg)))
         {
-            free(line);
             drain_gnl(fd);
             return (1);
         }
@@ -131,6 +130,8 @@ int	run_validations(t_config *cfg)
 	if (warp_flood_fill(&cfg->vars))
 		return (1);
 	if (map_validation(&cfg->vars))
+		return (1);
+	if (validate_door_accessibility(&cfg->vars))
 		return (1);
 	print_success(cfg);
 	return (0);
