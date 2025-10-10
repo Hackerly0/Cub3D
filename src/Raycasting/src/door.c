@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/08 16:47:26 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/10 22:40:55 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,81 @@ int	check_answer(char **qa)
 	return (0);
 }
 
+int load_collectible_textures(t_cub *cub)
+{
+	
+    cub->textures->collect_up = mlx_load_png("./textures/collect_up.png");
+    cub->textures->collect_mid = mlx_load_png("./textures/collect_mid.png");
+    cub->textures->collect_down = mlx_load_png("./textures/collect_down.png");
+    
+    if (!cub->textures->collect_up || !cub->textures->collect_mid || 
+        !cub->textures->collect_down)
+    {
+        printf("Error: Failed to load collectible textures\n");
+        return (1);
+    }
+    cub->textures->frame_collect[0] = cub->textures->collect_up;
+	cub->textures->frame_collect[1] = cub->textures->collect_mid;
+	cub->textures->frame_collect[2] = cub->textures->collect_down;
+		cub->textures->current_collect_frame = 0;
+    return (0);
+}
+
+// void	show_collect(t_cub *cub)
+// {
+// 	static int i = 0;
+// 	static double last_frame_time = 0;
+// 	double current_time;
+// 	double frame_delay = 0.2; // Adjust this value: higher = slower animation
+	
+// 	if (cub->game->show_collect)
+// 	{
+// 		current_time = mlx_get_time();
+		
+// 		// Only update frame if enough time has passed
+// 		if (current_time - last_frame_time >= frame_delay)
+// 		{
+// 			cub->textures->door = cub->textures->frame_collect[i];
+			
+// 			if (i < 2)
+// 				i++;
+// 			else
+// 				i = 0;
+			
+// 			last_frame_time = current_time;
+// 		}
+// 	}
+// }
+
+mlx_texture_t	*show_collect(t_cub *cub)
+{
+	static double last_frame_time = 0;
+	double current_time;
+	double frame_delay = 0.3; // Animation speed: higher = slower
+	
+	if (cub->game->show_collect)
+	{
+		current_time = mlx_get_time();
+		
+		// Update animation frame
+		if (current_time - last_frame_time >= frame_delay)
+		{
+			cub->textures->current_collect_frame++;
+			if (cub->textures->current_collect_frame > 2)
+				cub->textures->current_collect_frame = 0;
+			
+			last_frame_time = current_time;
+		}
+		
+		// Return the current animation frame
+		return (cub->textures->frame_collect[cub->textures->current_collect_frame]);
+	}
+	
+	// If not showing collectible, return normal door texture
+	return (cub->textures->door);
+}
+
+
 void	print_scary(int check_x, int check_y, t_cub *cub)
 {
 	mlx_image_t	*scery_img;
@@ -60,7 +135,11 @@ void	print_scary(int check_x, int check_y, t_cub *cub)
 		qa = grab_questions();
 		print_qa(qa);
 		if (check_answer(qa))
-			cub->game->door_state[check_y][check_x] = '0';
+		{
+			cub->game->num_doors--;
+			if (cub->game->num_doors != 0)
+				cub->game->door_state[check_y][check_x] = '0';
+		}
 		else
 		{
 			mlx_resize_image(scery_img, WIDTH, HEIGHT);
@@ -68,6 +147,11 @@ void	print_scary(int check_x, int check_y, t_cub *cub)
 			cub->game->showing_scery = 1;
 			cub->game->scery_start_time = mlx_get_time();
 		}
+	}
+	if (cub->game->num_doors == 0)
+	{
+		cub->game->show_collect = 1;
+		// show_collect(cub);
 	}
 	ft_free(qa, -1);
 }

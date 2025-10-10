@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:53:22 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/08 14:14:13 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/10 22:40:31 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	init_struct_element(t_cub *cub)
 	cub->game->plane_y = 0;
 	cub->game->showing_scery = 0;
 	cub->game->scery_start_time = 0.0;
+	cub->game->show_collect = 0;
+	cub->game->num_doors = 0;
 	cub->textures->player = NULL;
 	cub->textures->wall = NULL;
 	cub->textures->pixel_ray = NULL;

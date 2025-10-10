@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/08 17:10:40 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/10 22:38:44 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void number_of_door(t_game *game)
+{
+	int y;
+	int x;
+	int count;
+
+	y = 0;
+	count = 0;
+	while (y < game->map_height)
+	{
+		x = 0;
+		while (x < game->map_width)
+		{
+			if (game->map[y][x] == 'D')
+				count++;
+			x++;
+		}
+		y++;
+	}
+	game->num_doors = count;
+}
 
 void	init_door_states(t_game *game)
 {
@@ -38,6 +60,7 @@ void	init_door_states(t_game *game)
 		game->door_state[y][game->map_width] = '\0';
 		y++;
 	}
+	number_of_door(game);
 }
 
 int	is_valid_position(t_cub *cub, float map_x, float map_y)
@@ -54,9 +77,27 @@ int	is_valid_position(t_cub *cub, float map_x, float map_y)
 		return (0);
 	return (1);
 }
+int load_collectible_textures(t_cub *cub);
+
+// void load_ceil_frames(t_cub *cub)
+// {
+// 	cub->textures->ceiling[0] = mlx_load_png("./textures/skyy_1.png");
+// 	cub->textures->ceiling[1] = mlx_load_png("./textures/skyy_2.png");
+// 	cub->textures->ceiling[2] = mlx_load_png("./textures/skyy_3.png");
+// 	cub->textures->ceiling[3] = mlx_load_png("./textures/skyy_4.png");
+// 	if (!cub->textures->ceiling[0]
+// 		|| !cub->textures->ceiling[1]
+// 		|| !cub->textures->ceiling[2]
+// 		|| !cub->textures->ceiling[3])
+// 	{
+// 		printf("Error: Failed to load ceiling textures\n");
+// 		return ;
+// 	}
+// }
 
 int	load_textures(t_cub *cub)
 {
+	
 	cub->textures->north = mlx_load_png(cub->dir->north_path);
 	cub->textures->south = mlx_load_png(cub->dir->south_path);
 	cub->textures->east = mlx_load_png(cub->dir->east_path);
@@ -70,6 +111,9 @@ int	load_textures(t_cub *cub)
 		printf("Error: Failed to load one or more textures\n");
 		return (1);
 	}
+	if (load_collectible_textures(cub))
+        return (1);
+	// load_ceil_frames(cub);
 	return (0);
 }
 

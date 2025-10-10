@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/08 17:08:42 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/10 18:59:16 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	handle_movement_keys(t_cub *cub)
 	if (mlx_is_key_down(cub->game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub->game->mlx);
 }
-
+mlx_texture_t *show_collect(t_cub *cub);
 void	keyhook(void *param)
 {
 	t_cub	*cub;
@@ -122,4 +122,5 @@ void	keyhook(void *param)
 		cub->textures->player->instances[0].y = (int)(cub->game->yp_pos
 				* cub->game->minimap_scale);
 	}
+	show_collect(cub);
 }

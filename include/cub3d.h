@@ -139,7 +139,12 @@ typedef struct s_dir
 	char	*west_path;
 	char	*door_path;
 }	t_dir;
-
+typedef struct s_anim
+{
+    int frame_count;
+    int current_frame;
+    int delay_counter;
+}   t_anim;
 typedef struct s_textures
 {
 	mlx_image_t		*pixel_ray;
@@ -151,6 +156,12 @@ typedef struct s_textures
 	mlx_texture_t	*west;
 	mlx_texture_t	*door;
 	mlx_texture_t	*scery;
+		mlx_texture_t	*collect_up;
+		mlx_texture_t	*collect_mid;
+		mlx_texture_t	*collect_down;
+	mlx_texture_t *frame_collect[3];
+int current_collect_frame ;
+
 }	t_textures;
 
 typedef struct s_game
@@ -170,7 +181,8 @@ typedef struct s_game
 	char	**door_state;
 	int		showing_scery;        // ADD THIS
 	double	scery_start_time;     // ADD THIS
-
+	int		num_doors;           // ADD THIS
+	int		show_collect;
 }	t_game;
 
 typedef struct s_cub
