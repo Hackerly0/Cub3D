@@ -159,7 +159,7 @@ typedef struct s_textures
 		mlx_texture_t	*collect_up;
 		mlx_texture_t	*collect_mid;
 		mlx_texture_t	*collect_down;
-	mlx_texture_t *frame_collect[3];
+	mlx_texture_t *frame_collect[22];
 int current_collect_frame ;
 
 }	t_textures;

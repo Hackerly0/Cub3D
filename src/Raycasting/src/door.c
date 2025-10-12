@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/10 22:40:55 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/12 18:25:21 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,50 @@ int	check_answer(char **qa)
 	return (0);
 }
 
+void check_if_texture_fail(t_cub *cub)
+{
+	int i;
+
+	i = 0;
+	while(cub->textures->frame_collect[i])
+	{
+		if (!cub->textures->frame_collect[i])
+		{
+			printf("Error: Failed to load collectible textures\n");
+			ft_free_struct(cub, 1);
+			exit(1);
+		}
+		i++;
+	}
+	cub->textures->current_collect_frame = 0;
+}
+
 int load_collectible_textures(t_cub *cub)
 {
-	
-    cub->textures->collect_up = mlx_load_png("./textures/collect_up.png");
-    cub->textures->collect_mid = mlx_load_png("./textures/collect_mid.png");
-    cub->textures->collect_down = mlx_load_png("./textures/collect_down.png");
-    
-    if (!cub->textures->collect_up || !cub->textures->collect_mid || 
-        !cub->textures->collect_down)
-    {
-        printf("Error: Failed to load collectible textures\n");
-        return (1);
-    }
-    cub->textures->frame_collect[0] = cub->textures->collect_up;
-	cub->textures->frame_collect[1] = cub->textures->collect_mid;
-	cub->textures->frame_collect[2] = cub->textures->collect_down;
-		cub->textures->current_collect_frame = 0;
-    return (0);
+	cub->textures->frame_collect[0] = mlx_load_png("./textures/open/open_1.png");
+	cub->textures->frame_collect[1] = mlx_load_png("./textures/open/open_2.png");
+	cub->textures->frame_collect[2] = mlx_load_png("./textures/open/open_3.png");
+	cub->textures->frame_collect[3] = mlx_load_png("./textures/open/open_4.png");
+	cub->textures->frame_collect[4] = mlx_load_png("./textures/open/open_5.png");
+	cub->textures->frame_collect[5] = mlx_load_png("./textures/open/open_6.png");
+	cub->textures->frame_collect[6] = mlx_load_png("./textures/open/open_7.png");
+	cub->textures->frame_collect[7] = mlx_load_png("./textures/open/open_8.png");
+	cub->textures->frame_collect[8] = mlx_load_png("./textures/open/open_9.png");
+	cub->textures->frame_collect[9] = mlx_load_png("./textures/open/open_10.png");
+	cub->textures->frame_collect[10] = mlx_load_png("./textures/open/open_11.png");
+	cub->textures->frame_collect[11] = mlx_load_png("./textures/open/open_12.png");
+	cub->textures->frame_collect[12] = mlx_load_png("./textures/open/open_13.png");
+	cub->textures->frame_collect[13] = mlx_load_png("./textures/open/open_14.png");
+	cub->textures->frame_collect[14] = mlx_load_png("./textures/open/open_15.png");
+	cub->textures->frame_collect[15] = mlx_load_png("./textures/open/open_16.png");
+	cub->textures->frame_collect[16] = mlx_load_png("./textures/open/open_17.png");
+	cub->textures->frame_collect[17] = mlx_load_png("./textures/open/open_18.png");
+	cub->textures->frame_collect[18] = mlx_load_png("./textures/open/open_19.png");
+	cub->textures->frame_collect[19] = mlx_load_png("./textures/open/open_20.png");
+	cub->textures->frame_collect[20] = mlx_load_png("./textures/open/open_21.png");
+	cub->textures->frame_collect[21] = NULL;
+	check_if_texture_fail(cub);
+	return (0);
 }
 
 // void	show_collect(t_cub *cub)
@@ -108,7 +134,7 @@ mlx_texture_t	*show_collect(t_cub *cub)
 		if (current_time - last_frame_time >= frame_delay)
 		{
 			cub->textures->current_collect_frame++;
-			if (cub->textures->current_collect_frame > 2)
+			if (cub->textures->current_collect_frame > 20)
 				cub->textures->current_collect_frame = 0;
 			
 			last_frame_time = current_time;

@@ -6,12 +6,25 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:56:49 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/08 15:38:59 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/12 18:29:40 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
+static void	free_collect_frames(t_cub *cub)
+{
+	int	i;
+
+	i = 0;
+		while (cub->textures->frame_collect[i])
+		{
+			if (cub->textures->frame_collect[i])
+				mlx_delete_texture(cub->textures->frame_collect[i]);
+			i++;
+		}
+}
+	
 void	free_textures(t_cub *cub)
 {
 	if (cub && cub->textures && cub->game && cub->game->mlx)
@@ -34,6 +47,7 @@ void	free_textures(t_cub *cub)
 			mlx_delete_texture(cub->textures->west);
 		if (cub->textures->door)
 			mlx_delete_texture(cub->textures->door);
+		free_collect_frames(cub);
 	}
 }
 
