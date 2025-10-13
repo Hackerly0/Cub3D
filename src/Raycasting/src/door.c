@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/12 18:25:21 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:35:02 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,43 @@ void check_if_texture_fail(t_cub *cub)
 	cub->textures->current_collect_frame = 0;
 }
 
+void	exit_load(char *path, char *number, char *printed_path, t_cub *cub)
+{
+	if (path)
+		free(path);
+	if (number)
+		free(number);
+	if (printed_path)
+		free(printed_path);
+	if (cub)
+		ft_free_struct(cub , 1);
+	exit(1);
+}
+
 int load_collectible_textures(t_cub *cub)
 {
-	cub->textures->frame_collect[0] = mlx_load_png("./textures/open/open_1.png");
-	cub->textures->frame_collect[1] = mlx_load_png("./textures/open/open_2.png");
-	cub->textures->frame_collect[2] = mlx_load_png("./textures/open/open_3.png");
-	cub->textures->frame_collect[3] = mlx_load_png("./textures/open/open_4.png");
-	cub->textures->frame_collect[4] = mlx_load_png("./textures/open/open_5.png");
-	cub->textures->frame_collect[5] = mlx_load_png("./textures/open/open_6.png");
-	cub->textures->frame_collect[6] = mlx_load_png("./textures/open/open_7.png");
-	cub->textures->frame_collect[7] = mlx_load_png("./textures/open/open_8.png");
-	cub->textures->frame_collect[8] = mlx_load_png("./textures/open/open_9.png");
-	cub->textures->frame_collect[9] = mlx_load_png("./textures/open/open_10.png");
-	cub->textures->frame_collect[10] = mlx_load_png("./textures/open/open_11.png");
-	cub->textures->frame_collect[11] = mlx_load_png("./textures/open/open_12.png");
-	cub->textures->frame_collect[12] = mlx_load_png("./textures/open/open_13.png");
-	cub->textures->frame_collect[13] = mlx_load_png("./textures/open/open_14.png");
-	cub->textures->frame_collect[14] = mlx_load_png("./textures/open/open_15.png");
-	cub->textures->frame_collect[15] = mlx_load_png("./textures/open/open_16.png");
-	cub->textures->frame_collect[16] = mlx_load_png("./textures/open/open_17.png");
-	cub->textures->frame_collect[17] = mlx_load_png("./textures/open/open_18.png");
-	cub->textures->frame_collect[18] = mlx_load_png("./textures/open/open_19.png");
-	cub->textures->frame_collect[19] = mlx_load_png("./textures/open/open_20.png");
-	cub->textures->frame_collect[20] = mlx_load_png("./textures/open/open_21.png");
+	int	i;
+	char *path;
+	char *number;
+	char *printed_path;
+
+	i = 0;
+	while (i < 21)
+	{
+		number = ft_itoa(i + 1);
+		if (!number)
+			exit_load(NULL , NULL, NULL, cub);
+		path = ft_strjoin("./textures/open/open_", number);
+		if (!path)
+			exit_load(NULL, number, NULL, cub);
+		printed_path = ft_strjoin (path, ".png");
+		if (!printed_path)
+			exit_load(path, number, NULL, cub);
+		cub->textures->frame_collect[i++] = mlx_load_png(printed_path);
+		free(printed_path);
+		free(path);
+		free(number);
+	}
 	cub->textures->frame_collect[21] = NULL;
 	check_if_texture_fail(cub);
 	return (0);
@@ -124,7 +138,7 @@ mlx_texture_t	*show_collect(t_cub *cub)
 {
 	static double last_frame_time = 0;
 	double current_time;
-	double frame_delay = 0.3; // Animation speed: higher = slower
+	double frame_delay = 0.1; // Animation speed: higher = slower
 	
 	if (cub->game->show_collect)
 	{
@@ -135,8 +149,10 @@ mlx_texture_t	*show_collect(t_cub *cub)
 		{
 			cub->textures->current_collect_frame++;
 			if (cub->textures->current_collect_frame > 20)
-				cub->textures->current_collect_frame = 0;
-			
+			{
+				ft_free_struct(cub, 0);
+				exit(0);
+			}
 			last_frame_time = current_time;
 		}
 		
