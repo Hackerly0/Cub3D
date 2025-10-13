@@ -27,6 +27,8 @@ SRCS    = src/main.c \
 		$(RAYCAST_DIR)/door.c \
 		$(RAYCAST_DIR)/init.c \
 		$(RAYCAST_DIR)/ft_free_raycasting.c \
+		$(RAYCAST_DIR)/animated_door.c \
+		$(RAYCAST_DIR)/print.c \
 		$(PARSE_DIR)/parse_cub.c \
 		$(PARSE_DIR)/parse_cub_helper.c \
 		$(PARSE_DIR)/parse_cub_helper2.c \

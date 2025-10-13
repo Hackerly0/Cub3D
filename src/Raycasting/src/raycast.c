@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/10 22:38:44 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/14 00:09:36 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,6 @@ int	is_valid_position(t_cub *cub, float map_x, float map_y)
 		return (0);
 	return (1);
 }
-int load_collectible_textures(t_cub *cub);
-
-// void load_ceil_frames(t_cub *cub)
-// {
-// 	cub->textures->ceiling[0] = mlx_load_png("./textures/skyy_1.png");
-// 	cub->textures->ceiling[1] = mlx_load_png("./textures/skyy_2.png");
-// 	cub->textures->ceiling[2] = mlx_load_png("./textures/skyy_3.png");
-// 	cub->textures->ceiling[3] = mlx_load_png("./textures/skyy_4.png");
-// 	if (!cub->textures->ceiling[0]
-// 		|| !cub->textures->ceiling[1]
-// 		|| !cub->textures->ceiling[2]
-// 		|| !cub->textures->ceiling[3])
-// 	{
-// 		printf("Error: Failed to load ceiling textures\n");
-// 		return ;
-// 	}
-// }
 
 int	load_textures(t_cub *cub)
 {
@@ -111,14 +94,14 @@ int	load_textures(t_cub *cub)
 		printf("Error: Failed to load one or more textures\n");
 		return (1);
 	}
-	if (load_collectible_textures(cub))
+	if (load_frame_textures(cub))
         return (1);
-	// load_ceil_frames(cub);
 	return (0);
 }
 
 int	raycasting(t_cub *cub)
 {
+	print_statment();
 	cub->game->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	if (!cub->game->mlx)
 		return (ft_free_struct(cub, 1));

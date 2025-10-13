@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:02:47 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/12 15:31:59 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:52:18 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,11 @@ uint32_t	get_pixel_color(mlx_texture_t *tex, int x, int y)
 		| (pixels[i + 2] << 8) | 0xFF);
 }
 
-mlx_texture_t *show_collect(t_cub *cub);
 mlx_texture_t	*get_wall_texture(t_cub *cub, int side, int step_x, int step_y)
 {
 	if (cub->rays->hit_cell == 'D')
 	{
-		// if (!cub->game->show_collect)
-			// return (cub->textures->door);
-		// else
-			return (show_collect(cub));
+			return (show_animated(cub));
 	}
 	if (side == 0)
 	{

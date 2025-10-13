@@ -20,9 +20,6 @@
 /*                                   DEFINES                                  */
 /* ========================================================================== */
 
-/* Function Prototypes */
-// void	draw_center_square(t_cub *cub);
-
 # define WIDTH 1280
 # define HEIGHT 720
 # define TILE 64
@@ -159,8 +156,8 @@ typedef struct s_textures
 		mlx_texture_t	*collect_up;
 		mlx_texture_t	*collect_mid;
 		mlx_texture_t	*collect_down;
-	mlx_texture_t *frame_collect[22];
-int current_collect_frame ;
+	mlx_texture_t *frame_door[22];
+int current_door_frame ;
 
 }	t_textures;
 
@@ -179,10 +176,10 @@ typedef struct s_game
 	int		map_width;
 	float	minimap_scale;
 	char	**door_state;
-	int		showing_scery;        // ADD THIS
-	double	scery_start_time;     // ADD THIS
-	int		num_doors;           // ADD THIS
-	int		show_collect;
+	int		showing_scery;
+	double	scery_start_time;
+	int		num_doors;
+	int		show_animated;
 }	t_game;
 
 typedef struct s_cub
@@ -255,10 +252,8 @@ int		validate_door_accessibility(t_vars *v);
 /* ========================================================================== */
 
 int				ray(t_cub *cub);
-void			colores_set(t_cub *cub);
 void			put_wall_pixel(t_cub *cub, int i, int begin, int end,
 					int tex_x, mlx_texture_t *texture);
-void			cast_ray(t_cub *cub, int x);
 void			draw_column(t_cub *cub, int x, float dist);
 float			get_distance(t_cub *cub);
 uint32_t		get_pixel_color(mlx_texture_t *tex, int x, int y);
@@ -271,6 +266,7 @@ void			get_texture_coords(t_cub *cub, mlx_texture_t *tex,
 /* ========================================================================== */
 
 void	keyhook(void *param);
+void 	space_hook(mlx_key_data_t keydata, void* param);
 void	rotate_player(t_cub *cub, float theta);
 void	cursor(double xpos, double ypos, void *param);
 void	move_player(t_cub *cub, float move_x, float move_y);
@@ -282,10 +278,8 @@ int 	is_valid_position(t_cub *cub, float map_x, float map_y);
 /*                        INITIALIZATION FUNCTIONS                            */
 /* ========================================================================== */
 
-void	facing_dir(t_cub *cub);
 int		struct_init(t_cub *cub);
 int		ft_free_struct(t_cub *cub, int type);
-void	init_map_from_sample(t_game *g, t_cub *cub);
 int		init_image(t_cub *cub);
 void	init_door_states(t_game *game);
 
@@ -312,13 +306,17 @@ int		isnum(int c);
 int		perr(const char *msg);
 int		max(int a, int b);
 void	ft_free(char **s, int j);
-char	*strdup(const char *s);
-size_t	strlen(const char *s);
 
-
-
-void space_hook(mlx_key_data_t keydata, void* param);
+/* ========================================================================== */
+/*                            ANIMATION AND QUESTIONS                         */
+/* ========================================================================== */
 void print_qa(char **qa);
 char	**grab_questions(void);
+mlx_texture_t	*show_animated(t_cub *cub);
+int load_frame_textures(t_cub *cub);
+
+
+void print_statment();
+void print_statment_win();
 
 #endif
