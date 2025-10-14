@@ -13,32 +13,6 @@
 #include <cub3d.h>
 #include "../GNL/get_next_line.h"
 
-int	is_blank(const char *s)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (1);
-	while (s[i] && ((s[i] >= 9 && s[i] <= 13) || s[i] == 32))
-		i++;
-	return (s[i] == '\0');
-}
-
-void	rstrip_newline(char *s)
-{
-	int	n;
-
-	if (!s)
-		return ;
-	n = (int)ft_strlen(s);
-	while (n > 0 && (s[n - 1] == '\n' || s[n - 1] == '\r'))
-	{
-		s[n - 1] = '\0';
-		n--;
-	}
-}
-
 int	starts_with_id(const char *s, const char *id)
 {
 	int	i;

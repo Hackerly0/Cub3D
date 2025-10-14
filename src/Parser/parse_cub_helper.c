@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:31 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/09 18:24:04 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:23:22 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,31 +87,4 @@ int	handle_colors(const char *line, t_config *cfg)
 	if (r != -1)
 		return (r);
 	return (-1);
-}
-
-int	handle_header_line(const char *line, t_config *cfg, int *phase)
-{
-	int	result;
-
-	if (is_blank(line))
-		return (0);
-	result = handle_north_south(line, cfg);
-	if (result >= 0)
-		return (result);
-	result = handle_west_east(line, cfg);
-	if (result >= 0)
-		return (result);
-	result = handle_colors(line, cfg);
-	if (result >= 0)
-		return (result);
-	if (is_map_line(line))
-	{
-		if (validate_headers_complete(cfg))
-			return (1);
-		*phase = 1;
-		return (0);
-	}
-	printf("Error\nunknown identifier\n");
-	//exit (1);
-	return (1);
 }

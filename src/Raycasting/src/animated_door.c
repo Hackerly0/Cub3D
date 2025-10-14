@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animated_door.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 23:00:22 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/14 18:18:58 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:18:29 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ mlx_texture_t	*show_animated(t_cub *cub)
 	double			current_time;
 	double			frame_delay;
 
-	// last_frame_time = 0;
+	last_frame_time = 0;
 	frame_delay = 0.1;
 	if (cub->game->show_animated)
 	{
@@ -91,7 +91,6 @@ mlx_texture_t	*show_animated(t_cub *cub)
 				print_statment_win();
 				ft_free_struct(cub, 0);
 				exit(0);
-				return NULL;
 			}
 			last_frame_time = current_time;
 		}

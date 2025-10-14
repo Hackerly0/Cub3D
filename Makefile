@@ -18,6 +18,7 @@ MLXFLAGS = -Iinclude -ldl -lglfw -pthread -lm
 SRCS    = src/main.c \
 		src/config_to_cub.c \
 		src/grab_questions.c \
+		src/helper.c \
 		$(RAYCAST_DIR)/raycast.c \
 		$(RAYCAST_DIR)/raycasting.c \
 		$(RAYCAST_DIR)/move.c \
@@ -32,13 +33,17 @@ SRCS    = src/main.c \
 		$(PARSE_DIR)/parse_cub.c \
 		$(PARSE_DIR)/parse_cub_helper.c \
 		$(PARSE_DIR)/parse_cub_helper2.c \
+		$(PARSE_DIR)/parse_cub_helper3.c \
 		$(PARSE_DIR)/Parsing/map_builder.c \
+		$(PARSE_DIR)/Parsing/map_builder_helper.c \
 		$(PARSE_DIR)/Parsing/pad_map.c \
 		$(PARSE_DIR)/Parsing/parse_elements.c \
+		$(PARSE_DIR)/Parsing/parse_elements_helper.c \
 		$(PARSE_DIR)/Utility/memory_utils.c \
 		$(PARSE_DIR)/Utility/utils.c \
 		$(PARSE_DIR)/Validation/flood_validation.c \
 		$(PARSE_DIR)/Validation/header_validation.c \
+		$(PARSE_DIR)/Validation/header_validation_helper.c \
 		$(PARSE_DIR)/Validation/map_validation.c \
 		$(PARSE_DIR)/Validation/player_validation.c \
 		$(PARSE_DIR)/Validation/door_validation.c \

@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:47 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/09 17:33:14 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:06:34 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	map_validation(t_vars *v)
 			if (v->map[i][j] == '0' && touches_void8(v, i, j))
 				return (1);
 			else if (v->map[i][j] == 'D' && touches_void8(v, i, j))
-				return(1);
+				return (1);
 			j++;
 		}
 		i++;

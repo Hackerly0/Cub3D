@@ -6,57 +6,11 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:53:07 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/09 19:22:01 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/14 22:06:33 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-static int	has_valid_extension(const char *path)
-{
-	size_t	len;
-
-	len = strlen(path);
-	if (len > 4 && strcmp(path + len - 4, ".png") == 0)
-		return (1);
-	return (0);
-}
-
-static int	validate_texture_file(const char *path)
-{
-	int		fd;
-
-	if (!path)
-		return (-1);
-	if (!has_valid_extension(path))
-		return (-1);
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	close(fd);
-	return (0);
-}
-
-static int	parse_component(const char *s, int *i, int *dst, int need_comma)
-{
-	int	v;
-
-	v = parse_num(s, i);
-	if (v < 0)
-		return (-1);
-	*dst = v;
-	while (s[*i] && is_ws(s[*i]))
-		(*i)++;
-	if (need_comma)
-	{
-		if (s[*i] != ',')
-			return (-1);
-		(*i)++;
-		while (s[*i] && is_ws(s[*i]))
-			(*i)++;
-	}
-	return (0);
-}
 
 static char	*extract_and_trim_path(const char *s, int start)
 {
@@ -101,7 +55,7 @@ int	parse_tex_id(const char *s, char **out)
 	path = extract_and_trim_path(s, i);
 	if (!path)
 		return (-1);
-	if (validate_texture_file(path) < 0)
+	if (validate_texture_file_path(path) < 0)
 	{
 		free(path);
 		return (-1);

@@ -6,46 +6,12 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:34 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/09 19:20:35 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/14 22:18:14 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 #include "../GNL/get_next_line.h"
-
-void	drain_gnl(int fd)
-{
-    char *line;
-
-    while ((line = get_next_line(fd)))
-        free(line);
-}
-
-static int	process_phase0(char *line, t_config *cfg, int *phase)
-{
-	int	result;
-
-	result = handle_header_line(line, cfg, &(*phase));
-	if (result)
-	{
-		free_config(cfg);
-		return (result);
-	}
-	return (0);
-}
-
-static int	process_phase1(char *line, t_config *cfg)
-{
-	int	result;
-
-	result = handle_map_line(line, cfg);
-	if (result)
-	{
-		free(line);
-		return (result);
-	}
-	return (0);
-}
 
 int	handle_map_line(const char *line, t_config *cfg)
 {
@@ -77,28 +43,19 @@ int	process_file_lines(int fd, t_config *cfg)
 		if (!line)
 			break ;
 		rstrip_newline(line);
-        if ((phase == 0 && process_phase0(line, cfg, &phase)) ||
-            (phase == 1 && process_phase1(line, cfg)))
-        {
-            drain_gnl(fd);
-            return (1);
-        }
-		free(line);
+		if ((phase == 0 && process_phase0(line, cfg, &phase))
+			|| (phase == 1 && process_phase1(line, cfg)))
+		{
+			line = get_next_line(fd);
+			while (line)
+			{
+				free(line);
+				line = get_next_line(fd);
+			}
+			return (1);
+		}
 	}
 	return (0);
-}
-
-static void	print_padded_map(t_vars *v)
-{
-	int	i;
-
-	printf("DEBUG: Padded map:\n");
-	i = 0;
-	while (i < v->height)
-	{
-		printf("'%s'\n", v->map[i]);
-		i++;
-	}
 }
 
 static void	print_success(t_config *cfg)
@@ -122,7 +79,6 @@ int	run_validations(t_config *cfg)
 		printf("Error\nalloc failed while padding\n");
 		return (1);
 	}
-	print_padded_map(&cfg->vars);
 	if (validate_chars(&cfg->vars))
 		return (1);
 	if (validate_and_extract_player(&cfg->vars))
