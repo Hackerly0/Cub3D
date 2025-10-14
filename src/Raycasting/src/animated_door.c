@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 23:00:22 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/14 21:18:29 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/14 23:18:35 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ mlx_texture_t	*show_animated(t_cub *cub)
 	double			current_time;
 	double			frame_delay;
 
-	last_frame_time = 0;
 	frame_delay = 0.1;
 	if (cub->game->show_animated)
 	{
