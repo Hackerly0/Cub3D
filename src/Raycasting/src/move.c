@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:50:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/13 22:52:12 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/14 18:09:42 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ void	cursor(double xpos, double ypos, void *param)
 {
 	t_cub			*cub;
 	double			delta_x;
-	static double	last_x;
+	static double	last_x = -1;
 
-	last_x = -1;
 	cub = (t_cub *)param;
 	(void)ypos;
 	if (last_x < 0)

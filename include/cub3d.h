@@ -153,9 +153,6 @@ typedef struct s_textures
 	mlx_texture_t	*west;
 	mlx_texture_t	*door;
 	mlx_texture_t	*scery;
-		mlx_texture_t	*collect_up;
-		mlx_texture_t	*collect_mid;
-		mlx_texture_t	*collect_down;
 	mlx_texture_t *frame_door[22];
 int current_door_frame ;
 
@@ -314,7 +311,7 @@ void print_qa(char **qa);
 char	**grab_questions(void);
 mlx_texture_t	*show_animated(t_cub *cub);
 int load_frame_textures(t_cub *cub);
-
+char **grep_print(char **qa);
 
 void print_statment();
 void print_statment_win();

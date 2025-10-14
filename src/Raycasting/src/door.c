@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/13 23:08:31 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/14 17:38:54 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ void	print_scary(int check_x, int check_y, t_cub *cub)
 	scery_img = mlx_texture_to_image(cub->game->mlx, cub->textures->scery);
 	if (cub->game->door_state[check_y][check_x] == '1')
 	{
-		qa = grab_questions();
-		print_qa(qa);
+		qa = grep_print(qa);
 		if (check_answer(qa))
 		{
 			cub->game->num_doors--;

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/14 00:09:36 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/14 17:55:30 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void number_of_door(t_game *game)
+void	number_of_door(t_game *game)
 {
-	int y;
-	int x;
-	int count;
+	int	y;
+	int	x;
+	int	count;
 
 	y = 0;
 	count = 0;
@@ -68,8 +68,8 @@ int	is_valid_position(t_cub *cub, float map_x, float map_y)
 	char	cell;
 
 	cell = cub->game->map[(int)map_y][(int)map_x];
-	if (map_x < 0 || map_x >= cub->game->map_width
-		|| map_y < 0 || map_y >= cub->game->map_height)
+	if (map_x < 0 || map_x >= cub->game->map_width || map_y < 0
+		|| map_y >= cub->game->map_height)
 		return (0);
 	if (cell == '1')
 		return (0);
@@ -80,22 +80,21 @@ int	is_valid_position(t_cub *cub, float map_x, float map_y)
 
 int	load_textures(t_cub *cub)
 {
-	
 	cub->textures->north = mlx_load_png(cub->dir->north_path);
 	cub->textures->south = mlx_load_png(cub->dir->south_path);
 	cub->textures->east = mlx_load_png(cub->dir->east_path);
 	cub->textures->west = mlx_load_png(cub->dir->west_path);
 	cub->textures->door = mlx_load_png("./textures/door.png");
 	cub->textures->scery = mlx_load_png("./textures/scery.png");
-	if (!cub->textures->north || !cub->textures->south
-		|| !cub->textures->east || !cub->textures->west
-		|| !cub->textures->door || !cub->textures->scery)
+	if (!cub->textures->north || !cub->textures->south || !cub->textures->east
+		|| !cub->textures->west || !cub->textures->door
+		|| !cub->textures->scery)
 	{
 		printf("Error: Failed to load one or more textures\n");
 		return (1);
 	}
 	if (load_frame_textures(cub))
-        return (1);
+		return (1);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_raycasting.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:56:49 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/13 22:42:46 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/14 18:24:55 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void	free_collect_frames(t_cub *cub)
 	int	i;
 
 	i = 0;
-	while (cub->textures->frame_door[i])
+	while (i < 21 && cub->textures->frame_door[i])
 	{
 		if (cub->textures->frame_door[i])
 			mlx_delete_texture(cub->textures->frame_door[i]);
 		i++;
 	}
 }
-	
+
 void	free_textures(t_cub *cub)
 {
 	if (cub && cub->textures && cub->game && cub->game->mlx)
