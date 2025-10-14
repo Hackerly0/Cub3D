@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by your_login        #+#    #+#             */
-/*   Updated: 2025/10/14 22:06:27 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/14 22:40:41 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,6 @@ int				parse_num(const char *s, int *i);
 void			push_map_line(t_vars *v, const char *s);
 int				pad_map_rect(t_vars *v);
 int				ft_rowlen(const char *s);
-void			ft_fill_spaces(char *dst, int start, int end);
 int				ft_pad_one_row(char **row_ptr, int width);
 void			free_config(t_config *cfg);
 int				is_blank(const char *s);
@@ -237,7 +236,6 @@ void			rstrip_newline(char *s);
 uint32_t		rgb_to_hex(int r, int g, int b);
 void			facing_dir_n_s(t_cub *cub);
 void			facing_dir_e_w(t_cub *cub);
-void			drain_gnl(int fd);
 int				process_phase0(char *line, t_config *cfg, int *phase);
 int				process_phase1(char *line, t_config *cfg);
 int				is_blank_line(const char *s);
@@ -256,15 +254,10 @@ int				validate_colors(t_config *cfg);
 int				validate_chars(t_vars *v);
 int				validate_cub_file(const char *path);
 int				validate_and_extract_player(t_vars *v);
-int				validate_and_extract_player_enhanced(t_vars *v);
-int				validate_map_walls(t_vars *v);
-int				validate_map_with_floodfill(t_vars *v);
 int				map_validation(t_vars *var);
 int				is_allowed(char c);
 int				is_spawn(char c);
 int				is_walkable(char c);
-int				is_valid_map_char(char c);
-int				is_surrounded_by_walls(t_vars *v, int y, int x);
 int				is_void_or_oob(t_vars *v, int y, int x);
 int				flood_fill_recursive(char **map, int x, int y, t_vars *var);
 char			**copy_map(char **map, int height);
