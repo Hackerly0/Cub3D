@@ -13,3 +13,18 @@ Who discovered gravity?, a) Einstein, b) *Newton, c) Galileo, d) Tesla
 What is the fastest land animal?, a) Lion, b) Tiger, c) *Cheetah, d) Horse
 Which continent is Egypt part of?, a) Asia, b) *Africa, c) Europe, d) America
 What gas do humans need to breathe?, a) *Oxygen, b) Carbon Dioxide, c) Nitrogen, d) Helium
+Which library is needed for printf()?, a) string.h, b) stdbool.h, c) *stdio.h, d) stdlib.h
+Which keyword creates a loop?, a) stop, b) *for, c) loop, d) def
+What does return 0; mean?, a) Error, b) *Program ended successfully, c) Restarts program, d) Prints 0
+What is an array?, a) Function, b) *Collection of same type elements, c) Pointer, d) Loop
+What is the default target in a Makefile?, a) clean, b) *The first target, c) all, d) main
+What does $@ represent?, a) Dependency name, b) *Target name, c) File path, d) Command name
+How do you define a variable?, a) *VAR = value, b) VAR: value, c) VAR == value, d) VAR := value
+What does the -C flag do in make?, a) *Changes directory, b) Cleans files, c) Compiles, d) Copies files
+What does $^ represent?, a) *All dependencies, b) First dependency, c) Output file, d) Flags
+Which country invented pasta?, a) China, b) *Italy, c) Greece, d) France
+Which country invented chocolate?, a) France, b) *Mexico, c) Switzerland, d) Ghana
+What is an object in OOP?, a) A function, b) *An instance of a class, c) A header file, d) A pointer
+What is used to access members of a class through a pointer?, a) *, b) ., c) *->, d) -<
+Which function is called automatically when an object is created?, a) *Constructor, b) Destructor, c) Setter, d) Getter
+What is function overloading?, a) *Same name, different parameters, b) Same name, same parameters, c) Multiple returns, d) Static functions

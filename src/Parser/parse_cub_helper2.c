@@ -6,7 +6,7 @@
 /*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:34 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/14 23:27:48 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:59:13 by hnisirat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	process_file_lines(int fd, t_config *cfg)
 		if ((phase == 0 && process_phase0(line, cfg, &phase))
 			|| (phase == 1 && process_phase1(line, cfg)))
 		{
-			free(line);
 			line = get_next_line(fd);
 			while (line)
 			{
