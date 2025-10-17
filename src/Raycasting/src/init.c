@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:53:22 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/13 22:50:21 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:36:58 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	init_struct_element(t_cub *cub)
 	cub->game->scery_start_time = 0.0;
 	cub->game->show_animated = 0;
 	cub->game->num_doors = 0;
+	cub->game->ans = '0';
 	cub->textures->player = NULL;
 	cub->textures->wall = NULL;
 	cub->textures->pixel_ray = NULL;
@@ -70,6 +71,10 @@ void	init_struct_element(t_cub *cub)
 	cub->textures->east = NULL;
 	cub->textures->west = NULL;
 	cub->textures->door = NULL;
+	cub->game->question_active = 0;
+	cub->game->wrong_count = 0;
+	cub->game->ans = '\0';
+	cub->game->current_qa = NULL;
 }
 
 int	struct_init(t_cub *cub)

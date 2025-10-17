@@ -3,78 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:25:52 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/14 17:38:54 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:28:50 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	right_ans(char *ans)
+void	start_question_for_door(int check_x, int check_y, t_cub *cub)
 {
-	if (ans[4] == '*')
-		return (1);
-	return (0);
-}
-
-int	check_answer(char **qa)
-{
-	char	a;
-	int		count;
-
-	count = 0;
-	while (1)
-	{
-		printf("\nPlease Enter a valid Choice (a/b/c/d): ");
-		scanf(" %c", &a);
-		if ((a == 'a' && right_ans(qa[1])) || (a == 'b' && right_ans(qa[2]))
-			|| (a == 'c' && right_ans(qa[3])) || (a == 'd' && right_ans(qa[4])))
-		{
-			count = 0;
-			return (1);
-		}
-		else if (a == 'a' || a == 'b' || a == 'c' || a == 'd')
-		{
-			count++;
-			printf("Wrong Answer!!!!!!!\n");
-			if (count == 2)
-				return (0);
-		}
-		else
-			printf("Invalid choice, try again.\n");
-	}
-	return (0);
-}
-
-void	print_scary(int check_x, int check_y, t_cub *cub)
-{
-	mlx_image_t	*scery_img;
-	char		**qa;
-
-	qa = NULL;
-	scery_img = mlx_texture_to_image(cub->game->mlx, cub->textures->scery);
 	if (cub->game->door_state[check_y][check_x] == '1')
 	{
-		qa = grep_print(qa);
-		if (check_answer(qa))
-		{
-			cub->game->num_doors--;
-			if (cub->game->num_doors != 0)
-				cub->game->door_state[check_y][check_x] = '0';
-		}
-		else
-		{
-			mlx_resize_image(scery_img, WIDTH, HEIGHT);
-			mlx_image_to_window(cub->game->mlx, scery_img, 0, 0);
-			cub->game->showing_scery = 1;
-			cub->game->scery_start_time = mlx_get_time();
-		}
+		cub->game->door_check_x = check_x;
+		cub->game->door_check_y = check_y;
+		clear_text_imgs(cub);
+		load_new_question(cub);
+		cub->game->question_active = 1;
+		cub->game->wrong_count = 0;
+		cub->game->ans = '\0';
 	}
-	if (cub->game->num_doors == 0)
-		cub->game->show_animated = 1;
-	ft_free(qa, -1);
 }
 
 void	toggle_nearest_door(t_cub *cub)
@@ -86,15 +35,38 @@ void	toggle_nearest_door(t_cub *cub)
 	check_dist = 1.5f;
 	check_x = (int)(cub->game->xp_pos + cub->game->dir_x * check_dist);
 	check_y = (int)(cub->game->yp_pos + cub->game->dir_y * check_dist);
-	if (cub->game->map[check_y][check_x] == 'D')
-		print_scary(check_x, check_y, cub);
+	if (check_x >= 0 && check_x < cub->game->map_width
+		&& check_y >= 0 && check_y < cub->game->map_height)
+	{
+		if (cub->game->map[check_y][check_x] == 'D')
+			start_question_for_door(check_x, check_y, cub);
+	}
 }
 
-void	space_hook(mlx_key_data_t keydata, void *param)
+void	handle_question_key(t_cub *cub, mlx_key_data_t keydata)
+{
+	if (keydata.key == MLX_KEY_1)
+		cub->game->ans = '1';
+	else if (keydata.key == MLX_KEY_2)
+		cub->game->ans = '2';
+	else if (keydata.key == MLX_KEY_3)
+		cub->game->ans = '3';
+	else if (keydata.key == MLX_KEY_4)
+		cub->game->ans = '4';
+	else
+		return ;
+	process_answer(cub);
+}
+
+void	combined_key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_cub	*cub;
 
 	cub = (t_cub *)param;
-	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
+	if (keydata.action != MLX_PRESS)
+		return ;
+	if (cub->game->question_active)
+		handle_question_key(cub, keydata);
+	else if (keydata.key == MLX_KEY_SPACE)
 		toggle_nearest_door(cub);
 }

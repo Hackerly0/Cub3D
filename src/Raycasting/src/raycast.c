@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:00:00 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/14 17:55:30 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:33:23 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	raycasting(t_cub *cub)
 			* cub->game->minimap_scale) - (P_SIZE
 			* cub->game->minimap_scale) / 2);
 	mlx_loop_hook(cub->game->mlx, keyhook, cub);
-	mlx_key_hook(cub->game->mlx, space_hook, cub);
+	mlx_key_hook(cub->game->mlx, combined_key_hook, cub);
 	mlx_cursor_hook(cub->game->mlx, cursor, cub);
 	if (ray(cub))
 		return (ft_free_struct(cub, 1));

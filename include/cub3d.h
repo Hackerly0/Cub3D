@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by your_login        #+#    #+#             */
-/*   Updated: 2025/10/14 22:40:41 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:31:56 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define MOVE_SPEED 0.1f
 # define ROT_SPEED 0.05f
 # define MINIMAP_SCALE 0.2f
+# define QA_IMG_MAX 32
 
 /* ************************************************************************** */
 /*                              PARSING STRUCTURES                            */
@@ -157,6 +158,7 @@ typedef struct s_anim
 
 typedef struct s_textures
 {
+	// mlx_image_t 	*question[5];
 	mlx_image_t		*pixel_ray;
 	mlx_image_t		*player;
 	mlx_image_t		*wall;
@@ -189,6 +191,15 @@ typedef struct s_game
 	double	scery_start_time;
 	int		num_doors;
 	int		show_animated;
+
+	char ans;
+	int question_active;
+	int wrong_count;
+	char **current_qa;
+	int door_check_x;
+		int door_check_y;
+	mlx_image_t	*qa_imgs[QA_IMG_MAX];
+	int			qa_img_count;
 }	t_game;
 
 typedef struct s_cub
@@ -344,8 +355,20 @@ void			print_qa(char **qa);
 char			**grab_questions(void);
 mlx_texture_t	*show_animated(t_cub *cub);
 int				load_frame_textures(t_cub *cub);
-char			**grep_print(char **qa);
+char			**grep_print(char **qa, t_cub *cub);
 void			print_statment(void);
 void			print_statment_win(void);
+void			draw_centered_text(t_cub *cub, char **qa);
+void			combined_key_hook(mlx_key_data_t keydata, void *param);
+char			*strip_star(const char *s);
+void			process_qa_line(t_cub *cub, char **qa, int i, int y);
+void			draw_centered_text(t_cub *cub, char **qa);
+void			clear_question_display(t_cub *cub);
+void			load_new_question(t_cub *cub);
+int				check_answer(char **qa, t_cub *cub);
+void			process_answer(t_cub *cub);
+void			clear_text_imgs(t_cub *cub);
+void			draw_overlay(t_cub *cub);
+void			draw_text_line(t_cub *cub, char *line, int x, int y);
 
 #endif

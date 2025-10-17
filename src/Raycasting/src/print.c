@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 00:23:06 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/14 18:01:03 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:39:07 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**grep_print(char **qa)
+char	**grep_print(char **qa, t_cub *cub)
 {
 	qa = grab_questions();
-	print_qa(qa);
+	draw_centered_text(cub, qa);
 	return (qa);
 }
 
