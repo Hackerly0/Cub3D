@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_answers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:19:39 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/17 23:38:54 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/18 11:08:15 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	handle_wrong_answer(t_cub *cub)
 	cub->game->ans = '\0';
 	ft_free(cub->game->current_qa, -1);
 	cub->game->current_qa = NULL;
+	print_statment_lose();
 }
 
 void	process_answer(t_cub *cub)

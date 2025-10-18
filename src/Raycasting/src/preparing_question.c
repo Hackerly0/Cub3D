@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparing_question.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 23:03:11 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/17 23:15:04 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/18 11:17:07 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

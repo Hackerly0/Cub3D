@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salshaha <salshaha@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by your_login        #+#    #+#             */
-/*   Updated: 2025/10/17 23:31:56 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/18 11:08:03 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 /*                                   DEFINES                                  */
 /* ************************************************************************** */
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1919
+# define HEIGHT 930
 # define TILE 64
 # define P_SIZE 20
 # define MOVE_SPEED 0.1f
@@ -358,6 +358,7 @@ int				load_frame_textures(t_cub *cub);
 char			**grep_print(char **qa, t_cub *cub);
 void			print_statment(void);
 void			print_statment_win(void);
+void			print_statment_lose(void);
 void			draw_centered_text(t_cub *cub, char **qa);
 void			combined_key_hook(mlx_key_data_t keydata, void *param);
 char			*strip_star(const char *s);

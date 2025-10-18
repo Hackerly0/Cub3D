@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:56:49 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/14 18:24:55 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/18 10:50:38 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	ft_free_struct(t_cub *cub, int type)
 	free_textures(cub);
 	free_td_array(cub->game, cub->game->door_state, cub->game->map_height);
 	free_td_array(cub->game, cub->game->map, cub->game->map_height);
+	free_td_array(cub->game, cub->game->current_qa, 5);
 	ft_free_dir(cub->dir);
 	if (cub->game && cub->game->mlx)
 		mlx_terminate(cub->game->mlx);
