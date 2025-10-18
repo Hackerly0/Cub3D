@@ -140,20 +140,4 @@ MiniLibX uses AppKit & OpenGL natively; you usually **don’t need extra install
 
 ---
 
-## License
-
-Choose what fits your needs (e.g., MIT). Example:
-
-```
-MIT License — see LICENSE for details.
-```
-
----
-
-## Screens
-
-_(Add GIFs or screenshots later: main menu, door prompt, success, scary face)_
-
----
-
 ### Have fun opening doors… and answering wisely 😈
