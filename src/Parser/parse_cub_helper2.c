@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub_helper2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:34 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/15 16:59:13 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:43:51 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 #include "../GNL/get_next_line.h"
+
+int	drain_gnl(char *line, int fd)
+{
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (1);
+}
 
 int	handle_map_line(const char *line, t_config *cfg)
 {
@@ -43,29 +54,16 @@ int	process_file_lines(int fd, t_config *cfg)
 		if (!line)
 			break ;
 		rstrip_newline(line);
-		if ((phase == 0 && process_phase0(line, cfg, &phase))
-			|| (phase == 1 && process_phase1(line, cfg)))
+		if ((phase == 0 && process_phase0(line, cfg, &phase)))
 		{
-			line = get_next_line(fd);
-			while (line)
-			{
-				free(line);
-				line = get_next_line(fd);
-			}
-			return (1);
+			free(line);
+			return (drain_gnl(line, fd));
 		}
+		else if (phase == 1 && process_phase1(line, cfg))
+			return (drain_gnl(line, fd));
 		free(line);
 	}
 	return (0);
-}
-
-static void	print_success(t_config *cfg)
-{
-	printf("All validations passed!\n");
-	printf("Player at (%d, %d) facing '%c'\n",
-		(int)cfg->vars.player.x,
-		(int)cfg->vars.player.y,
-		cfg->vars.player.dir);
 }
 
 int	run_validations(t_config *cfg)
@@ -76,10 +74,7 @@ int	run_validations(t_config *cfg)
 		return (1);
 	}
 	if (pad_map_rect(&cfg->vars))
-	{
-		printf("Error\nalloc failed while padding\n");
 		return (1);
-	}
 	if (validate_chars(&cfg->vars))
 		return (1);
 	if (validate_and_extract_player(&cfg->vars))
@@ -90,6 +85,5 @@ int	run_validations(t_config *cfg)
 		return (1);
 	if (validate_door_accessibility(&cfg->vars))
 		return (1);
-	print_success(cfg);
 	return (0);
 }

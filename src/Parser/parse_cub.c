@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 23:58:30 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/15 16:12:47 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:43:12 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	parser_init(t_config *cfg)
 	cfg->textures.west.path = NULL;
 	cfg->textures.east.path = NULL;
 	cfg->vars.map = NULL;
+	cfg->vars.reachable = NULL;
 	cfg->vars.width = 0;
 	cfg->vars.height = 0;
 	cfg->vars.player.x = -1;
@@ -69,6 +70,7 @@ int	parse_cub(const char *path, t_config *cfg)
 {
 	int	fd;
 	int	result;
+	int	i;
 
 	parser_init(cfg);
 	if (validate_inputs(path, cfg))
@@ -80,5 +82,8 @@ int	parse_cub(const char *path, t_config *cfg)
 	close(fd);
 	if (result)
 		return (result);
-	return (run_validations(cfg));
+	i = run_validations(cfg);
+	if (i)
+		printf("Error\n Validating while parsing\n");
+	return (i);
 }

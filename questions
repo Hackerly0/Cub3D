@@ -1,30 +1,30 @@
-1+1?, a) *11, b) 2, c) 0, d) inf
-Who is the 1st President of The US?, a) Me, b) Trump, c) Obama, d) *Washington
-What is the capital of France?, a) Paris, b) *Mbappe, c) Rome, d) Berlin
-Which planet is known as the Red Planet?, a) Venus, b) *Mars, c) Jupiter, d) Saturn
-2+2=?, a) 3, b) *4, c) 5, d) 22
-Who wrote 'Hamlet'?, a) *Shakespeare, b) Dickens, c) Hemingway, d) Tolkien
-What is H2O commonly called?, a) Oxygen, b) Hydrogen, c) *Water, d) Salt
-The largest ocean on Earth?, a) Atlantic, b) *Pacific, c) Indian, d) Arctic
-Who painted the Mona Lisa?, a) Van Gogh, b) Picasso, c) *Da Vinci, d) Michelangelo
-What is the square root of 16?, a) 2, b) 3, c) *4, d) 5
-Which element has the symbol 'Au'?, a) Silver, b) *Gold, c) Copper, d) Iron
-Who discovered gravity?, a) Einstein, b) *Newton, c) Galileo, d) Tesla
-What is the fastest land animal?, a) Lion, b) Tiger, c) *Cheetah, d) Horse
-Which continent is Egypt part of?, a) Asia, b) *Africa, c) Europe, d) America
-What gas do humans need to breathe?, a) *Oxygen, b) Carbon Dioxide, c) Nitrogen, d) Helium
-Which library is needed for printf()?, a) string.h, b) stdbool.h, c) *stdio.h, d) stdlib.h
-Which keyword creates a loop?, a) stop, b) *for, c) loop, d) def
-What does return 0; mean?, a) Error, b) *Program ended successfully, c) Restarts program, d) Prints 0
-What is an array?, a) Function, b) *Collection of same type elements, c) Pointer, d) Loop
-What is the default target in a Makefile?, a) clean, b) *The first target, c) all, d) main
-What does $@ represent?, a) Dependency name, b) *Target name, c) File path, d) Command name
-How do you define a variable?, a) *VAR = value, b) VAR: value, c) VAR == value, d) VAR := value
-What does the -C flag do in make?, a) *Changes directory, b) Cleans files, c) Compiles, d) Copies files
-What does $^ represent?, a) *All dependencies, b) First dependency, c) Output file, d) Flags
-Which country invented pasta?, a) China, b) *Italy, c) Greece, d) France
-Which country invented chocolate?, a) France, b) *Mexico, c) Switzerland, d) Ghana
-What is an object in OOP?, a) A function, b) *An instance of a class, c) A header file, d) A pointer
-What is used to access members of a class through a pointer?, a) *, b) ., c) *->, d) -<
-Which function is called automatically when an object is created?, a) *Constructor, b) Destructor, c) Setter, d) Getter
-What is function overloading?, a) *Same name, different parameters, b) Same name, same parameters, c) Multiple returns, d) Static functions
+1+1?, 1) *11, 2) 2, 3) 0, 4) inf
+Who is the 1st President of The US?, 1) Me, 2) Trump, 3) Obama, 4) *Washington
+What is the capital of France?, 1) Paris, 2) *Mbappe, 3) Rome, 4) Berlin
+Which planet is known as the Red Planet?, 1) Venus, 2) *Mars, 3) Jupiter, 4) Saturn
+2+2=?, 1) 3, 2) *4, 3) 5, 4) 22
+Who wrote 'Hamlet'?, 1) *Shakespeare, 2) Dickens, 3) Hemingway, 4) Tolkien
+What is H2O commonly called?, 1) Oxygen, 2) Hydrogen, 3) *Water, 4) Salt
+The largest ocean on Earth?, 1) Atlantic, 2) *Pacific, 3) Indian, 4) Arctic
+Who painted the Mona Lisa?, 1) Van Gogh, 2) Picasso, 3) *Da Vinci, 4) Michelangelo
+What is the square root of 16?, 1) 2, 2) 3, 3) *4, 4) 5
+Which element has the symbol 'Au'?, 1) Silver, 2) *Gold, 3) Copper, 4) Iron
+Who discovered gravity?, 1) Einstein, 2) *Newton, 3) Galileo, 4) Tesla
+What is the fastest land animal?, 1) Lion, 2) Tiger, 3) *Cheetah, 4) Horse
+Which continent is Egypt part of?, 1) Asia, 2) *Africa, 3) Europe, 4) America
+What gas do humans need to breathe?, 1) *Oxygen, 2) Carbon Dioxide, 3) Nitrogen, 4) Helium
+Which library is needed for printf()?, 1) string.h, 2) stdbool.h, 3) *stdio.h, 4) stdlib.h
+Which keyword creates a loop?, 1) stop, 2) *for, 3) loop, 4) def
+What does return 0; mean?, 1) Error, 2) *Program ended successfully, 3) Restarts program, 4) Prints 0
+What is an array?, 1) Function, 2) *Collection of same type elements, 3) Pointer, 4) Loop
+What is the default target in a Makefile?, 1) clean, 2) *The first target, 3) all, 4) main
+What does $@ represent?, 1) Dependency name, 2) *Target name, 3) File path, 4) Command name
+How do you define a variable?, 1) *VAR = value, 2) VAR: value, 3) VAR == value, 4) VAR := value
+What does the -C flag do in make?, 1) *Changes directory, 2) Cleans files, 3) Compiles, 4) Copies files
+What does $^ represent?, 1) *All dependencies, 2) First dependency, 3) Output file, 4) Flags
+Which country invented pasta?, 1) China, 2) *Italy, 3) Greece, 4) France
+Which country invented chocolate?, 1) France, 2) *Mexico, 3) Switzerland, 4) Ghana
+What is an object in OOP?, 1) A function, 2) *An instance of a class, 3) A header file, 4) A pointer
+What is used to access members of a class through a pointer?, 1) #, 2) ., 3) *->, 4) -<
+Which function is called automatically when an object is created?, 1) *Constructor, 2) Destructor, 3) Setter, 4) Getter
+What is function overloading?, 1) *Same name, different parameters, 2) Same name, same parameters, 3) Multiple returns, 4) Static functions

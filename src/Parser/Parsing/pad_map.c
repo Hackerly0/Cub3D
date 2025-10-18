@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pad_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:53:10 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/07 22:59:17 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/18 14:58:58 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static void	copy_content(char *new, char *old, int len)
 	}
 }
 
-static void	pad_with_spaces(char *new, int start, int width)
+static void	pad_with_ones(char *new, int start, int width)
 {
 	while (start < width)
 	{
-		new[start] = ' ';
+		new[start] = '1';
 		start++;
 	}
 }
@@ -59,7 +59,7 @@ int	ft_pad_one_row(char **row_ptr, int width)
 	if (!new)
 		return (1);
 	copy_content(new, old, len);
-	pad_with_spaces(new, len, width);
+	pad_with_ones(new, len, width);
 	new[width] = '\0';
 	free(old);
 	*row_ptr = new;

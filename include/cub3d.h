@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by your_login        #+#    #+#             */
-/*   Updated: 2025/10/18 11:08:03 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:10:22 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_parse_colors
 typedef struct s_vars
 {
 	char		**map;
+	int			**reachable;
 	int			width;
 	int			height;
 	int			map_ended;
@@ -174,30 +175,29 @@ typedef struct s_textures
 
 typedef struct s_game
 {
-	mlx_t	*mlx;
-	char	**map;
-	float	dir_x;
-	float	dir_y;
-	float	plane_x;
-	float	plane_y;
-	char	facing_dir;
-	double	xp_pos;
-	double	yp_pos;
-	int		map_height;
-	int		map_width;
-	float	minimap_scale;
-	char	**door_state;
-	int		showing_scery;
-	double	scery_start_time;
-	int		num_doors;
-	int		show_animated;
-
-	char ans;
-	int question_active;
-	int wrong_count;
-	char **current_qa;
-	int door_check_x;
-		int door_check_y;
+	mlx_t		*mlx;
+	char		**map;
+	float		dir_x;
+	float		dir_y;
+	float		plane_x;
+	float		plane_y;
+	char		facing_dir;
+	double		xp_pos;
+	double		yp_pos;
+	int			map_height;
+	int			map_width;
+	float		minimap_scale;
+	char		**door_state;
+	int			showing_scery;
+	double		scery_start_time;
+	int			num_doors;
+	int			show_animated;
+	char		ans;
+	int			question_active;
+	int			wrong_count;
+	char		**current_qa;
+	int			door_check_x;
+	int			door_check_y;
 	mlx_image_t	*qa_imgs[QA_IMG_MAX];
 	int			qa_img_count;
 }	t_game;
@@ -253,6 +253,8 @@ int				is_blank_line(const char *s);
 void			rtrim(char *s);
 void			trim_fields(char **qa);
 uint32_t		rgb_to_uint32(t_rgb rgb);
+int				mark_reachable_cells(t_vars *v);
+void			free_reachable_map(t_vars *v);
 
 /* ************************************************************************** */
 /*                          VALIDATION FUNCTIONS                              */
@@ -286,6 +288,7 @@ int				file_exists(const char *path);
 int				validate_file_extension(const char *path,
 					const char *expected_ext);
 int				validate_texture_file(const char *path);
+int				is_reachable(t_vars *v, int y, int x);
 
 /* ************************************************************************** */
 /*                           RAYCASTING FUNCTIONS                             */
@@ -322,6 +325,7 @@ int				struct_init(t_cub *cub);
 int				ft_free_struct(t_cub *cub, int type);
 int				init_image(t_cub *cub);
 void			init_door_states(t_game *game);
+void			init_struct_element(t_cub *cub);
 
 /* ************************************************************************** */
 /*                            MINIMAP FUNCTIONS                               */

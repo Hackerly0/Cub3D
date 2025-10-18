@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnisirat <hnisirat@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:52:20 by hnisirat          #+#    #+#             */
-/*   Updated: 2025/10/14 22:14:22 by hnisirat         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:42:57 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+int	struct_init(t_cub *cub)
+{
+	cub->game = malloc(sizeof(t_game));
+	cub->rays = malloc(sizeof(t_rays));
+	cub->textures = malloc(sizeof(t_textures));
+	cub->colors = malloc(sizeof(t_colors));
+	cub->dir = malloc(sizeof(t_dir));
+	init_struct_element(cub);
+	if (!cub->game || !cub->rays || !cub->textures || !cub->colors || !cub->dir)
+		return (1);
+	return (0);
+}
 
 static int	init_cub_struct(t_cub **cub, t_config *cfg)
 {
@@ -18,7 +31,7 @@ static int	init_cub_struct(t_cub **cub, t_config *cfg)
 	if (!*cub)
 	{
 		free_config(cfg);
-		return (perr("Error: Memory allocation failed"));
+		return (perr("Error:\n Memory allocation failed"));
 	}
 	if (struct_init(*cub))
 	{
@@ -39,7 +52,7 @@ static int	setup_game(char *path, t_cub **cub)
 
 	if (parse_cub(path, &cfg))
 	{
-		printf("Error: Parsing failed\n");
+		printf("Error:\n Parsing failed\n");
 		free_config(&cfg);
 		return (1);
 	}

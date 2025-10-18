@@ -1,5 +1,5 @@
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -Iinclude -IGNL -fsanitize=address
+CFLAGS  = -Wall -Wextra -Werror -Iinclude -IGNL -g #-fsanitize=address
 NAME    = cub3D
 
 # Directories
@@ -8,6 +8,7 @@ RAYCAST_DIR = src/Raycasting/src
 GNL_DIR = GNL
 LIBFT_DIR = ./libft
 MLX_DIR = ./MLX42
+OBJ_DIR = OBJ
 
 # Libraries
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -54,27 +55,29 @@ SRCS    = src/main.c \
 		$(GNL_DIR)/get_next_line_utils.c
 
 # Object files
-OBJS    = $(SRCS:.c=.o)
+OBJS    = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 # Default target
 all: LIBFT MLX $(NAME)
 
 # Build the executable
-$(NAME): $(OBJS) $(LIBFT) $(MLX)
+$(NAME): $(OBJS) $(LIBFT) $(MLX) 
 	$(CC) $(CFLAGS) $(OBJS) $(MLX) -L$(LIBFT_DIR) -lft $(MLXFLAGS) -o $(NAME)
 
 # Compile source files
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Build libft
 LIBFT:
 	make -C $(LIBFT_DIR)
 
-# Build MLX42
-MLX: $(MLX)
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
-$(MLX):
+# Build MLX42
+MLX:
 	cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	cmake --build $(MLX_DIR)/build -j4
 
@@ -87,6 +90,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	make fclean -C $(LIBFT_DIR)
+	rm -rf $(MLX_DIR)/build
 
 # Rebuild everything
 re: fclean all

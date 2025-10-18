@@ -6,7 +6,7 @@
 /*   By: salshaha <salshaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:56:49 by salshaha          #+#    #+#             */
-/*   Updated: 2025/10/18 10:50:38 by salshaha         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:01:10 by salshaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ void	free_td_array(t_game *game, char **string, int limit)
 {
 	int	i;
 
-	if (game && string)
+	i = 0;
+	if (!game)
+		return ;
+	if (string)
 	{
-		i = 0;
 		while (i < limit)
 		{
 			if (string[i])
@@ -91,21 +93,48 @@ int	ft_free_struct(t_cub *cub, int type)
 {
 	if (!cub)
 		return (type);
-	free_textures(cub);
-	free_td_array(cub->game, cub->game->door_state, cub->game->map_height);
-	free_td_array(cub->game, cub->game->map, cub->game->map_height);
-	free_td_array(cub->game, cub->game->current_qa, 5);
-	ft_free_dir(cub->dir);
-	if (cub->game && cub->game->mlx)
-		mlx_terminate(cub->game->mlx);
+	if (cub->textures)
+	{
+		free_textures(cub);
+		free(cub->textures);
+	}
 	if (cub->game)
+	{
+		free_td_array(cub->game, cub->game->door_state, cub->game->map_height);
+		free_td_array(cub->game, cub->game->map, cub->game->map_height);
+		free_td_array(cub->game, cub->game->current_qa, 5);
+		if (cub->game->mlx)
+			mlx_terminate(cub->game->mlx);
 		free(cub->game);
+	}
+	ft_free_dir(cub->dir);
 	if (cub->rays)
 		free(cub->rays);
-	if (cub->textures)
-		free(cub->textures);
 	if (cub->colors)
 		free(cub->colors);
 	free(cub);
 	return (type);
 }
+
+// int	ft_free_struct(t_cub *cub, int type)
+// {
+// 	if (!cub)
+// 		return (type);
+// 	free_textures(cub);
+// 	free_td_array(cub->game, cub->game->door_state, cub->game->map_height);
+// 	free_td_array(cub->game, cub->game->map, cub->game->map_height);
+// 	free_td_array(cub->game, cub->game->current_qa, 5);
+// 	ft_free_dir(cub->dir);
+// 	if (cub->game && cub->game->mlx)
+// 		mlx_terminate(cub->game->mlx);
+// 	if (cub->game)
+// 		free(cub->game);
+// 	if (cub->rays)
+// 		free(cub->rays);
+// 	if (cub->textures)
+// 		free(cub->textures);
+// 	if (cub->colors)
+// 		free(cub->colors);
+// 	free(cub);
+// 	return (type);
+// }
