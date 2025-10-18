@@ -3,7 +3,7 @@
 A ray-casting maze game where every **door** challenges you with a question.  
 Open **all** doors to win. Mess up twice on the same door and… a **scary face** greets you 👻
 
-Teammates: **Hackerly0** & **salshaha**
+Teammates: [@Hackerly0](https://github.com/Hackerly0) & [@salshaha](https://github.com/salshaha)
 
 ---
 
@@ -51,14 +51,28 @@ make          # builds ./cub3D
 ## Requirements
 
 - **make** and **gcc/clang**
-- **MiniLibX** (bundled or fetched by the Makefile, depending on your setup)
-  - **macOS**: uses AppKit/OpenGL frameworks (no extra installs usually needed on 42 iMacs).
-  - **Linux**: needs X11 dev libs. On Debian/Ubuntu:
-    ```bash
-    sudo apt-get update
-    sudo apt-get install -y build-essential xorg libxext-dev libxrandr-dev libx11-dev libbsd-dev
-    ```
-> If your environment is different, adjust package names accordingly.
+- **MiniLibX** (bundled or fetched by the Makefile)
+- **Dependencies** (already linked through `MLXFLAGS` in the Makefile):
+  ```bash
+  MLXFLAGS = -Iinclude -ldl -lglfw -pthread -lm
+  ```
+  These flags indicate the required system libraries:
+  - `-ldl` — dynamic linking library  
+  - `-lglfw` — GLFW (used by MiniLibX for window management & OpenGL context)  
+  - `-pthread` — POSIX threads for concurrency  
+  - `-lm` — math library  
+
+### Linux (Debian/Ubuntu)
+You can install everything needed via:
+```bash
+sudo apt-get update
+sudo apt-get install -y build-essential libglfw3-dev libx11-dev libxext-dev libbsd-dev
+```
+
+### macOS
+MiniLibX uses AppKit & OpenGL natively; you usually **don’t need extra installs** on 42 iMacs or macOS setups.
+
+> 💡 If you face linking errors, check your GLFW installation or re-run `make re` after cleaning.
 
 ---
 
@@ -120,8 +134,8 @@ make          # builds ./cub3D
 
 ## Credits
 
-- **Core & Gameplay**: Hackerly0  
-- **Teammate**: **salshaha**  
+- **Core & Gameplay**: [@Hackerly0](https://github.com/Hackerly0)  
+- **Teammate**: [@salshaha](https://github.com/salshaha)  
 - **MiniLibX**: © 42
 
 ---
