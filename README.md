@@ -134,8 +134,8 @@ MiniLibX uses AppKit & OpenGL natively; you usually **don’t need extra install
 
 ## Credits
 
-- **Core & Gameplay**: [@Hackerly0](https://github.com/Hackerly0)  
-- **Teammate**: [@salshaha](https://github.com/salshaha)  
+- **Parser**: [@Hackerly0](https://github.com/Hackerly0)  
+- **Casting**: [@salshaha](https://github.com/salshaha)  
 - **MiniLibX**: © 42
 
 ---
